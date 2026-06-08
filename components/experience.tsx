@@ -11,7 +11,7 @@ type Experience = {
 const experiences: Experience[] = [
   {
     company: 'American Express',
-    role: 'Finance & Automations Apprentice',
+    role: 'Gen AI & Automations Apprentice',
     date: 'June 2025 – Present',
     points: [
       'Collaborated with 5+ cross-functional teams to identify automation opportunities.',
