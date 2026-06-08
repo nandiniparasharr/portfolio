@@ -15,7 +15,7 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'Nandini Parashar Portfolio',
+  title: 'Nandini Parashar — Finance & Automations',
   description:
     'Personal portfolio of Nandini Parashar — Finance & Automations professional based in Delhi-NCR. Investment research, financial analysis, and workflow automation.',
   generator: 'v0.app',
