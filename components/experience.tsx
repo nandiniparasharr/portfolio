@@ -14,9 +14,9 @@ const experiences: Experience[] = [
     role: 'Gen AI & Automations Apprentice',
     date: 'June 2025 – Present',
     points: [
-      'Collaborated with 5+ cross-functional teams to identify automation opportunities.',
+      'Collaborated with cross-functional teams to identify automation opportunities.',
       'Built a Python-assisted automation workflow using ChatGPT, Copilot, PyCharm, and Excel — appreciated by management.',
-      'Supported month-end close, financial reporting, capitalization testing, OPEX review, and 5+ regulatory filings (XBRL, SOFTEX, MPR).',
+      'Supported month-end close, financial reporting, capitalization testing, OPEX review, and regulatory filings (XBRL, SOFTEX, MPR).',
     ],
   },
   {
