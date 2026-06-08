@@ -40,6 +40,7 @@ export function Hero() {
             financial reporting and analysis, with a growing focus on fintech &amp; startup-focused finance.
           </p>
           <p className="text-pretty text-base leading-7 text-foreground">
+            
             When I&apos;m not working, I&apos;m usually picking up side quests — exploring new tools, 
             or learning something that catches my interest. This website happenes to be one of those
             projects :D
