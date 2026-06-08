@@ -52,7 +52,7 @@ export function Contact() {
           Let&apos;s Connect
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-pretty leading-relaxed text-muted-foreground">
-          Open to opportunities in investment research, alternative assets, and finance strategy.
+          Always open to conversations around finance, investing or building something unconventional.
         </p>
 
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8">
