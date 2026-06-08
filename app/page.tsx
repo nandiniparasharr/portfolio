@@ -18,7 +18,7 @@ export default function Page() {
         <Projects />
         <Skills />
         <Certifications />
-        <div className="mx-auto max-w-[1100px] px-6">
+        <div className="mx-auto max-w-[1500px] px-10">
           <hr className="border-t border-gold/30" />
         </div>
         <Contact />
