@@ -35,16 +35,13 @@ export function Hero() {
 
         <div className="lg:col-span-4">
           <p className="text-pretty text-base leading-7 text-foreground">
-            I work at the intersection of finance, research, and automation —
-            building analytical systems that improve decision-making and
-            operational efficiency. My experience spans investment research,
-            financial reporting and analysis, with a growing focus on fintech
-            &amp; startup-focused finance.
+            I work at the intersection of finance, research, and automation — building analytical systems 
+            that improve decision-making and operational efficiency. My experience spans investment research,
+            financial reporting and analysis, with a growing focus on fintech &amp; startup-focused finance.
           </p>
           <p className="text-pretty text-base leading-7 text-foreground">
-            When I&apos;m not working, I&apos;m usually picking up side quests —
-            exploring new tools, building systems, or learning something that
-            catches my interest. This website happened to be one of those
+            When I&apos;m not working, I&apos;m usually picking up side quests — exploring new tools, 
+            or learning something that catches my interest. This website happened to be one of those
             projects.
           </p>
         </div>
