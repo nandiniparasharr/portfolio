@@ -52,7 +52,7 @@ export function Experience() {
   return (
     <section id="experience" className="relative py-24">
       <div className="mx-auto max-w-[1100px] px-6">
-        <SectionHeading eyebrow="Experience" title="Where I have Built & Learned" />
+        <SectionHeading eyebrow="Experience" title="Where I have Built & Learnt" />
 
         <ol className="relative ml-[5px] border-l border-gold/25 pl-12 sm:pl-16">
           {experiences.map((exp, i) => (
