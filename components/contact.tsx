@@ -46,10 +46,10 @@ export function Contact() {
       <div className="gold-dots absolute inset-0 z-0 opacity-40" aria-hidden="true" />
       <Reveal className="relative z-10 mx-auto max-w-[1400px] px-6">
         <p className="mb-3 text-xs uppercase tracking-[0.25em] text-gold">
-          Get in touch
+          If Something here resonated
         </p>
         <h2 className="text-balance text-5xl font-semibold text-foreground sm:text-6xl">
-          Let&apos;s Connect
+          Let&apos;s Talk
         </h2>
         <p className="mx-auto mt-4 max-w-3xl text-pretty leading-relaxed text-muted-foreground">
           Always open to conversations around finance, investing or building something unconventional.
