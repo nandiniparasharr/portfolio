@@ -81,7 +81,7 @@ export function Projects() {
   return (
     <section id="projects" className="relative py-24">
       <div className="mx-auto max-w-[1100px] px-6">
-        <SectionHeading eyebrow="Selected Work" title="Projects" />
+        <SectionHeading eyebrow="Featured Projects" title="Projects" />
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {projects.map((project, i) => (
