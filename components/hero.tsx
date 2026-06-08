@@ -42,7 +42,7 @@ export function Hero() {
           <p className="text-pretty text-base leading-7 text-foreground">
             When I&apos;m not working, I&apos;m usually picking up side quests — exploring new tools, 
             or learning something that catches my interest. This website happened to be one of those
-            projects.
+            projects :D
           </p>
         </div>
       </div>
