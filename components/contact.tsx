@@ -41,21 +41,21 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="grain relative overflow-hidden py-28 text-center"
+      className="grain relative overflow-hidden py-36 text-center"
     >
       <div className="gold-dots absolute inset-0 z-0 opacity-40" aria-hidden="true" />
-      <Reveal className="relative z-10 mx-auto max-w-[1100px] px-6">
+      <Reveal className="relative z-10 mx-auto max-w-[1400px] px-6">
         <p className="mb-3 text-xs uppercase tracking-[0.25em] text-gold">
           Get in touch
         </p>
         <h2 className="text-balance text-5xl font-semibold text-foreground sm:text-6xl">
           Let&apos;s Connect
         </h2>
-        <p className="mx-auto mt-4 max-w-xl text-pretty leading-relaxed text-muted-foreground">
+        <p className="mx-auto mt-4 max-w-3xl text-pretty leading-relaxed text-muted-foreground">
           Always open to conversations around finance, investing or building something unconventional.
         </p>
 
-        <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8">
+        <div className="mt-10 flex flex-col items-center justify-center gap-8 sm:flex-row sm:gap-16">
           {contacts.map((item) => {
             const Icon = item.icon
             const isExternal = item.href.startsWith('http')
@@ -66,7 +66,7 @@ export function Contact() {
                 {...(isExternal
                   ? { target: '_blank', rel: 'noreferrer' }
                   : {})}
-                className="gold-link inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                className="gold-link inline-flex items-center gap-2 text-sm text-zinc-300 transition-colors hover:text-foreground"
               >
                 <Icon className="h-4 w-4 text-gold" aria-hidden="true" />
                 {item.label}
