@@ -59,7 +59,7 @@ export function Hero() {
             View My Work
           </a>
           <a
-            href="/NandiniParashar-CV.pdf"
+            href="/NandiniParashar_CV.pdf"
             target="_blank"
             rel="noreferrer"
             className="rounded-md border border-gold px-6 py-3 text-sm font-medium text-gold transition-colors hover:bg-gold/10"
