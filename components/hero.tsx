@@ -64,10 +64,6 @@ export function Hero() {
             rel="noreferrer"
             className="rounded-md border border-gold px-6 py-3 text-sm font-medium text-gold transition-colors hover:bg-gold/10"
           >
-            href="/NandiniParashar_CV.pdf"
-  target="_blank"
-  rel="noopener noreferrer"
-> 
             Resume
           </a>
         </div>
