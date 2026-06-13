@@ -152,7 +152,6 @@ NP<span className="text-gold">.</span> </a>
     </div>
   )}
 </header>
-```
 
 )
 }
