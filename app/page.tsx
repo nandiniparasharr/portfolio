@@ -13,9 +13,9 @@ export default function Page() {
       <Nav />
       <main>
         <Hero />
-        <Experience />
-        <Education />
         <Projects />
+        <Education />
+        <Experience />
         <Skills />
         <Certifications />
         <div className="mx-auto max-w-[1500px] px-10">
