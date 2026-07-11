@@ -262,6 +262,47 @@ button:hover > .np-arrow,
   animation: np-rule var(--dur-4) var(--ease-expo) 0.3s forwards;
 }
 
+/* Trajectory timeline */
+.np-rail {
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: var(--np-line);
+}
+.np-rail-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  transform-origin: top;
+  transform: scaleY(var(--trajectory-progress, 0));
+  background: var(--np-rose);
+}
+.np-node {
+  position: absolute;
+  left: -4.5px;
+  top: 10px;
+  height: 9px;
+  width: 9px;
+  border: 1px solid var(--np-rose);
+  background: var(--color-page);
+  transition: background var(--dur-2) var(--ease-swift);
+}
+.is-visible .np-node {
+  background: var(--np-rose);
+}
+
+/* Donut segments draw in, then respond to hover */
+.donut-seg {
+  transition:
+    stroke-dashoffset var(--dur-4) var(--ease-expo),
+    opacity var(--dur-1) var(--ease-swift),
+    transform var(--dur-1) var(--ease-swift);
+}
+
 /* Command palette */
 .palette-overlay {
   animation: np-fade var(--dur-1) var(--ease-swift) forwards;
@@ -293,6 +334,13 @@ button:hover > .np-arrow,
   }
   .np-intro {
     display: none;
+  }
+  .np-rail-fill {
+    transform: scaleY(1);
+  }
+  .donut-seg {
+    transition: none;
+    stroke-dashoffset: 0 !important;
   }
   html {
     scroll-behavior: auto;

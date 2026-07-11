@@ -106,6 +106,9 @@ export type Role = {
   role: string
   date: string
   points: string[]
+  initials: string
+  /** Drop a real logo at this path in /public and it replaces the monogram. */
+  logo: string
 }
 
 export const experience: Role[] = [
@@ -113,6 +116,8 @@ export const experience: Role[] = [
     company: 'American Express',
     role: 'Gen AI & Automations Apprentice',
     date: 'Jun 2025 — Present',
+    initials: 'AE',
+    logo: '/logos/american-express.png',
     points: [
       'Collaborated with cross-functional teams to identify automation opportunities.',
       'Built a Python-assisted automation workflow using ChatGPT, Copilot, PyCharm, and Excel — appreciated by management.',
@@ -123,6 +128,8 @@ export const experience: Role[] = [
     company: 'Kairne Capital IFSC',
     role: 'Investment Intern',
     date: 'Feb 2025 — Jun 2025',
+    initials: 'KC',
+    logo: '/logos/kairne-capital.png',
     points: [
       'Conducted financial due diligence and analysis for M&A and startup transactions.',
       'Identified investment opportunities in distressed assets and 25+ NCLT cases.',
@@ -133,6 +140,8 @@ export const experience: Role[] = [
     company: 'RevRoad VC',
     role: 'Remote Extern',
     date: 'Aug 2024 — Sep 2024',
+    initials: 'RR',
+    logo: '/logos/revroad.png',
     points: [
       'Performed secondary research on US EdTech companies; identified 10+ actionable growth opportunities.',
       "Sourced a startup with 75% adherence to RevRoad's investment criteria.",
@@ -142,46 +151,42 @@ export const experience: Role[] = [
     company: 'Tech Mahindra',
     role: 'Finance Department Intern',
     date: 'Jun 2023 — Jul 2023',
+    initials: 'TM',
+    logo: '/logos/tech-mahindra.png',
     points: [
       'Supported budgeting and cost analysis; implemented cost-saving measures resulting in a 15% overhead cost reduction.',
     ],
   },
 ]
 
-export const skills: {
+export const skillGroups: {
   title: string
   tone: 'forest' | 'plum' | 'rose'
   items: string[]
 }[] = [
   {
-    title: 'Markets',
+    title: 'Finance & markets',
     tone: 'forest',
     items: [
-      'Financial modelling & DCF',
-      'Equity research',
-      'Due diligence & deal screening',
-      'Unit economics',
+      'Valuation',
+      'Pitch decks',
+      'Investment memos',
+      'Research reports',
     ],
   },
   {
-    title: 'Machines',
+    title: 'Technical',
     tone: 'plum',
     items: [
       'Python for finance',
       'GenAI-assisted workflows',
-      'Excel automation',
       'Bloomberg Terminal',
     ],
   },
   {
-    title: 'Craft',
+    title: 'Off the clock',
     tone: 'rose',
-    items: [
-      'Pitch decks & investment memos',
-      'Financial reporting',
-      'Writing & editing',
-      'Design — in progress',
-    ],
+    items: ['Singing', 'Writing & editing', 'Design — in progress'],
   },
 ]
 

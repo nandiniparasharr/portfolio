@@ -14,6 +14,41 @@ const fieldInput =
 
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 
+/* Catch throwaway typos before they cost a reply — ".con" is not a place. */
+const BAD_TLDS = new Set([
+  'con', 'cpm', 'cmo', 'ocm', 'vom', 'xom', 'cim', 'comm', 'coom', 'conm',
+  'cm', 'og', 'nte', 'ent',
+])
+const DOMAIN_TYPOS: Record<string, string> = {
+  'gmial.com': 'gmail.com',
+  'gmal.com': 'gmail.com',
+  'gamil.com': 'gmail.com',
+  'gnail.com': 'gmail.com',
+  'gmaill.com': 'gmail.com',
+  'hotmial.com': 'hotmail.com',
+  'hotmali.com': 'hotmail.com',
+  'yahooo.com': 'yahoo.com',
+  'yaho.com': 'yahoo.com',
+  'outlok.com': 'outlook.com',
+  'iclod.com': 'icloud.com',
+}
+
+function emailProblem(raw: string): string | null {
+  const email = raw.trim().toLowerCase()
+  if (!/^[^\s@]+@([^\s@.]+\.)+[a-z]{2,}$/i.test(email)) {
+    return 'That email doesn’t look complete — check it once?'
+  }
+  const domain = email.split('@')[1]
+  const tld = domain.split('.').pop() ?? ''
+  if (DOMAIN_TYPOS[domain]) {
+    return `Did you mean @${DOMAIN_TYPOS[domain]}?`
+  }
+  if (BAD_TLDS.has(tld)) {
+    return `“.${tld}” isn’t a real ending — .com, maybe?`
+  }
+  return null
+}
+
 /** Delivers via FormSubmit's AJAX relay — no backend, straight to the inbox. */
 export function ContactForm() {
   const [kind, setKind] = useState<(typeof KINDS)[number]>('An opportunity')
@@ -21,10 +56,16 @@ export function ContactForm() {
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
   const [status, setStatus] = useState<Status>('idle')
+  const [emailError, setEmailError] = useState<string | null>(null)
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (status === 'sending') return
+    const problem = emailProblem(email)
+    if (problem) {
+      setEmailError(problem)
+      return
+    }
     setStatus('sending')
     try {
       const res = await fetch(
@@ -106,10 +147,23 @@ export function ContactForm() {
               type="email"
               required
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value)
+                setEmailError(null)
+              }}
+              onBlur={() => email && setEmailError(emailProblem(email))}
+              aria-invalid={!!emailError}
               placeholder="jane@example.com"
-              className={fieldInput}
+              className={cn(fieldInput, emailError && 'border-rose')}
             />
+            {emailError && (
+              <span
+                role="alert"
+                className="font-mono text-[10px] uppercase tracking-[0.08em] text-rose"
+              >
+                {emailError}
+              </span>
+            )}
           </label>
         </div>
         <label className="flex flex-col gap-1.5">

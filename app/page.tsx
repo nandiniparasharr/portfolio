@@ -1,13 +1,10 @@
 import Link from 'next/link'
-import {
-  Container,
-  IndexNumeral,
-  LLink,
-  SectionLabel,
-} from '@/components/ledger'
+import { Container, LLink, SectionLabel } from '@/components/ledger'
 import { ProjectCard } from '@/components/project-card'
 import { Reveal } from '@/components/reveal'
-import { experience, projects, site, skills } from '@/lib/content'
+import { AllocationDonut } from '@/components/allocation-donut'
+import { SkillsetTabs } from '@/components/skillset-tabs'
+import { experience, projects, site } from '@/lib/content'
 
 function Stage({
   children,
@@ -32,64 +29,52 @@ export default function Page() {
   return (
     <>
       {/* Hero */}
-      <Container className="relative pb-20 pt-24">
-        <IndexNumeral
-          value="01"
-          className="absolute right-7 top-16 hidden text-[190px] md:block"
-        />
-        <Stage delay={0}>
-          <SectionLabel className="mb-5">Portfolio — 2026</SectionLabel>
-        </Stage>
-        <Stage delay={80}>
-          <h1 className="max-w-xl text-hero">
-            Curiosity, <em className="text-rose">compounding</em> daily.
-          </h1>
-        </Stage>
-        <Stage delay={160}>
-          <p className="mt-6 max-w-md text-muted-foreground">
-            Finance professional building across markets, machines, and the
-            written word.
-          </p>
-        </Stage>
-        <Stage delay={240} className="mt-9 flex flex-wrap items-center gap-5">
-          <LLink href="/work" variant="primary">
-            See the work <span className="np-arrow">→</span>
-          </LLink>
-          <LLink href={site.substack} variant="ghost">
-            Read the Substack ↗
-          </LLink>
-        </Stage>
+      <Container className="pb-20 pt-20">
+        <div className="grid items-center gap-14 lg:grid-cols-[1.25fr_1fr]">
+          <div>
+            <Stage delay={0}>
+              <SectionLabel className="mb-5">Portfolio — 2026</SectionLabel>
+            </Stage>
+            <Stage delay={80}>
+              <h1 className="max-w-xl text-hero">
+                Curiosity, <em className="text-rose">compounding</em> daily.
+              </h1>
+            </Stage>
+            <Stage delay={160}>
+              <p className="mt-6 max-w-md text-muted-foreground">
+                Finance professional building across markets, machines, and
+                the written word.
+              </p>
+            </Stage>
+            <Stage
+              delay={240}
+              className="mt-9 flex flex-wrap items-center gap-5"
+            >
+              <LLink href="/work" variant="primary">
+                See the work <span className="np-arrow">→</span>
+              </LLink>
+              <LLink href={site.substack} variant="ghost">
+                Read the Substack ↗
+              </LLink>
+            </Stage>
+          </div>
+          <Stage delay={320} className="justify-self-center lg:justify-self-end">
+            <AllocationDonut />
+          </Stage>
+        </div>
       </Container>
 
-      {/* Toolkit */}
+      {/* Skillset */}
       <div className="border-t border-border">
         <Container className="py-14">
           <Reveal>
             <SectionLabel index="02" tone="muted" className="mb-8">
-              Toolkit
+              Skillset
             </SectionLabel>
           </Reveal>
-          <div className="grid gap-x-12 gap-y-10 md:grid-cols-3">
-            {skills.map((group, i) => (
-              <Reveal key={group.title} delay={i * 80}>
-                <div className="flex items-baseline justify-between gap-4">
-                  <h3 className="text-h3">{group.title}</h3>
-                  <SectionLabel tone={group.tone}>0{i + 1}</SectionLabel>
-                </div>
-                <div className="np-rule-draw mt-3 h-0.5 bg-border-strong" />
-                <ul className="m-0 list-none p-0">
-                  {group.items.map((skill) => (
-                    <li
-                      key={skill}
-                      className="border-b border-border py-2.5 text-sm text-muted-foreground last:border-b-0"
-                    >
-                      {skill}
-                    </li>
-                  ))}
-                </ul>
-              </Reveal>
-            ))}
-          </div>
+          <Reveal delay={80}>
+            <SkillsetTabs />
+          </Reveal>
         </Container>
       </div>
 
@@ -116,12 +101,12 @@ export default function Page() {
         </Container>
       </div>
 
-      {/* Experience index */}
+      {/* Trajectory index */}
       <div className="border-t border-border">
         <Container className="py-16">
           <div className="mb-6 flex items-baseline justify-between gap-6">
             <Reveal>
-              <SectionLabel index="04">Experience</SectionLabel>
+              <SectionLabel index="04">Trajectory</SectionLabel>
             </Reveal>
             <Reveal delay={80}>
               <LLink href="/about" variant="ghost">

@@ -7,11 +7,11 @@ import {
   SectionLabel,
 } from '@/components/ledger'
 import { Reveal } from '@/components/reveal'
+import { Trajectory } from '@/components/trajectory'
 import {
   certifications,
   currently,
   education,
-  experience,
   pursuits,
   site,
 } from '@/lib/content'
@@ -88,44 +88,15 @@ export default function AboutPage() {
         </div>
       </div>
 
-      {/* Experience */}
+      {/* Trajectory */}
       <section id="experience" className="mt-24">
         <Reveal>
           <SectionLabel index="02" className="mb-6">
-            Experience
+            Trajectory
           </SectionLabel>
           <div className="np-rule-draw h-0.5 bg-border-strong" />
         </Reveal>
-        {experience.map((role, i) => (
-          <Reveal
-            key={role.company}
-            delay={i * 80}
-            className="grid gap-x-12 gap-y-2 border-b border-border py-8 md:grid-cols-[220px_1fr]"
-          >
-            <div>
-              <p className="m-0 font-mono text-[11px] uppercase tracking-[0.08em] text-faint">
-                {role.date}
-              </p>
-              <h3 className="mt-1 text-h3">{role.company}</h3>
-              <p className="m-0 mt-1 text-sm text-muted-foreground">
-                {role.role}
-              </p>
-            </div>
-            <ul className="m-0 flex list-none flex-col gap-2 p-0">
-              {role.points.map((point) => (
-                <li
-                  key={point}
-                  className="flex gap-3 text-sm leading-relaxed text-muted-foreground"
-                >
-                  <span aria-hidden="true" className="text-rose">
-                    —
-                  </span>
-                  {point}
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        ))}
+        <Trajectory />
       </section>
 
       {/* Education & credentials */}
