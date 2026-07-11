@@ -24,12 +24,12 @@ export function SkillsetTabs() {
   }
 
   return (
-    <div className="max-w-2xl">
+    <div className="w-full">
       <div
         role="tablist"
         aria-label="Skillset"
         onKeyDown={onKeyDown}
-        className="flex flex-wrap items-end gap-1 pl-3"
+        className="flex flex-wrap items-end gap-1"
       >
         {skillGroups.map((g, i) => (
           <button
@@ -39,10 +39,10 @@ export function SkillsetTabs() {
             aria-selected={active === i}
             onClick={() => setActive(i)}
             className={cn(
-              'relative -mb-px inline-flex items-center gap-2.5 border border-border px-4 font-serif text-[15px] transition-colors duration-150',
+              'relative -mb-px inline-flex items-center gap-2.5 border border-border px-5 font-serif text-[17px] transition-colors duration-150',
               active === i
-                ? 'z-10 border-b-card bg-card py-2.5 text-foreground'
-                : 'bg-sunken py-2 text-muted-foreground hover:text-foreground',
+                ? 'z-10 border-b-card bg-card py-3 text-foreground'
+                : 'bg-sunken py-2.5 text-muted-foreground hover:text-foreground',
             )}
           >
             {g.title}
@@ -58,10 +58,10 @@ export function SkillsetTabs() {
           aria-label="New tab"
           onClick={() => setActive(skillGroups.length)}
           className={cn(
-            'relative -mb-px inline-flex items-center border border-border px-3.5 font-mono text-sm transition-colors duration-150',
+            'relative -mb-px inline-flex items-center border border-border px-4 font-mono text-base transition-colors duration-150',
             isEgg
-              ? 'z-10 border-b-card bg-card py-2.5 text-foreground'
-              : 'bg-sunken py-2 text-faint hover:text-foreground',
+              ? 'z-10 border-b-card bg-card py-3 text-foreground'
+              : 'bg-sunken py-2.5 text-faint hover:text-foreground',
           )}
         >
           +

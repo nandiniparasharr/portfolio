@@ -62,13 +62,13 @@ export default function Page() {
               Skillset
             </SectionLabel>
           </Reveal>
-          <div className="grid items-start gap-x-16 gap-y-12 lg:grid-cols-[minmax(0,1.5fr)_auto]">
+          <div className="grid items-start gap-x-16 gap-y-12 lg:grid-cols-2">
             <Reveal delay={80}>
               <SkillsetTabs />
             </Reveal>
             <Reveal
               delay={160}
-              className="justify-self-center lg:mt-14 lg:justify-self-end"
+              className="justify-self-center lg:mt-14"
             >
               <AllocationDonut />
             </Reveal>
