@@ -1,0 +1,108 @@
+'use client'
+
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import { site } from '@/lib/content'
+
+/** Local time in Delhi, ticking. Renders after mount to avoid hydration drift. */
+function DelhiClock() {
+  const [time, setTime] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fmt = new Intl.DateTimeFormat('en-IN', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+      timeZone: 'Asia/Kolkata',
+    })
+    const tick = () => setTime(fmt.format(new Date()))
+    tick()
+    const id = setInterval(tick, 1000)
+    return () => clearInterval(id)
+  }, [])
+
+  return <span suppressHydrationWarning>Delhi {time ?? '—:—:—'} IST</span>
+}
+
+const siteLinks = [
+  { label: 'Work', href: '/work' },
+  { label: 'Writing', href: '/writing' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+]
+
+export function SiteFooter() {
+  return (
+    <footer>
+      {/* Palette strip — rose 2fr / plum / forest / ink */}
+      <div className="flex h-2" aria-hidden="true">
+        <div className="flex-[2] bg-rose" />
+        <div className="flex-1 bg-plum" />
+        <div className="flex-1 bg-forest" />
+        <div className="flex-1 bg-inverse" />
+      </div>
+      <div className="bg-inverse px-7 pb-6 pt-12 text-on-inverse">
+        <div className="mx-auto max-w-[1200px]">
+          <div className="flex flex-wrap justify-between gap-12">
+            <div className="max-w-xs">
+              <div className="font-serif text-[28px]">{site.name}</div>
+              <div className="mt-2 font-serif text-[17px] italic opacity-70">
+                {site.tagline}
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-14">
+              <div className="flex flex-col gap-2.5">
+                <div className="font-mono text-[10px] uppercase tracking-[0.14em] opacity-50">
+                  Site
+                </div>
+                {siteLinks.map((l) => (
+                  <Link
+                    key={l.href}
+                    href={l.href}
+                    className="font-mono text-xs tracking-[0.06em] text-on-inverse no-underline hover:underline"
+                  >
+                    {l.label}
+                  </Link>
+                ))}
+              </div>
+              <div className="flex flex-col gap-2.5">
+                <div className="font-mono text-[10px] uppercase tracking-[0.14em] opacity-50">
+                  Elsewhere
+                </div>
+                <a
+                  href={site.substack}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-mono text-xs tracking-[0.06em] text-on-inverse no-underline hover:underline"
+                >
+                  Substack ↗
+                </a>
+                <a
+                  href={site.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-mono text-xs tracking-[0.06em] text-on-inverse no-underline hover:underline"
+                >
+                  LinkedIn ↗
+                </a>
+                <a
+                  href={`mailto:${site.email}`}
+                  className="font-mono text-xs tracking-[0.06em] text-on-inverse no-underline hover:underline"
+                >
+                  Email
+                </a>
+              </div>
+            </div>
+          </div>
+          <div className="mt-8 flex flex-wrap justify-between gap-4 border-t border-on-inverse/20 pt-4 font-mono text-[10px] uppercase tracking-[0.1em] opacity-50">
+            <span>
+              © {new Date().getFullYear()} {site.shortMark} · <DelhiClock />
+            </span>
+            <span>Set in Instrument Serif &amp; IBM Plex Mono</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  )
+}

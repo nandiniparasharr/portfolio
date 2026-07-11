@@ -2,44 +2,126 @@
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:is([data-theme='dark'] *));
 
 @theme inline {
-  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-cormorant), Georgia, serif;
-  --font-heading: var(--font-cormorant), Georgia, serif;
+  /* THE LEDGER — Instrument Serif display · Archivo body · IBM Plex Mono labels */
+  --font-sans: var(--font-archivo), 'Helvetica Neue', Arial, sans-serif;
+  --font-serif: var(--font-instrument), Georgia, serif;
+  --font-heading: var(--font-instrument), Georgia, serif;
+  --font-mono: var(--font-plex-mono), 'SFMono-Regular', Consolas, monospace;
 
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-border: var(--border);
-  --color-gold: var(--gold);
-  --color-gold-light: var(--gold-light);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
+  --color-background: var(--color-page);
+  --color-foreground: var(--np-ink);
+  --color-card: var(--np-paper-raised);
+  --color-card-foreground: var(--np-ink);
+  --color-sunken: var(--np-paper-sunken);
+  --color-muted: var(--np-paper-sunken);
+  --color-muted-foreground: var(--np-ink-2);
+  --color-faint: var(--np-ink-3);
+  --color-border: var(--np-line);
+  --color-border-strong: var(--np-ink);
+  --color-inverse: var(--np-ink);
+  --color-on-inverse: var(--color-on-inverse-var);
+  --color-rose: var(--np-rose);
+  --color-rose-deep: var(--np-rose-deep);
+  --color-rose-tint: var(--np-rose-tint);
+  --color-plum: var(--np-plum);
+  --color-plum-tint: var(--np-plum-tint);
+  --color-forest: var(--np-forest);
+  --color-forest-tint: var(--np-forest-tint);
+  --color-on-accent: var(--color-on-accent-var);
+  --color-primary: var(--np-rose);
+  --color-primary-foreground: var(--color-on-accent-var);
 
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
+  /* type scale */
+  --text-hero: clamp(2.75rem, 7.5vw, 4rem);
+  --text-hero--line-height: 1.02;
+  --text-display: clamp(2.125rem, 5.5vw, 3rem);
+  --text-display--line-height: 1.05;
+  --text-h3: 1.5rem;
+  --text-h3--line-height: 1.2;
+  --text-lead: 1.125rem;
+  --text-lead--line-height: 1.55;
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.4;
+  --text-label-xs: 0.625rem;
+  --text-label-xs--line-height: 1.4;
+
+  /* The Ledger is square. No rounded corners, anywhere. */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+
+  --tracking-label: 0.12em;
+  --tracking-btn: 0.08em;
+
+  --shadow-card: var(--shadow-card-var);
+  --shadow-pop: var(--shadow-pop-var);
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-swift: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ============================================================
+   THE LEDGER — Rose Madder (direction 3a)
+   Warm editorial palette: cream paper, aubergine ink,
+   rose madder primary, plum secondary, forest tertiary.
+   ============================================================ */
 :root {
-  --background: #0a0f1e;
-  --foreground: #f0ede6;
-  --card: #0e1426;
-  --card-foreground: #f0ede6;
-  --muted: #151c30;
-  --muted-foreground: #9aa3b2;
-  --border: #1e2740;
-  --gold: #c9a84c;
-  --gold-light: #e2be6a;
-  --primary: #c9a84c;
-  --primary-foreground: #0a0f1e;
-  --radius: 0.5rem;
+  --np-paper: #f4efe4;
+  --np-paper-raised: #faf6ec;
+  --np-paper-sunken: #ece5d5;
+  --np-ink: #241c22;
+  --np-ink-2: #56455a;
+  --np-ink-3: #8d7f8a;
+  --np-rose: #b8496a;
+  --np-rose-deep: #9c3a58;
+  --np-rose-tint: #f0dce2;
+  --np-plum: #5d3754;
+  --np-plum-tint: #e7dce5;
+  --np-forest: #1f3a2d;
+  --np-forest-tint: #dee5dc;
+  --np-line: #ddd2c4;
+
+  --color-page: var(--np-paper);
+  --color-on-accent-var: #f4efe4;
+  --color-on-inverse-var: #f4efe4;
+  --color-link: var(--np-plum);
+  --color-link-hover: var(--np-rose);
+
+  --shadow-card-var: 0 2px 16px rgba(36, 28, 34, 0.1);
+  --shadow-pop-var: 0 12px 40px rgba(36, 28, 34, 0.18);
+
+  --dur-1: 150ms;
+  --dur-2: 300ms;
+  --dur-3: 600ms;
+  --dur-4: 900ms;
+}
+
+/* Aubergine-ink night */
+[data-theme='dark'] {
+  --np-paper: #1a141a;
+  --np-paper-raised: #241c23;
+  --np-paper-sunken: #140f14;
+  --np-ink: #ede3e0;
+  --np-ink-2: #b9a8b3;
+  --np-ink-3: #8d7f8a;
+  --np-rose: #e0708d;
+  --np-rose-deep: #eb8ba3;
+  --np-rose-tint: #3a222c;
+  --np-plum: #b18ca7;
+  --np-plum-tint: #342533;
+  --np-forest: #7fa98c;
+  --np-forest-tint: #22302a;
+  --np-line: #3b303a;
+
+  --color-on-accent-var: #1a141a;
+  --color-on-inverse-var: #1a141a;
+
+  --shadow-card-var: 0 2px 16px rgba(0, 0, 0, 0.35);
+  --shadow-pop-var: 0 12px 40px rgba(0, 0, 0, 0.5);
 }
 
 @layer base {
@@ -49,82 +131,168 @@
   html {
     @apply font-sans;
     scroll-behavior: smooth;
-    scroll-padding-top: 5rem;
+    scroll-padding-top: 6rem;
   }
   body {
     @apply bg-background text-foreground;
+    font-size: 15px;
+    line-height: 1.55;
+    overflow-x: clip;
+    transition:
+      background-color var(--dur-2) var(--ease-swift),
+      color var(--dur-2) var(--ease-swift);
   }
   h1,
   h2,
-  h3 {
-    @apply font-serif;
+  h3,
+  h4 {
+    @apply font-serif font-normal;
+    line-height: 1.02;
+    margin: 0;
+  }
+  ::selection {
+    background: var(--np-rose-tint);
+  }
+  button {
+    border-radius: 0;
   }
 }
 
-/* Subtle film grain overlay */
-.grain::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.04;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+/* ---------------------------------- */
+/* Motion — expressive but decisive.  */
+/* Never bounce, never spring.        */
+/* ---------------------------------- */
+
+@keyframes np-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes np-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes np-rule {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
 }
 
-/* Faint gold grid pattern */
-.gold-grid {
-  background-image:
-    linear-gradient(to right, rgba(201, 168, 76, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(201, 168, 76, 0.05) 1px, transparent 1px);
-  background-size: 56px 56px;
+/* Page enter (template.tsx remounts per route) */
+.np-page {
+  animation: np-rise var(--dur-3) var(--ease-expo) both;
 }
 
-/* Gold dot pattern */
-.gold-dots {
-  background-image: radial-gradient(
-    rgba(201, 168, 76, 0.18) 1px,
-    transparent 1px
-  );
-  background-size: 22px 22px;
-}
-
-/* Animated gold underline for links */
-.gold-link {
-  position: relative;
-}
-.gold-link::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -2px;
-  height: 1px;
-  width: 0;
-  background-color: var(--gold);
-  transition: width 0.3s ease;
-}
-.gold-link:hover::after {
-  width: 100%;
+/* Hero staging — staggered rises, 80ms apart */
+.np-stage {
+  opacity: 0;
+  animation: np-rise var(--dur-4) var(--ease-expo) forwards;
+  animation-delay: var(--stage-delay, 0ms);
 }
 
 /* Scroll reveal */
-.reveal {
+.np-reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition:
-    opacity 0.7s ease,
-    transform 0.7s ease;
 }
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
+.np-reveal.is-visible {
+  animation: np-rise var(--dur-3) var(--ease-expo) forwards;
+  animation-delay: var(--reveal-delay, 0ms);
 }
 
+/* Rules that draw in when visible */
+.np-rule-draw {
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.is-visible .np-rule-draw,
+.np-rule-draw.is-visible {
+  animation: np-rule var(--dur-4) var(--ease-expo) forwards;
+}
+
+/* Arrows travel 3px on hover */
+.np-arrow {
+  display: inline-block;
+  transition: transform var(--dur-1) var(--ease-swift);
+}
+a:hover > .np-arrow,
+button:hover > .np-arrow,
+.group:hover .np-arrow {
+  transform: translateX(3px);
+}
+
+/* Header scroll progress — a thin rose entry line */
+.scroll-progress {
+  transform-origin: left;
+  transform: scaleX(var(--scroll-progress, 0));
+}
+
+/* Masthead intro (first visit per session) */
+.np-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-page);
+  animation: np-intro-exit var(--dur-3) var(--ease-expo) forwards;
+  animation-delay: 1.5s;
+}
+@keyframes np-intro-exit {
+  to {
+    transform: translateY(-100%);
+    visibility: hidden;
+  }
+}
+.np-intro-line {
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: np-rule var(--dur-4) var(--ease-expo) 0.3s forwards;
+}
+
+/* Command palette */
+.palette-overlay {
+  animation: np-fade var(--dur-1) var(--ease-swift) forwards;
+}
+.palette-panel {
+  animation: np-rise var(--dur-2) var(--ease-expo) both;
+}
+
+/* Toast */
+.np-toast {
+  animation: np-rise var(--dur-2) var(--ease-expo) both;
+}
+
+/* ---------------------------------- */
+/* Reduced motion                     */
+/* ---------------------------------- */
+
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
+  .np-page,
+  .np-stage,
+  .np-reveal,
+  .np-reveal.is-visible,
+  .np-rule-draw,
+  .palette-panel,
+  .np-toast {
+    animation: none;
     opacity: 1;
     transform: none;
-    transition: none;
+  }
+  .np-intro {
+    display: none;
   }
   html {
     scroll-behavior: auto;

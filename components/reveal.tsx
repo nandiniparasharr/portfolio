@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 
+/** Scroll reveal — np-rise on first intersection, staggered via delay. */
 export function Reveal({
   children,
   className,
@@ -12,7 +13,7 @@ export function Reveal({
   children: ReactNode
   className?: string
   delay?: number
-  as?: 'div' | 'li' | 'section' | 'span'
+  as?: 'div' | 'li' | 'section' | 'span' | 'article'
 }) {
   const ref = useRef<HTMLElement | null>(null)
   const [visible, setVisible] = useState(false)
@@ -27,7 +28,7 @@ export function Reveal({
           observer.unobserve(entry.target)
         }
       },
-      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' },
+      { threshold: 0.12, rootMargin: '0px 0px -48px 0px' },
     )
     observer.observe(el)
     return () => observer.disconnect()
@@ -38,8 +39,8 @@ export function Reveal({
   return (
     <Component
       ref={ref as React.RefObject<HTMLDivElement>}
-      className={cn('reveal', visible && 'is-visible', className)}
-      style={{ transitionDelay: `${delay}ms` }}
+      className={cn('np-reveal', visible && 'is-visible', className)}
+      style={{ ['--reveal-delay' as string]: `${delay}ms` }}
     >
       {children}
     </Component>
