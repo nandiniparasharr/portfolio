@@ -29,39 +29,29 @@ export default function Page() {
   return (
     <>
       {/* Hero */}
-      <Container className="pb-20 pt-20">
-        <div className="grid items-center gap-14 lg:grid-cols-[1.25fr_1fr]">
-          <div>
-            <Stage delay={0}>
-              <SectionLabel className="mb-5">Hello, I&apos;m</SectionLabel>
-            </Stage>
-            <Stage delay={80}>
-              <h1 className="max-w-xl text-hero">
-                Nandini <em className="text-rose">Parashar</em>.
-              </h1>
-            </Stage>
-            <Stage delay={160}>
-              <p className="mt-6 max-w-md text-muted-foreground">
-                Finance professional building across markets, machines, and
-                the written word.
-              </p>
-            </Stage>
-            <Stage
-              delay={240}
-              className="mt-9 flex flex-wrap items-center gap-5"
-            >
-              <LLink href="/work" variant="primary">
-                See the work <span className="np-arrow">→</span>
-              </LLink>
-              <LLink href={site.substack} variant="ghost">
-                Read the Substack ↗
-              </LLink>
-            </Stage>
-          </div>
-          <Stage delay={320} className="justify-self-center lg:justify-self-end">
-            <AllocationDonut />
-          </Stage>
-        </div>
+      <Container className="pb-20 pt-24">
+        <Stage delay={0}>
+          <SectionLabel className="mb-5">Hello, I&apos;m</SectionLabel>
+        </Stage>
+        <Stage delay={80}>
+          <h1 className="max-w-xl text-hero">
+            Nandini <em className="text-rose">Parashar</em>.
+          </h1>
+        </Stage>
+        <Stage delay={160}>
+          <p className="mt-6 max-w-md text-muted-foreground">
+            Finance professional building across markets, machines, and the
+            written word.
+          </p>
+        </Stage>
+        <Stage delay={240} className="mt-9 flex flex-wrap items-center gap-5">
+          <LLink href="/work" variant="primary">
+            See the work <span className="np-arrow">→</span>
+          </LLink>
+          <LLink href={site.substack} variant="ghost">
+            Read the Substack ↗
+          </LLink>
+        </Stage>
       </Container>
 
       {/* Skillset */}
@@ -72,9 +62,17 @@ export default function Page() {
               Skillset
             </SectionLabel>
           </Reveal>
-          <Reveal delay={80}>
-            <SkillsetTabs />
-          </Reveal>
+          <div className="grid items-start gap-x-16 gap-y-12 lg:grid-cols-[minmax(0,1.5fr)_auto]">
+            <Reveal delay={80}>
+              <SkillsetTabs />
+            </Reveal>
+            <Reveal
+              delay={160}
+              className="justify-self-center lg:mt-14 lg:justify-self-end"
+            >
+              <AllocationDonut />
+            </Reveal>
+          </div>
         </Container>
       </div>
 
