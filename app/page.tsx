@@ -3,6 +3,7 @@ import { Container, LLink, SectionLabel } from '@/components/ledger'
 import { ProjectCard } from '@/components/project-card'
 import { Reveal } from '@/components/reveal'
 import { AllocationDonut } from '@/components/allocation-donut'
+import { LongShort } from '@/components/long-short'
 import { SkillsetTabs } from '@/components/skillset-tabs'
 import { experience, projects, site } from '@/lib/content'
 
@@ -30,28 +31,41 @@ export default function Page() {
     <>
       {/* Hero */}
       <Container className="pb-20 pt-24">
-        <Stage delay={0}>
-          <SectionLabel className="mb-5">Hello, I&apos;m</SectionLabel>
-        </Stage>
-        <Stage delay={80}>
-          <h1 className="max-w-xl text-hero">
-            Nandini <em className="text-rose">Parashar</em>.
-          </h1>
-        </Stage>
-        <Stage delay={160}>
-          <p className="mt-6 max-w-md text-muted-foreground">
-            Finance professional building across markets, machines, and the
-            written word.
-          </p>
-        </Stage>
-        <Stage delay={240} className="mt-9 flex flex-wrap items-center gap-5">
-          <LLink href="/work" variant="primary">
-            See the work <span className="np-arrow">→</span>
-          </LLink>
-          <LLink href={site.substack} variant="ghost">
-            Read the Substack ↗
-          </LLink>
-        </Stage>
+        <div className="grid items-center gap-x-10 gap-y-16 lg:grid-cols-[1.3fr_auto]">
+          <div>
+            <Stage delay={0}>
+              <SectionLabel className="mb-5">Hello, I&apos;m</SectionLabel>
+            </Stage>
+            <Stage delay={80}>
+              <h1 className="max-w-xl text-hero">
+                Nandini <em className="text-rose">Parashar</em>.
+              </h1>
+            </Stage>
+            <Stage delay={160}>
+              <p className="mt-6 max-w-md text-muted-foreground">
+                Finance professional building across markets, machines, and
+                the written word.
+              </p>
+            </Stage>
+            <Stage
+              delay={240}
+              className="mt-9 flex flex-wrap items-center gap-5"
+            >
+              <LLink href="/work" variant="primary">
+                See the work <span className="np-arrow">→</span>
+              </LLink>
+              <LLink href={site.substack} variant="ghost">
+                Read the Substack ↗
+              </LLink>
+            </Stage>
+          </div>
+          <Stage
+            delay={320}
+            className="justify-self-center pt-4 lg:justify-self-end lg:pr-6"
+          >
+            <LongShort />
+          </Stage>
+        </div>
       </Container>
 
       {/* Skillset */}
