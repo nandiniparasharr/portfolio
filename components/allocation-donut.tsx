@@ -101,12 +101,11 @@ export function AllocationDonut({ className }: { className?: string }) {
               </span>
             </>
           ) : (
-            <>
-              <span className="font-serif text-3xl text-foreground">100%</span>
-              <span className="mt-1 font-serif text-lg italic text-rose">
-                curious
-              </span>
-            </>
+            <span className="font-serif text-xl italic leading-snug text-rose">
+              inside
+              <br />
+              my brain
+            </span>
           )}
         </div>
       </div>

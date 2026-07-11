@@ -33,11 +33,11 @@ export default function Page() {
         <div className="grid items-center gap-14 lg:grid-cols-[1.25fr_1fr]">
           <div>
             <Stage delay={0}>
-              <SectionLabel className="mb-5">Portfolio — 2026</SectionLabel>
+              <SectionLabel className="mb-5">Hello, I&apos;m</SectionLabel>
             </Stage>
             <Stage delay={80}>
               <h1 className="max-w-xl text-hero">
-                Curiosity, <em className="text-rose">compounding</em> daily.
+                Nandini <em className="text-rose">Parashar</em>.
               </h1>
             </Stage>
             <Stage delay={160}>

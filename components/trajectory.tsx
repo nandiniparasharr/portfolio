@@ -1,36 +1,8 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { experience, type Role } from '@/lib/content'
+import { useEffect, useRef } from 'react'
+import { experience } from '@/lib/content'
 import { Reveal } from '@/components/reveal'
-
-/** Monogram tile that upgrades itself to a real logo when the file exists. */
-function LogoTile({ role }: { role: Role }) {
-  const [hasLogo, setHasLogo] = useState(false)
-
-  useEffect(() => {
-    const probe = new Image()
-    probe.onload = () => setHasLogo(true)
-    probe.src = role.logo
-  }, [role.logo])
-
-  return (
-    <span className="flex h-12 w-12 flex-none items-center justify-center overflow-hidden border border-border-strong bg-card">
-      {hasLogo ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={role.logo}
-          alt={`${role.company} logo`}
-          className="h-full w-full object-contain p-1.5"
-        />
-      ) : (
-        <span aria-hidden="true" className="font-serif text-lg text-rose">
-          {role.initials}
-        </span>
-      )}
-    </span>
-  )
-}
 
 /** The rose line fills as you scroll through the roles. */
 export function Trajectory() {
@@ -68,16 +40,11 @@ export function Trajectory() {
             className="relative pb-12 pl-10 last:pb-2 sm:pl-14"
           >
             <span className="np-node" aria-hidden="true" />
-            <div className="flex flex-wrap items-center gap-4">
-              <LogoTile role={role} />
-              <div>
-                <p className="m-0 font-mono text-[11px] uppercase tracking-[0.08em] text-faint">
-                  {role.date}
-                </p>
-                <h3 className="mt-0.5 text-h3">{role.company}</h3>
-                <p className="m-0 text-sm text-muted-foreground">{role.role}</p>
-              </div>
-            </div>
+            <p className="m-0 font-mono text-[11px] uppercase tracking-[0.08em] text-faint">
+              {role.date}
+            </p>
+            <h3 className="mt-0.5 text-h3">{role.company}</h3>
+            <p className="m-0 text-sm text-muted-foreground">{role.role}</p>
             <ul className="m-0 mt-4 flex max-w-2xl list-none flex-col gap-2 p-0">
               {role.points.map((point) => (
                 <li
