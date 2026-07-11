@@ -74,6 +74,7 @@ export default async function CaseStudyPage({
               src={project.image}
               alt={`${project.title} screenshot`}
               ratio="16/9"
+              fit="contain"
               label="HERO IMAGE — SCREENSHOT OR CHART OF THE REAL THING"
             />
           </Reveal>

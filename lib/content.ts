@@ -56,19 +56,20 @@ export const projects: Project[] = [
   {
     slug: 'avenue-supermarts',
     num: '02',
-    title: 'Avenue Supermarts, valued',
+    title: 'Avenue Supermarts, profiled',
     badges: [{ tone: 'forest', label: 'Finance' }],
-    stack: 'DCF · relative valuation',
+    stack: 'Company profile · equity research',
     blurb:
-      'A full DCF and relative valuation of DMart’s parent, projected through FY29.',
+      'A one-page company profile of DMart — five years of financials, ratios, and price history.',
     brief:
-      'Avenue Supermarts trades at multiples that make analysts argue. The exercise: build the model from first principles — project the financials through FY29 and let reinvestment rates and capital efficiency, not sentiment, set the intrinsic value.',
+      'Avenue Supermarts runs DMart on a simple premise: everyday low cost, everyday low price. The exercise: compress the company into one honest page — what it does, how the strategy shows up in the numbers, and what the market pays for it.',
     shipped:
-      'A detailed valuation model covering five fiscal years and 10+ key metrics — reinvestment rates, capital efficiency, intrinsic value per share — with DCF and relative approaches reconciled side by side.',
-    role: 'Equity research & modelling',
+      'A company profile covering five years of key metrics — revenue growth, margins, EPS — alongside the ratios that matter (P/E, EV/EBITDA, ROE, ROCE) and the five-year share-price and volume picture.',
+    role: 'Equity research',
     status: 'Shipped',
     href: 'https://drive.google.com/file/d/1csVyFxaZZWlwcMgR4yM1XdoT6RySykMq/view?usp=sharing',
-    hrefLabel: 'View the model ↗',
+    hrefLabel: 'View the profile ↗',
+    image: '/projects/avenue-supermarts.png',
   },
   {
     slug: 'skippi-ice-pops',

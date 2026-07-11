@@ -9,11 +9,13 @@ export function ProjectImage({
   alt,
   ratio = '16/9',
   label,
+  fit = 'cover',
 }: {
   src?: string
   alt: string
   ratio?: string
   label?: string
+  fit?: 'cover' | 'contain'
 }) {
   const [loaded, setLoaded] = useState(false)
 
@@ -31,7 +33,15 @@ export function ProjectImage({
         style={{ aspectRatio: ratio }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt={alt} className="h-full w-full object-cover object-top" />
+        <img
+          src={src}
+          alt={alt}
+          className={
+            fit === 'contain'
+              ? 'h-full w-full object-contain'
+              : 'h-full w-full object-cover object-top'
+          }
+        />
       </span>
     )
   }
