@@ -7,8 +7,7 @@ import {
 } from '@/components/ledger'
 import { ProjectCard } from '@/components/project-card'
 import { Reveal } from '@/components/reveal'
-import { CountUp } from '@/components/count-up'
-import { experience, projects, site, stats } from '@/lib/content'
+import { experience, projects, site, skills } from '@/lib/content'
 
 function Stage({
   children,
@@ -62,24 +61,32 @@ export default function Page() {
         </Stage>
       </Container>
 
-      {/* The ledger, at a glance */}
+      {/* Toolkit */}
       <div className="border-t border-border">
         <Container className="py-14">
           <Reveal>
             <SectionLabel index="02" tone="muted" className="mb-8">
-              The ledger, at a glance
+              Toolkit
             </SectionLabel>
           </Reveal>
-          <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4">
-            {stats.map((s, i) => (
-              <Reveal key={s.label} delay={i * 80}>
-                <div className="font-serif text-[54px] leading-none text-foreground">
-                  <CountUp end={s.value} suffix={s.suffix} />
+          <div className="grid gap-x-12 gap-y-10 md:grid-cols-3">
+            {skills.map((group, i) => (
+              <Reveal key={group.title} delay={i * 80}>
+                <div className="flex items-baseline justify-between gap-4">
+                  <h3 className="text-h3">{group.title}</h3>
+                  <SectionLabel tone={group.tone}>0{i + 1}</SectionLabel>
                 </div>
-                <div className="mt-2 h-px w-10 bg-rose" aria-hidden="true" />
-                <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.1em] text-muted-foreground">
-                  {s.label}
-                </p>
+                <div className="np-rule-draw mt-3 h-0.5 bg-border-strong" />
+                <ul className="m-0 list-none p-0">
+                  {group.items.map((skill) => (
+                    <li
+                      key={skill}
+                      className="border-b border-border py-2.5 text-sm text-muted-foreground last:border-b-0"
+                    >
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
               </Reveal>
             ))}
           </div>
@@ -118,7 +125,7 @@ export default function Page() {
             </Reveal>
             <Reveal delay={80}>
               <LLink href="/about" variant="ghost">
-                The full ledger <span className="np-arrow">→</span>
+                The full story <span className="np-arrow">→</span>
               </LLink>
             </Reveal>
           </div>

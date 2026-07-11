@@ -94,7 +94,7 @@ export default async function CaseStudyPage({
         <aside className="lg:sticky lg:top-28">
           <div className="border border-border bg-card p-6 shadow-card">
             <SectionLabel tone="muted" className="mb-3">
-              Ledger
+              The record
             </SectionLabel>
             <LedgerRow label="Role" value={project.role} />
             <LedgerRow label="Stack" value={project.stack} />

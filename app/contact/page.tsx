@@ -43,11 +43,6 @@ export default function ContactPage() {
               label="Substack"
               value={`${site.substackName} ↗`}
               href={site.substack}
-            />
-            <LedgerRow
-              label="Phone"
-              value={site.phone}
-              href={site.phoneHref}
               last
             />
           </div>

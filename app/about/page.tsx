@@ -12,14 +12,14 @@ import {
   currently,
   education,
   experience,
-  ledgers,
+  pursuits,
   site,
 } from '@/lib/content'
 
 export const metadata: Metadata = {
   title: 'About — Nandini Parashar',
   description:
-    'Finance by profession — markets, machines, margins, and making. The full ledger.',
+    'Finance by profession — markets, machines, margins, and making. The full story.',
 }
 
 export default function AboutPage() {
@@ -58,17 +58,17 @@ export default function AboutPage() {
           </h1>
           <p className="mt-6 max-w-lg text-lead text-muted-foreground">
             I work in finance and love it — and I refuse to stop there. This
-            site is the ledger of everything else: code, writing, design, and
+            site is the archive of everything else: code, writing, design, and
             the reading that feeds all of it.
           </p>
 
           <div className="mt-12">
-            {ledgers.map((l, i) => (
+            {pursuits.map((l, i) => (
               <Reveal
                 key={l.num}
                 delay={i * 80}
                 className={`flex items-baseline gap-6 py-5 ${
-                  i < ledgers.length - 1 ? 'border-b border-border' : ''
+                  i < pursuits.length - 1 ? 'border-b border-border' : ''
                 }`}
               >
                 <span className="w-14 flex-none font-serif text-[34px] italic text-rose">

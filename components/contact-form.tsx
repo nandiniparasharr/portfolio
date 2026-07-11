@@ -12,21 +12,47 @@ const fieldLabel =
 const fieldInput =
   'w-full border border-border bg-background px-3.5 py-2.5 text-[15px] text-foreground outline-none transition-colors duration-150 placeholder:text-faint focus:border-rose'
 
-/** No backend by design — submit composes the email in the visitor's own mail app. */
+type Status = 'idle' | 'sending' | 'sent' | 'error'
+
+/** Delivers via FormSubmit's AJAX relay — no backend, straight to the inbox. */
 export function ContactForm() {
   const [kind, setKind] = useState<(typeof KINDS)[number]>('An opportunity')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
-  const [toast, setToast] = useState(false)
+  const [status, setStatus] = useState<Status>('idle')
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const subject = `${kind} — from ${name || 'your website'}`
-    const body = `${message}\n\n— ${name}${email ? ` (${email})` : ''}`
-    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-    setToast(true)
-    setTimeout(() => setToast(false), 4000)
+    if (status === 'sending') return
+    setStatus('sending')
+    try {
+      const res = await fetch(
+        `https://formsubmit.co/ajax/${site.email}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            message,
+            _subject: `${kind} — from ${name || 'the website'}`,
+            _template: 'box',
+          }),
+        },
+      )
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      setStatus('sent')
+      setName('')
+      setEmail('')
+      setMessage('')
+    } catch {
+      setStatus('error')
+    }
+    setTimeout(() => setStatus('idle'), 5000)
   }
 
   return (
@@ -78,6 +104,7 @@ export function ContactForm() {
             <span className={fieldLabel}>Email</span>
             <input
               type="email"
+              required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="jane@example.com"
@@ -98,20 +125,31 @@ export function ContactForm() {
         </label>
         <div className="flex items-center justify-between gap-4">
           <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-faint">
-            Opens in your mail app
+            Straight to my inbox
           </span>
-          <LButton type="submit" variant="primary">
-            Send it <span className="np-arrow">→</span>
+          <LButton type="submit" variant="primary" disabled={status === 'sending'}>
+            {status === 'sending' ? (
+              'Sending —'
+            ) : (
+              <>
+                Send it <span className="np-arrow">→</span>
+              </>
+            )}
           </LButton>
         </div>
       </form>
 
-      {toast && (
+      {(status === 'sent' || status === 'error') && (
         <div
           role="status"
-          className="np-toast fixed bottom-6 left-1/2 z-[105] -translate-x-1/2 bg-forest px-5 py-3 font-mono text-[11px] uppercase tracking-[0.1em] text-on-accent shadow-pop"
+          className={cn(
+            'np-toast fixed bottom-6 left-1/2 z-[105] -translate-x-1/2 px-5 py-3 font-mono text-[11px] uppercase tracking-[0.1em] text-on-accent shadow-pop',
+            status === 'sent' ? 'bg-forest' : 'bg-rose-deep',
+          )}
         >
-          Drafted in your mail app — send when ready.
+          {status === 'sent'
+            ? 'Sent — talk soon.'
+            : `Couldn't send — email me at ${site.email}`}
         </div>
       )}
     </>

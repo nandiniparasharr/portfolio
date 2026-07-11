@@ -8,12 +8,12 @@ export default function NotFound() {
         No such <em className="text-rose">entry</em>.
       </h1>
       <p className="mx-auto mt-5 max-w-sm text-muted-foreground">
-        This page isn&apos;t in the ledger. The index will get you back on
-        balance.
+        This page isn&apos;t in the archive. Head back and start a fresh
+        entry.
       </p>
       <div className="mt-9 flex justify-center">
         <LLink href="/" variant="secondary">
-          Back to the ledger <span className="np-arrow">→</span>
+          Back to the start <span className="np-arrow">→</span>
         </LLink>
       </div>
     </Container>

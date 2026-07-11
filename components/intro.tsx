@@ -30,7 +30,7 @@ export function Intro() {
           className="np-stage mt-3 font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground"
           style={{ ['--stage-delay' as string]: '500ms' }}
         >
-          The ledger — 2026
+          Portfolio — 2026
         </p>
       </div>
     </div>

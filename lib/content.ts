@@ -4,8 +4,6 @@ export const site = {
   name: 'Nandini Parashar',
   shortMark: 'N—P',
   email: 'nandiniparashar207@gmail.com',
-  phone: '+91 81780 85401',
-  phoneHref: 'tel:+918178085401',
   linkedin: 'https://www.linkedin.com/in/nandiniparashar/',
   substack: 'https://substack.com/@archivesbynan',
   substackName: 'Archives by Nan',
@@ -85,9 +83,9 @@ export const projects: Project[] = [
     hrefLabel: 'View the sheet ↗',
   },
   {
-    slug: 'the-ledger',
+    slug: 'the-rebrand',
     num: '04',
-    title: 'The Ledger — this site',
+    title: 'The rebrand — this site',
     badges: [{ tone: 'ink', label: 'Design' }],
     stack: 'Design system · Next.js',
     blurb:
@@ -150,18 +148,48 @@ export const experience: Role[] = [
   },
 ]
 
-export const stats = [
-  { value: 25, suffix: '+', label: 'NCLT cases screened' },
-  { value: 20, suffix: '+', label: 'Pitch decks built' },
-  { value: 15, suffix: '%', label: 'Overhead cost reduced' },
-  { value: 4, suffix: '', label: 'Ledgers open' },
+export const skills: {
+  title: string
+  tone: 'forest' | 'plum' | 'rose'
+  items: string[]
+}[] = [
+  {
+    title: 'Markets',
+    tone: 'forest',
+    items: [
+      'Financial modelling & DCF',
+      'Equity research',
+      'Due diligence & deal screening',
+      'Unit economics',
+    ],
+  },
+  {
+    title: 'Machines',
+    tone: 'plum',
+    items: [
+      'Python for finance',
+      'GenAI-assisted workflows',
+      'Excel automation',
+      'Bloomberg Terminal',
+    ],
+  },
+  {
+    title: 'Craft',
+    tone: 'rose',
+    items: [
+      'Pitch decks & investment memos',
+      'Financial reporting',
+      'Writing & editing',
+      'Design — in progress',
+    ],
+  },
 ]
 
-export const ledgers = [
+export const pursuits = [
   {
     num: '01',
     title: 'Markets',
-    note: 'Finance by profession; CFA Level 2 in progress.',
+    note: 'Finance by profession; CFA Level I passed.',
   },
   {
     num: '02',
@@ -176,12 +204,12 @@ export const ledgers = [
   {
     num: '04',
     title: 'Making',
-    note: 'Design — the newest ledger, opened this year.',
+    note: 'Design — the newest chapter, opened this year.',
   },
 ]
 
 export const currently = [
-  { label: 'Studying', value: 'CFA Level 2 · GRE' },
+  { label: 'Learning', value: 'Design, and the code that ships it' },
   { label: 'Based in', value: 'Delhi-NCR, India' },
   { label: 'Reading', value: 'Ask me — it changes weekly' },
 ]
@@ -191,7 +219,7 @@ export const education = [
     title: 'CFA Program',
     institution: 'CFA Institute',
     date: 'Level I · Mar 2026',
-    note: 'Level II candidate. Practical Skill Module — Financial Modelling.',
+    note: 'Passed Level I (March 2026). Practical Skill Module — Financial Modelling.',
   },
   {
     title: 'BSc Finance',
