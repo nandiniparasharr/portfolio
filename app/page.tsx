@@ -66,10 +66,7 @@ export default function Page() {
             <Reveal delay={80}>
               <SkillsetTabs />
             </Reveal>
-            <Reveal
-              delay={160}
-              className="justify-self-center lg:mt-14"
-            >
+            <Reveal delay={160} className="justify-self-center">
               <AllocationDonut />
             </Reveal>
           </div>
