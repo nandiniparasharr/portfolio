@@ -86,6 +86,7 @@ export const projects: Project[] = [
     status: 'Shipped',
     href: 'https://docs.google.com/spreadsheets/d/1QwZtbIA13qkOlhkFZbImC76xpiuAyIsD/edit?usp=sharing&ouid=108525365897885632984&rtpof=true&sd=true',
     hrefLabel: 'View the sheet ↗',
+    image: '/projects/skippi-ice-pops.png',
   },
   {
     slug: 'the-rebrand',
