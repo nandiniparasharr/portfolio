@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { Badge, ImagePlaceholder } from '@/components/ledger'
+import { Badge } from '@/components/ledger'
+import { ProjectImage } from '@/components/project-image'
 import type { Project } from '@/lib/content'
 
 export function ProjectCard({
@@ -18,7 +19,11 @@ export function ProjectCard({
         Entry {project.num}
       </div>
       <div className="font-serif text-h3 text-foreground">{project.title}</div>
-      <ImagePlaceholder ratio="16/10" />
+      <ProjectImage
+        src={project.image}
+        alt={`${project.title} screenshot`}
+        ratio="16/10"
+      />
       {showBlurb && (
         <p className="m-0 text-sm text-muted-foreground">{project.blurb}</p>
       )}

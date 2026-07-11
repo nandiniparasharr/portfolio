@@ -27,26 +27,31 @@ export type Project = {
   status: string
   href?: string
   hrefLabel?: string
+  /** Screenshot under /public/projects; falls back to the placeholder block. */
+  image?: string
 }
 
 export const projects: Project[] = [
   {
-    slug: 'portfolio-pulse',
+    slug: 'portfolio-prism',
     num: '01',
-    title: 'Portfolio Pulse',
+    title: 'Portfolio Prism',
     badges: [
       { tone: 'forest', label: 'Finance' },
       { tone: 'plum', label: 'AI & Code' },
     ],
     stack: 'Robo-advisor model · risk analytics',
     blurb:
-      'An AI-driven portfolio analysis tool that reads a set of holdings the way an advisor would.',
+      'An AI-driven portfolio analysis app that reads a set of holdings the way an advisor would.',
     brief:
       'Most retail portfolios never get a second pair of eyes. The idea: a robo-advisor model that takes a user’s holdings and returns an honest read — risk, asset allocation, correlation exposure, and diversification — without the wealth-management minimum.',
     shipped:
-      'A working analysis engine that evaluates holdings across risk, allocation, correlation, and diversification metrics, then distils the diagnosis into three actionable insights per portfolio.',
+      'A live web app that evaluates holdings across risk, allocation, correlation, and diversification metrics, then distils the diagnosis into three actionable insights per portfolio.',
     role: 'Research & build',
-    status: 'Shipped',
+    status: 'Live',
+    href: 'https://portfolio-prism.vercel.app',
+    hrefLabel: 'Open the app ↗',
+    image: '/projects/portfolio-prism.png',
   },
   {
     slug: 'avenue-supermarts',

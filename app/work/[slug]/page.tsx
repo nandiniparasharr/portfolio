@@ -4,12 +4,12 @@ import { notFound } from 'next/navigation'
 import {
   Badge,
   Container,
-  ImagePlaceholder,
   IndexNumeral,
   LLink,
   LedgerRow,
   SectionLabel,
 } from '@/components/ledger'
+import { ProjectImage } from '@/components/project-image'
 import { Reveal } from '@/components/reveal'
 import { projects } from '@/lib/content'
 
@@ -69,11 +69,12 @@ export default async function CaseStudyPage({
             </div>
           </div>
 
-          <Reveal>
-            <ImagePlaceholder
+          <Reveal className="mt-10">
+            <ProjectImage
+              src={project.image}
+              alt={`${project.title} screenshot`}
               ratio="16/9"
               label="HERO IMAGE — SCREENSHOT OR CHART OF THE REAL THING"
-              className="mt-10"
             />
           </Reveal>
 
