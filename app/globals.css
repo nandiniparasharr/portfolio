@@ -30,6 +30,8 @@
   --color-plum-tint: var(--np-plum-tint);
   --color-forest: var(--np-forest);
   --color-forest-tint: var(--np-forest-tint);
+  --color-ember: var(--np-ember);
+  --color-ember-tint: var(--np-ember-tint);
   --color-on-accent: var(--color-on-accent-var);
   --color-primary: var(--np-rose);
   --color-primary-foreground: var(--color-on-accent-var);
@@ -83,6 +85,8 @@
   --np-plum-tint: #e7dce5;
   --np-forest: #1f3a2d;
   --np-forest-tint: #dee5dc;
+  --np-ember: #a63d2f;
+  --np-ember-tint: #f2ddd3;
   --np-line: #ddd2c4;
 
   --color-page: var(--np-paper);
@@ -115,6 +119,8 @@
   --np-plum-tint: #342533;
   --np-forest: #7fa98c;
   --np-forest-tint: #22302a;
+  --np-ember: #d4756a;
+  --np-ember-tint: #3a2521;
   --np-line: #3b303a;
 
   --color-on-accent-var: #1a141a;

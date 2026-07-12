@@ -51,7 +51,7 @@ const CHIP_STYLES: Record<string, string> = {
   Research: 'bg-forest-tint text-forest',
   Code: 'bg-plum-tint text-plum',
   Writing: 'bg-rose-tint text-rose',
-  Ideas: 'border border-border-strong text-foreground',
+  Ideas: 'bg-ember-tint text-ember',
   Reading: 'bg-sunken text-muted-foreground',
 }
 
