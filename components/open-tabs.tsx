@@ -47,6 +47,14 @@ const CATEGORIES = [
   },
 ] as const
 
+const CHIP_STYLES: Record<string, string> = {
+  Research: 'bg-forest-tint text-forest',
+  Code: 'bg-plum-tint text-plum',
+  Writing: 'bg-rose-tint text-rose',
+  Ideas: 'bg-inverse text-on-inverse',
+  Reading: 'bg-sunken text-muted-foreground',
+}
+
 /** What's open in my head, filed under browser tabs. × closes; I reopen. */
 export function OpenTabs({ className }: { className?: string }) {
   const [active, setActive] = useState<string>('All')
@@ -54,7 +62,9 @@ export function OpenTabs({ className }: { className?: string }) {
 
   const groups =
     active === 'All' ? CATEGORIES : CATEGORIES.filter((c) => c.id === active)
-  const shown = groups.flatMap((g) => g.tabs.filter((t) => !closed.has(t)))
+  const shown = groups.flatMap((g) =>
+    g.tabs.filter((t) => !closed.has(t)).map((t) => ({ tab: t, cat: g.id })),
+  )
 
   return (
     <div className={className}>
@@ -92,24 +102,32 @@ export function OpenTabs({ className }: { className?: string }) {
             All caught up — for once.
           </p>
         ) : (
-          shown.map((tab) => (
+          shown.map(({ tab, cat }) => (
             <div
               key={tab}
               className="group flex items-baseline justify-between gap-4 border-b border-border py-2.5"
             >
-              <span className="font-mono text-xs text-foreground transition-colors duration-150 group-hover:text-rose">
+              <span className="min-w-0 truncate font-mono text-xs text-foreground transition-colors duration-150 group-hover:text-rose">
                 {tab}
               </span>
-              <button
-                type="button"
-                aria-label={`Close ${tab}`}
-                onClick={() =>
-                  setClosed((prev) => new Set(prev).add(tab))
-                }
-                className="font-mono text-xs text-faint transition-colors duration-150 hover:text-rose"
-              >
-                ×
-              </button>
+              <span className="flex flex-none items-baseline gap-3">
+                <span
+                  className={cn(
+                    'px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.1em]',
+                    CHIP_STYLES[cat],
+                  )}
+                >
+                  {cat}
+                </span>
+                <button
+                  type="button"
+                  aria-label={`Close ${tab}`}
+                  onClick={() => setClosed((prev) => new Set(prev).add(tab))}
+                  className="font-mono text-xs text-faint transition-colors duration-150 hover:text-rose"
+                >
+                  ×
+                </button>
+              </span>
             </div>
           ))
         )}
