@@ -8,11 +8,11 @@ import {
 } from '@/components/ledger'
 import { Reveal } from '@/components/reveal'
 import { Trajectory } from '@/components/trajectory'
+import { OpenTabs } from '@/components/open-tabs'
 import {
   certifications,
   currently,
   education,
-  pursuits,
   site,
 } from '@/lib/content'
 
@@ -62,29 +62,9 @@ export default function AboutPage() {
             the reading that feeds all of it.
           </p>
 
-          <div className="mt-12">
-            {pursuits.map((l, i) => (
-              <Reveal
-                key={l.num}
-                delay={i * 80}
-                className={`flex items-baseline gap-6 py-5 ${
-                  i < pursuits.length - 1 ? 'border-b border-border' : ''
-                }`}
-              >
-                <span className="w-14 flex-none font-serif text-[34px] italic text-rose">
-                  {l.num}
-                </span>
-                <div>
-                  <div className="font-serif text-h3 text-foreground">
-                    {l.title}
-                  </div>
-                  <div className="mt-1 text-sm text-muted-foreground">
-                    {l.note}
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          <Reveal delay={160}>
+            <OpenTabs className="mt-12" />
+          </Reveal>
         </div>
       </div>
 
