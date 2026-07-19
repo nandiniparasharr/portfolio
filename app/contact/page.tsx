@@ -19,7 +19,7 @@ export default function ContactPage() {
           <h1 className="text-display">
             Say the <em className="text-rose">word</em>.
           </h1>
-          <p className="mt-5 max-w-sm text-muted-foreground">
+          <p className="mt-5 max-w-sm text-lead text-muted-foreground">
             Roles, collaborations, or a good book recommendation — I read
             everything.
           </p>

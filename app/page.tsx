@@ -42,7 +42,7 @@ export default function Page() {
               </h1>
             </Stage>
             <Stage delay={160}>
-              <p className="mt-6 max-w-md text-muted-foreground">
+              <p className="mt-6 max-w-md text-lead text-muted-foreground">
                 Finance professional building across markets, machines, and
                 the written word.
               </p>
@@ -160,7 +160,7 @@ export default function Page() {
               <h2 className="max-w-lg text-display">
                 Say the <em className="text-rose">word</em>.
               </h2>
-              <p className="mt-4 max-w-md text-muted-foreground">
+              <p className="mt-4 max-w-md text-lead text-muted-foreground">
                 Roles, collaborations, or a good book recommendation — I read
                 everything.
               </p>
