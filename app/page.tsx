@@ -147,27 +147,27 @@ export default function Page() {
         </Container>
       </div>
 
-      {/* Writing teaser */}
+      {/* Closing CTA */}
       <div className="border-t border-border">
         <Container className="py-16">
           <Reveal>
             <SectionLabel index="05" className="mb-6">
-              Writing
+              Contact
             </SectionLabel>
           </Reveal>
           <div className="flex flex-wrap items-end justify-between gap-8">
             <Reveal delay={80}>
               <h2 className="max-w-lg text-display">
-                Notes from the <em className="text-rose">margins</em>.
+                Say the <em className="text-rose">word</em>.
               </h2>
               <p className="mt-4 max-w-md text-muted-foreground">
-                Essays on markets, learning curves, and compounding — in money
-                and in life. They live on Substack.
+                Roles, collaborations, or a good book recommendation — I read
+                everything.
               </p>
             </Reveal>
             <Reveal delay={160}>
-              <LLink href={site.substack} variant="secondary">
-                Subscribe on Substack ↗
+              <LLink href="/contact" variant="primary">
+                Work with me <span className="np-arrow">→</span>
               </LLink>
             </Reveal>
           </div>

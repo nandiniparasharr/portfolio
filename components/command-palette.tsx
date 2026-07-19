@@ -30,7 +30,6 @@ export function CommandPalette({
     () => [
       { group: 'Pages', label: 'Home', hint: '→', run: () => router.push('/') },
       { group: 'Pages', label: 'Work', hint: '→', run: () => router.push('/work') },
-      { group: 'Pages', label: 'Writing', hint: '→', run: () => router.push('/writing') },
       { group: 'Pages', label: 'About', hint: '→', run: () => router.push('/about') },
       { group: 'Pages', label: 'Contact', hint: '→', run: () => router.push('/contact') },
       { group: 'Actions', label: 'Toggle theme', hint: '● ○', run: () => toggleTheme() },

@@ -265,6 +265,5 @@ export const certifications = [
 
 export const navLinks = [
   { href: '/work', label: 'Work' },
-  { href: '/writing', label: 'Writing' },
   { href: '/about', label: 'About' },
 ]
