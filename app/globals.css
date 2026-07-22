@@ -310,112 +310,108 @@ button:hover > .np-arrow,
 }
 
 /* ---------------------------------- */
-/* Mac desktop — the Open Tabs toy.   */
-/* Apple-flavored, inked in brand.    */
+/* The MacBook — scroll-driven About  */
+/* centerpiece. macOS lives here.     */
 /* ---------------------------------- */
 
-.mac-wallpaper {
-  background:
-    radial-gradient(120% 90% at 15% 10%, #e8a0b4 0%, transparent 55%),
-    radial-gradient(110% 80% at 85% 15%, #f0c987 0%, transparent 50%),
-    radial-gradient(130% 100% at 80% 90%, #5d3754 0%, transparent 60%),
-    radial-gradient(120% 90% at 20% 95%, #1f3a2d 0%, transparent 55%),
-    linear-gradient(160deg, #c9738f 0%, #b8496a 40%, #5d3754 100%);
+.mac-font {
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
 }
-[data-theme='dark'] .mac-wallpaper {
-  background:
-    radial-gradient(120% 90% at 15% 10%, #7a3a52 0%, transparent 55%),
-    radial-gradient(110% 80% at 85% 15%, #a56a4a 0%, transparent 50%),
-    radial-gradient(130% 100% at 80% 90%, #2c1c33 0%, transparent 60%),
-    radial-gradient(120% 90% at 20% 95%, #16241d 0%, transparent 55%),
-    linear-gradient(160deg, #8f3f5c 0%, #5d2c44 45%, #241428 100%);
+
+/* Sonoma-style sunset wallpaper */
+.mac-sunset {
+  background: linear-gradient(
+    180deg,
+    #241a3f 0%,
+    #4a2454 22%,
+    #8f2f56 42%,
+    #d24d4f 58%,
+    #ef8a4d 70%,
+    #f7b56a 78%,
+    #d9744c 84%,
+    #3a1e3c 100%
+  );
 }
 
 .mac-glass {
-  background: rgba(250, 246, 236, 0.72);
-  backdrop-filter: blur(14px) saturate(1.3);
-  -webkit-backdrop-filter: blur(14px) saturate(1.3);
-  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.45);
   box-shadow: 0 10px 30px rgba(20, 10, 20, 0.25);
 }
-[data-theme='dark'] .mac-glass {
-  background: rgba(36, 28, 35, 0.66);
-  border-color: rgba(255, 255, 255, 0.16);
+.mac-glass-dark {
+  background: rgba(30, 22, 34, 0.5);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-/* Bubble idles, then jiggles on hover */
-@keyframes bubble-bob {
+/* macOS window chrome */
+.mac-window {
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(248, 246, 244, 0.97);
+  box-shadow:
+    0 0 0 0.5px rgba(0, 0, 0, 0.25),
+    0 18px 50px rgba(10, 5, 15, 0.45);
+  transition:
+    transform 0.45s cubic-bezier(0.34, 1.3, 0.64, 1),
+    opacity 0.3s ease,
+    filter 0.3s ease;
+}
+.mac-window[data-active='false'] {
+  filter: brightness(0.94);
+  cursor: pointer;
+}
+.mac-window[data-active='false']:hover {
+  transform: translateY(-4px);
+}
+
+/* Notifications slide in from the right */
+.mac-noti {
+  opacity: 0;
+  transform: translateX(120%);
+  transition:
+    transform 0.6s cubic-bezier(0.34, 1.3, 0.64, 1),
+    opacity 0.4s ease;
+}
+.mac-noti.is-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Lock pulses gently */
+@keyframes lock-pulse {
   0%,
   100% {
-    transform: translateY(0);
+    opacity: 0.85;
   }
   50% {
-    transform: translateY(-5px);
+    opacity: 0.5;
   }
 }
-.mac-bubble {
-  animation: bubble-bob 3.2s ease-in-out infinite;
-  transition: transform 0.2s var(--ease-swift);
-}
-.mac-bubble:hover {
-  animation-play-state: paused;
-  transform: scale(1.07) rotate(-2deg);
+.mac-lock {
+  animation: lock-pulse 2.4s ease-in-out infinite;
 }
 
-/* Cards spring out of the bubble */
-@keyframes fan-out {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, 30px) rotate(0deg) scale(0.5);
-  }
-  70% {
-    opacity: 1;
-    transform: translate(calc(-50% + var(--fan-x)), calc(var(--fan-y) - 8px))
-      rotate(calc(var(--fan-rot) * 1.06)) scale(1.02);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(calc(-50% + var(--fan-x)), var(--fan-y))
-      rotate(var(--fan-rot)) scale(1);
-  }
+/* Dock icons magnify */
+.mac-dock-icon {
+  transition: transform 0.18s cubic-bezier(0.34, 1.3, 0.64, 1);
 }
-.fan-card {
-  transform: translate(calc(-50% + var(--fan-x)), var(--fan-y))
-    rotate(var(--fan-rot));
-  animation: fan-out 0.55s cubic-bezier(0.34, 1.4, 0.64, 1) both;
-  animation-delay: var(--fan-delay, 0ms);
-  transition:
-    transform 0.25s cubic-bezier(0.34, 1.4, 0.64, 1),
-    box-shadow 0.25s ease;
-}
-.fan-card:hover,
-.fan-card:focus-visible {
-  transform: translate(calc(-50% + var(--fan-x)), calc(var(--fan-y) - 26px))
-    rotate(0deg) scale(1.06);
-  z-index: 40;
-}
-
-@keyframes quicklook-in {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -46%) scale(0.94);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-.mac-quicklook {
-  animation: quicklook-in 0.3s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+.mac-dock-icon:hover {
+  transform: translateY(-8px) scale(1.22);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mac-bubble,
-  .fan-card,
-  .mac-quicklook {
+  .mac-lock {
     animation: none;
   }
-  .fan-card {
+  .mac-window,
+  .mac-noti,
+  .mac-dock-icon {
     transition: none;
   }
 }
