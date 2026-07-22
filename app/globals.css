@@ -322,17 +322,32 @@ button:hover > .np-arrow,
 
 /* Sonoma-style sunset wallpaper */
 .mac-sunset {
-  background: linear-gradient(
-    180deg,
-    #241a3f 0%,
-    #4a2454 22%,
-    #8f2f56 42%,
-    #d24d4f 58%,
-    #ef8a4d 70%,
-    #f7b56a 78%,
-    #d9744c 84%,
-    #3a1e3c 100%
-  );
+  background:
+    radial-gradient(
+      95% 55% at 50% 74%,
+      rgba(255, 198, 128, 0.95) 0%,
+      rgba(244, 130, 92, 0.6) 32%,
+      transparent 62%
+    ),
+    linear-gradient(
+      180deg,
+      #1b1340 0%,
+      #38205e 20%,
+      #722e63 40%,
+      #bb4a5f 56%,
+      #e8824f 68%,
+      #f7b671 76%,
+      #b45a52 86%,
+      #2a1530 100%
+    );
+}
+
+/* Aluminum surfaces for the lid + deck */
+.mac-alu {
+  background: linear-gradient(180deg, #d8d4d9 0%, #b9b4bc 55%, #a49fa8 100%);
+}
+.mac-alu-dark {
+  background: linear-gradient(180deg, #423c46 0%, #2c272f 60%, #201c24 100%);
 }
 
 .mac-glass {
