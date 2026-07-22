@@ -456,10 +456,10 @@ function DockTile({
     >
       <span className="relative block h-10 w-10 sm:h-11 sm:w-11">
         {/* squircle body clips the icon; badge sits outside */}
-        <span className="absolute inset-0 overflow-hidden rounded-[23%] shadow-[0_3px_6px_rgba(0,0,0,0.3)] ring-1 ring-black/10">
+        <span className="absolute inset-0 overflow-hidden rounded-[23%] shadow-[0_3px_6px_rgba(0,0,0,0.28)] ring-1 ring-black/[0.06]">
           {children}
-          {/* glossy top sheen */}
-          <span className="pointer-events-none absolute inset-x-0 top-0 h-[45%] bg-gradient-to-b from-white/20 to-transparent" />
+          {/* faint top sheen */}
+          <span className="pointer-events-none absolute inset-x-0 top-0 h-[38%] bg-gradient-to-b from-white/12 to-transparent" />
         </span>
         {badge && (
           <span className="mac-font absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#ff3b30] text-[9px] font-bold text-white ring-[1.5px] ring-white/80">
@@ -543,16 +543,16 @@ function WordIcon() {
 
 function NotesIcon() {
   return (
-    <span className="block h-full w-full bg-[#fffdf6]" aria-hidden="true">
-      {/* yellow header */}
-      <span className="block h-[26%] w-full bg-gradient-to-b from-[#ffe45e] to-[#ffd21f]" />
-      {/* full-width ruled lines */}
-      <span className="mt-[11%] flex flex-col gap-[11%] px-[12%]">
-        <span className="h-[3px] w-full rounded bg-black/12" />
-        <span className="h-[3px] w-full rounded bg-black/12" />
-        <span className="h-[3px] w-full rounded bg-black/12" />
-        <span className="h-[3px] w-[64%] rounded bg-black/12" />
-      </span>
+    <span className="block h-full w-full" aria-hidden="true">
+      <svg viewBox="0 0 44 44" className="h-full w-full" preserveAspectRatio="none">
+        <rect x="0" y="0" width="44" height="44" fill="#fffdf6" />
+        <rect x="0" y="0" width="44" height="13" fill="#ffd21f" />
+        <g stroke="#c7c1b4" strokeWidth="2" strokeLinecap="round">
+          <line x1="8" y1="21" x2="36" y2="21" />
+          <line x1="8" y1="28" x2="36" y2="28" />
+          <line x1="8" y1="35" x2="27" y2="35" />
+        </g>
+      </svg>
     </span>
   )
 }
@@ -600,18 +600,27 @@ function RemindersIcon() {
     ['#ff9f0a', 'w-[44%]'],
   ]
   return (
-    <span className="flex h-full w-full items-center justify-center bg-white px-[20%]" aria-hidden="true">
-      <span className="flex w-full flex-col gap-[5px]">
-        {rows.map(([c, w]) => (
-          <span key={c} className="flex items-center gap-1.5">
-            <span
-              className="h-2 w-2 flex-none rounded-full border-[2px] bg-white"
-              style={{ borderColor: c }}
-            />
-            <span className={cn('h-[2px] rounded bg-black/15', w)} />
-          </span>
-        ))}
-      </span>
+    <span className="flex h-full w-full items-center justify-center bg-white" aria-hidden="true">
+      <svg viewBox="0 0 44 44" className="h-[62%] w-[62%]">
+        {rows.map(([c, w], i) => {
+          const y = 6 + i * 16
+          const len = w.includes('44') ? 20 : 20
+          return (
+            <g key={c}>
+              <circle cx="6" cy={y} r="4.4" fill="white" stroke={c} strokeWidth="2.4" />
+              <line
+                x1="16"
+                y1={y}
+                x2={i === 2 ? 30 : 40}
+                y2={y}
+                stroke="#c9c9cf"
+                strokeWidth="2.4"
+                strokeLinecap="round"
+              />
+            </g>
+          )
+        })}
+      </svg>
     </span>
   )
 }
