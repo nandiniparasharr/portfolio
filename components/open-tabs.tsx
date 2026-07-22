@@ -252,14 +252,12 @@ function Clock({ big = false }: { big?: boolean }) {
 
 function DockTile({
   children,
-  className,
   label,
   onClick,
   indicator = false,
   badge,
 }: {
   children?: React.ReactNode
-  className?: string
   label: string
   onClick?: () => void
   indicator?: boolean
@@ -272,15 +270,15 @@ function DockTile({
       onClick={onClick}
       className="mac-dock-icon flex flex-col items-center gap-0.5"
     >
-      <span
-        className={cn(
-          'relative flex h-8 w-8 items-center justify-center rounded-[9px] shadow-md sm:h-9 sm:w-9',
-          className,
-        )}
-      >
-        {children}
+      <span className="relative block h-9 w-9 sm:h-10 sm:w-10">
+        {/* squircle body clips the icon; badge sits outside */}
+        <span className="absolute inset-0 overflow-hidden rounded-[22%] shadow-[0_2px_5px_rgba(0,0,0,0.35)] ring-1 ring-black/10">
+          {children}
+          {/* glossy top sheen */}
+          <span className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/25 to-transparent" />
+        </span>
         {badge && (
-          <span className="mac-font absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#ff3b30] text-[9px] font-bold text-white">
+          <span className="mac-font absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#ff3b30] text-[9px] font-bold text-white ring-[1.5px] ring-white/80">
             {badge}
           </span>
         )}
@@ -293,97 +291,138 @@ function DockTile({
   )
 }
 
+/* All icons fill the clipped squircle (h-full w-full). */
+
 function FinderIcon() {
   return (
-    <span className="relative block h-full w-full overflow-hidden rounded-[9px] bg-gradient-to-b from-[#8fd0ff] to-[#3f9ef8]" aria-hidden="true">
-      <span className="absolute inset-y-0 left-0 w-1/2 bg-white/85" />
-      <span className="absolute left-[30%] top-[30%] h-[3px] w-[3px] rounded-full bg-[#1d3c66]" />
-      <span className="absolute right-[26%] top-[30%] h-[3px] w-[3px] rounded-full bg-white" />
-      <span className="absolute left-1/2 top-[52%] h-2.5 w-3.5 -translate-x-1/2 rounded-b-full border-b-2 border-[#1d3c66]" />
+    <span className="relative block h-full w-full" aria-hidden="true">
+      <span className="absolute inset-0 bg-gradient-to-b from-[#3a9bff] to-[#1f6fe0]" />
+      <span className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-b from-[#dcefff] to-[#bfdfff]" />
+      {/* eyes */}
+      <span className="absolute left-[34%] top-[24%] h-[16%] w-[9%] -translate-x-1/2 rounded-full bg-[#243a52]" />
+      <span className="absolute left-[66%] top-[24%] h-[16%] w-[9%] -translate-x-1/2 rounded-full bg-[#243a52]" />
+      {/* smile */}
+      <span className="absolute left-1/2 top-[46%] h-[24%] w-[46%] -translate-x-1/2 rounded-b-full border-b-[2.5px] border-[#243a52]" />
     </span>
   )
 }
+
 function SafariIcon() {
   return (
-    <span className="relative flex h-full w-full items-center justify-center rounded-[9px] bg-gradient-to-b from-[#3aa0ff] to-[#1f6ff0]" aria-hidden="true">
-      <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white/70">
-        <span className="block h-3 w-[3px] rotate-45 bg-gradient-to-b from-[#ff5b52] from-50% to-white to-50%" />
+    <span className="relative flex h-full w-full items-center justify-center bg-gradient-to-b from-[#e9f4ff] to-[#cfe6ff]" aria-hidden="true">
+      <span className="relative flex h-[82%] w-[82%] items-center justify-center rounded-full bg-gradient-to-b from-[#3aa4ff] to-[#0a63ea]">
+        {/* tick ring */}
+        <span
+          className="absolute inset-[9%] rounded-full"
+          style={{
+            background:
+              'repeating-conic-gradient(from 0deg, rgba(255,255,255,0.85) 0deg 2deg, transparent 2deg 30deg)',
+            WebkitMask: 'radial-gradient(circle, transparent 62%, #000 63%)',
+            mask: 'radial-gradient(circle, transparent 62%, #000 63%)',
+          }}
+        />
+        {/* needle */}
+        <span className="block h-[62%] w-[4px] rotate-45">
+          <span className="block h-1/2 w-full rounded-t-full bg-[#ff4b3e]" />
+          <span className="block h-1/2 w-full rounded-b-full bg-[#f4f4f4]" />
+        </span>
+        <span className="absolute h-1.5 w-1.5 rounded-full bg-white ring-1 ring-black/10" />
       </span>
     </span>
   )
 }
+
 function WordIcon() {
   return (
-    <span className="mac-font flex h-full w-full items-center justify-center rounded-[9px] bg-gradient-to-b from-[#2d7bdc] to-[#185abd] text-[15px] font-bold text-white" aria-hidden="true">
-      W
+    <span className="relative flex h-full w-full items-center justify-center overflow-hidden bg-white" aria-hidden="true">
+      <span className="absolute inset-y-[14%] left-[12%] w-[26%] rounded-[3px] bg-gradient-to-b from-[#2b7cd8] to-[#1a4fa0]" />
+      <span className="mac-font ml-[26%] text-[15px] font-bold leading-none text-[#1a5fb4]">W</span>
     </span>
   )
 }
+
 function NotesIcon() {
   return (
-    <span className="block h-full w-full overflow-hidden rounded-[9px] bg-white" aria-hidden="true">
-      <span className="block h-1/3 w-full bg-[#ffd60a]" />
-      <span className="mx-auto mt-[3px] block h-[2px] w-3/5 rounded bg-black/15" />
-      <span className="mx-auto mt-[3px] block h-[2px] w-3/5 rounded bg-black/15" />
-      <span className="mx-auto mt-[3px] block h-[2px] w-2/5 rounded bg-black/15" />
+    <span className="block h-full w-full bg-white" aria-hidden="true">
+      <span className="block h-[28%] w-full bg-gradient-to-b from-[#ffdc4a] to-[#ffce29]" />
+      <span className="mx-auto mt-[10%] block h-[6%] w-3/5 rounded bg-black/12" />
+      <span className="mx-auto mt-[8%] block h-[6%] w-3/5 rounded bg-black/12" />
+      <span className="mx-auto mt-[8%] block h-[6%] w-2/5 rounded bg-black/12" />
     </span>
   )
 }
+
 function SpotifyIcon() {
   return (
-    <span className="relative flex h-full w-full items-center justify-center rounded-[9px] bg-[#1ed760]" aria-hidden="true">
-      <span className="flex flex-col gap-[2.5px]">
-        <span className="h-[2.5px] w-4 rounded-full bg-black/85" />
-        <span className="h-[2.5px] w-3.5 rounded-full bg-black/85" />
-        <span className="h-[2.5px] w-2.5 rounded-full bg-black/85" />
-      </span>
+    <span className="flex h-full w-full items-center justify-center bg-gradient-to-b from-[#28e061] to-[#12c04c]" aria-hidden="true">
+      <svg viewBox="0 0 28 28" className="h-[70%] w-[70%]">
+        <path d="M5 10.5 C11 8, 18 8.5, 23.5 12" fill="none" stroke="#0b3d1b" strokeWidth="2.6" strokeLinecap="round" />
+        <path d="M6.5 15 C11.5 13.2, 17 13.6, 21.5 16.4" fill="none" stroke="#0b3d1b" strokeWidth="2.3" strokeLinecap="round" />
+        <path d="M8 19 C11.6 17.8, 15.5 18, 19 19.8" fill="none" stroke="#0b3d1b" strokeWidth="2" strokeLinecap="round" />
+      </svg>
     </span>
   )
 }
+
 function PhotosIcon() {
+  const petals = ['#fc3b3b', '#ff8a00', '#ffcc00', '#37c93a', '#00b3c4', '#2a7bff', '#7a3ff2', '#ff3ea5']
   return (
-    <span
-      className="flex h-full w-full items-center justify-center rounded-[9px]"
-      style={{
-        background:
-          'conic-gradient(from 20deg, #f9d423, #8bc34a, #29b6f6, #7e57c2, #ec407a, #ff7043, #f9d423)',
-      }}
-      aria-hidden="true"
-    >
-      <span className="block h-1/3 w-1/3 rounded-full bg-white/90" />
+    <span className="flex h-full w-full items-center justify-center bg-white" aria-hidden="true">
+      <svg viewBox="0 0 40 40" className="h-[80%] w-[80%]">
+        {petals.map((c, i) => (
+          <ellipse
+            key={c}
+            cx="20"
+            cy="11.5"
+            rx="4.4"
+            ry="8.5"
+            fill={c}
+            opacity="0.9"
+            transform={`rotate(${i * 45} 20 20)`}
+          />
+        ))}
+      </svg>
     </span>
   )
 }
+
 function RemindersIcon() {
   return (
-    <span className="flex h-full w-full items-center justify-center rounded-[9px] bg-white" aria-hidden="true">
+    <span className="flex h-full w-full items-center justify-center bg-white" aria-hidden="true">
       <span className="flex flex-col gap-[3px]">
-        {['#f26b3a', '#1f7cf6', '#e7a33d'].map((c) => (
-          <span key={c} className="flex items-center gap-1">
-            <span className="h-1.5 w-1.5 rounded-full" style={{ background: c }} />
-            <span className="h-[2px] w-3 rounded bg-black/20" />
+        {['#ff453a', '#0a84ff', '#ffcc00'].map((c) => (
+          <span key={c} className="flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-full ring-[1.5px]" style={{ ['--tw-ring-color' as string]: c, background: 'white' }} />
+            <span className="h-[2px] w-3.5 rounded bg-black/18" />
           </span>
         ))}
       </span>
     </span>
   )
 }
+
 function MailIcon() {
   return (
-    <span className="flex h-full w-full items-center justify-center rounded-[9px] bg-gradient-to-b from-[#4da3ff] to-[#1f7cf6]" aria-hidden="true">
-      <svg viewBox="0 0 24 24" className="h-4.5 w-4.5">
-        <rect x="2" y="5" width="20" height="14" rx="2" fill="white" />
-        <path d="M3 6.5 L12 13 L21 6.5" fill="none" stroke="#1f7cf6" strokeWidth="1.6" />
+    <span className="flex h-full w-full items-center justify-center bg-gradient-to-b from-[#41a6ff] to-[#137bf5]" aria-hidden="true">
+      <svg viewBox="0 0 26 26" className="h-[64%] w-[64%]">
+        <rect x="2" y="5.5" width="22" height="15" rx="3" fill="white" />
+        <path d="M3.4 7.4 L13 14 L22.6 7.4" fill="none" stroke="#137bf5" strokeWidth="1.8" strokeLinejoin="round" />
       </svg>
     </span>
   )
 }
+
 function TrashIcon() {
   return (
-    <span className="relative flex h-full w-full items-end justify-center rounded-[9px] bg-gradient-to-b from-[#e8e6ea] to-[#b9b5bf] pb-1" aria-hidden="true">
-      <span className="relative h-4 w-3 rounded-[2px] bg-gradient-to-b from-[#9d98a4] to-[#7c7683]">
-        <span className="absolute -top-1 left-1/2 h-[2px] w-4 -translate-x-1/2 rounded bg-[#8b8592]" />
+    <span className="relative flex h-full w-full items-end justify-center bg-gradient-to-b from-[#eceaf0] to-[#c3bfca] pb-[14%]" aria-hidden="true">
+      <span className="relative flex h-[52%] w-[40%] flex-col overflow-hidden rounded-b-[3px] rounded-t-[1px] bg-gradient-to-b from-[#a9a4b0] to-[#847e8c]">
+        <span
+          className="h-full w-full opacity-70"
+          style={{ backgroundImage: 'repeating-linear-gradient(90deg, rgba(255,255,255,0.5) 0 1px, transparent 1px 3px)' }}
+        />
       </span>
+      <span className="absolute top-[22%] h-[3px] w-[52%] rounded-full bg-[#8b8592]" />
+      <span className="absolute top-[16%] h-[3px] w-[22%] rounded-full bg-[#8b8592]" />
     </span>
   )
 }
@@ -647,10 +686,12 @@ export function OpenTabs({ className }: { className?: string }) {
                           className={cn('mac-noti mac-glass flex items-center gap-2.5 rounded-2xl p-2.5', notiIn && 'is-in')}
                           style={{ transitionDelay: `${i * 140}ms` }}
                         >
-                          <span className="relative flex h-8 w-8 flex-none items-center justify-center">
-                            {n.app === 'Mail' ? <MailIcon /> : <RemindersIcon />}
+                          <span className="relative block h-8 w-8 flex-none">
+                            <span className="absolute inset-0 overflow-hidden rounded-[22%] ring-1 ring-black/10">
+                              {n.app === 'Mail' ? <MailIcon /> : <RemindersIcon />}
+                            </span>
                             {n.badge && (
-                              <span className="mac-font absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#ff3b30] text-[9px] font-bold text-white">
+                              <span className="mac-font absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#ff3b30] text-[9px] font-bold text-white ring-[1.5px] ring-white/80">
                                 1
                               </span>
                             )}
