@@ -107,47 +107,97 @@ function NotesBody() {
   )
 }
 
+// Latest available snapshot — edit these figures (or wire a keyed market API)
+// and the panel presents them with a live-updating IST timestamp.
+const NIFTY = {
+  level: '26,215.65',
+  change: '+138.20',
+  pct: '+0.53%',
+  up: true,
+}
+const MOVERS = [
+  ['RELIANCE', '1,304.75', '+0.88%', true],
+  ['HDFCBANK', '1,725.40', '+0.55%', true],
+  ['ICICIBANK', '1,278.35', '+0.72%', true],
+  ['TCS', '4,088.10', '-0.31%', false],
+  ['INFY', '1,932.60', '+0.47%', true],
+] as const
+
 function NiftyTab() {
-  const movers = [
-    ['RELIANCE', '2,934.50', '+1.02%', true],
-    ['HDFCBANK', '1,678.80', '+0.81%', true],
-    ['TCS', '3,984.20', '-0.35%', false],
-    ['INFY', '1,812.30', '+0.22%', true],
-  ] as const
+  const [ts, setTs] = useState('')
+  useEffect(() => {
+    const fmt = () =>
+      setTs(
+        new Intl.DateTimeFormat('en-IN', {
+          day: '2-digit',
+          month: 'short',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+          timeZone: 'Asia/Kolkata',
+        }).format(new Date()),
+      )
+    fmt()
+    const id = setInterval(fmt, 30000)
+    return () => clearInterval(id)
+  }, [])
+  const green = '#1d8a4a'
+  const red = '#c33b2e'
   return (
-    <div className="mac-font grid gap-5 bg-white px-5 py-4 sm:grid-cols-[1.3fr_1fr]">
-      <div>
-        <p className="m-0 text-[11px] font-semibold uppercase tracking-wide text-black/45">
+    <div className="mac-font bg-white px-5 py-4">
+      <div className="flex items-center justify-between">
+        <p className="m-0 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-black/45">
           Nifty 50
-        </p>
-        <p className="m-0 mt-1 text-[24px] font-bold text-black">
-          24,502.15{' '}
-          <span className="text-[13px] font-semibold text-[#1d8a4a]">
-            +156.35 (0.64%)
+          <span className="inline-flex items-center gap-1 rounded-full bg-[#eafaf0] px-1.5 py-0.5 text-[9px] font-bold text-[#1d8a4a]">
+            <span className="mac-lock h-1.5 w-1.5 rounded-full bg-[#1d8a4a]" />
+            LIVE
           </span>
         </p>
-        <svg viewBox="0 0 200 48" className="mt-2 h-12 w-full" aria-hidden="true">
-          <path
-            d="M0 38 L14 33 L26 36 L40 28 L54 31 L68 22 L82 27 L96 18 L110 24 L124 14 L138 20 L152 10 L166 16 L182 7 L200 12"
-            fill="none"
-            stroke="#1d8a4a"
-            strokeWidth="2"
-          />
-        </svg>
+        <span suppressHydrationWarning className="text-[10px] text-black/40">
+          NSE · {ts} IST
+        </span>
       </div>
-      <div>
-        <p className="m-0 text-[11px] font-semibold uppercase tracking-wide text-black/45">
-          Watchlist
-        </p>
-        <ul className="m-0 mt-1.5 flex list-none flex-col gap-1.5 p-0">
-          {movers.map(([n, px, chg, up]) => (
-            <li key={n} className="flex items-baseline justify-between gap-3 text-[12px]">
-              <span className="font-semibold text-black/80">{n}</span>
-              <span className="text-black/50">{px}</span>
-              <span className={up ? 'text-[#1d8a4a]' : 'text-[#c33b2e]'}>{chg}</span>
-            </li>
-          ))}
-        </ul>
+      <div className="mt-1 grid gap-5 sm:grid-cols-[1.3fr_1fr]">
+        <div>
+          <p className="m-0 text-[26px] font-bold leading-none text-black">
+            {NIFTY.level}
+          </p>
+          <p className="m-0 mt-1 text-[13px] font-semibold" style={{ color: NIFTY.up ? green : red }}>
+            {NIFTY.up ? '▲' : '▼'} {NIFTY.change} ({NIFTY.pct})
+          </p>
+          <svg viewBox="0 0 200 44" className="mt-2 h-11 w-full" aria-hidden="true">
+            <defs>
+              <linearGradient id="niftyfill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stopColor={green} stopOpacity="0.18" />
+                <stop offset="1" stopColor={green} stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            <path
+              d="M0 34 L14 30 L26 33 L40 25 L54 28 L68 19 L82 24 L96 15 L110 21 L124 12 L138 17 L152 8 L166 14 L182 6 L200 10 L200 44 L0 44 Z"
+              fill="url(#niftyfill)"
+            />
+            <path
+              d="M0 34 L14 30 L26 33 L40 25 L54 28 L68 19 L82 24 L96 15 L110 21 L124 12 L138 17 L152 8 L166 14 L182 6 L200 10"
+              fill="none"
+              stroke={green}
+              strokeWidth="2"
+            />
+          </svg>
+        </div>
+        <div>
+          <p className="m-0 text-[11px] font-semibold uppercase tracking-wide text-black/45">
+            Watchlist
+          </p>
+          <ul className="m-0 mt-1.5 flex list-none flex-col gap-1.5 p-0">
+            {MOVERS.map(([n, px, chg, up]) => (
+              <li key={n} className="flex items-baseline justify-between gap-3 text-[12px]">
+                <span className="font-semibold text-black/80">{n}</span>
+                <span className="text-black/50">{px}</span>
+                <span style={{ color: up ? green : red }}>{chg}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   )
@@ -173,15 +223,75 @@ function BookTab() {
   )
 }
 
-function SafariBody({ tab, setTab }: { tab: SafariTab; setTab: (t: SafariTab) => void }) {
-  const tabs: { id: SafariTab; label: string }[] = [
-    { id: 'nifty', label: 'Nifty 50 — NSE' },
-    { id: 'book', label: 'Zero to One — Books' },
-  ]
+function ToolbarBtn({ children, dim = false }: { children: React.ReactNode; dim?: boolean }) {
   return (
-    <div className="mac-font">
-      {/* tab strip */}
-      <div className="flex items-stretch gap-px border-b border-black/10 bg-[#e4e1de] pl-2 pt-1.5">
+    <span className={cn('flex h-5 w-5 items-center justify-center', dim ? 'text-black/25' : 'text-black/45')}>
+      {children}
+    </span>
+  )
+}
+
+function SafariBody({ tab, setTab }: { tab: SafariTab; setTab: (t: SafariTab) => void }) {
+  const tabs: { id: SafariTab; label: string; url: string }[] = [
+    { id: 'nifty', label: 'Nifty 50 — NSE', url: 'nseindia.com' },
+    { id: 'book', label: 'Zero to One', url: 'books.apple.com' },
+  ]
+  const url = tabs.find((t) => t.id === tab)?.url ?? ''
+  return (
+    <div className="mac-font bg-white">
+      {/* Safari toolbar */}
+      <div className="flex items-center gap-2 border-b border-black/10 bg-[#f6f5f4] px-3 py-1.5">
+        <ToolbarBtn>
+          <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <rect x="3" y="5" width="18" height="14" rx="2.5" />
+            <line x1="9" y1="5" x2="9" y2="19" />
+          </svg>
+        </ToolbarBtn>
+        <span className="flex items-center gap-1">
+          <ToolbarBtn>
+            <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.2">
+              <path d="M15 6 L9 12 L15 18" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </ToolbarBtn>
+          <ToolbarBtn dim>
+            <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.2">
+              <path d="M9 6 L15 12 L9 18" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </ToolbarBtn>
+        </span>
+        {/* centered search pill */}
+        <span className="mx-auto flex w-[58%] items-center justify-center gap-1.5 rounded-lg bg-black/[0.07] px-3 py-[5px] text-[11px] text-black/55">
+          <svg viewBox="0 0 24 24" className="h-3 w-3 text-black/40" fill="none" stroke="currentColor" strokeWidth="2">
+            <rect x="5" y="11" width="14" height="9" rx="2" />
+            <path d="M8 11 V8 a4 4 0 0 1 8 0 v3" />
+          </svg>
+          {url}
+        </span>
+        {/* right cluster */}
+        <span className="flex items-center gap-2">
+          <ToolbarBtn>
+            <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path d="M12 3 V15 M8 7 L12 3 L16 7" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M6 12 V20 H18 V12" strokeLinecap="round" />
+            </svg>
+          </ToolbarBtn>
+          <ToolbarBtn>
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <line x1="12" y1="6" x2="12" y2="18" strokeLinecap="round" />
+              <line x1="6" y1="12" x2="18" y2="12" strokeLinecap="round" />
+            </svg>
+          </ToolbarBtn>
+          <ToolbarBtn>
+            <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <rect x="4" y="6" width="12" height="12" rx="2" />
+              <rect x="9" y="3" width="12" height="12" rx="2" fill="#f6f5f4" />
+            </svg>
+          </ToolbarBtn>
+        </span>
+      </div>
+
+      {/* clean tab bar */}
+      <div className="flex items-stretch gap-1.5 border-b border-black/10 bg-[#eceae8] px-2 pt-1.5">
         {tabs.map((t) => (
           <button
             key={t.id}
@@ -192,21 +302,17 @@ function SafariBody({ tab, setTab }: { tab: SafariTab; setTab: (t: SafariTab) =>
               setTab(t.id)
             }}
             className={cn(
-              'mac-tab flex max-w-[160px] items-center gap-1.5 truncate rounded-t-lg px-3 py-1.5 text-[11px]',
-              tab === t.id ? 'bg-white text-black/80' : 'text-black/45 hover:text-black/70',
+              'mac-tab group flex w-40 max-w-[42%] items-center gap-1.5 truncate rounded-t-[7px] px-2.5 py-1.5 text-[11px]',
+              tab === t.id ? 'bg-white text-black/80 shadow-[0_-1px_2px_rgba(0,0,0,0.04)]' : 'text-black/45 hover:bg-black/[0.04]',
             )}
           >
-            <span className="h-1.5 w-1.5 flex-none rounded-full bg-[#1f7cf6]" />
-            {t.label}
+            <span className="h-2.5 w-2.5 flex-none rounded-[3px] bg-[#1f7cf6]" />
+            <span className="flex-1 truncate text-left">{t.label}</span>
+            {tab === t.id && <span className="text-black/30">×</span>}
           </button>
         ))}
       </div>
-      {/* address bar */}
-      <div className="flex justify-center border-b border-black/10 bg-[#f3f1ef] px-3 py-1.5">
-        <span className="w-2/3 rounded-md bg-black/5 py-1 text-center text-[11px] text-black/50">
-          {tab === 'nifty' ? 'nseindia.com — market snapshot' : 'books.apple.com — zero to one'}
-        </span>
-      </div>
+
       {tab === 'nifty' ? <NiftyTab /> : <BookTab />}
     </div>
   )
