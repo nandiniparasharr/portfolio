@@ -62,11 +62,20 @@ export default function AboutPage() {
             the reading that feeds all of it.
           </p>
 
-          <Reveal delay={160}>
-            <OpenTabs className="mt-12" />
-          </Reveal>
         </div>
       </div>
+
+      {/* Inside my head — the desktop */}
+      <section className="mt-24">
+        <Reveal>
+          <SectionLabel tone="muted" className="mb-8 justify-center">
+            Inside my head
+          </SectionLabel>
+        </Reveal>
+        <Reveal delay={80}>
+          <OpenTabs />
+        </Reveal>
+      </section>
 
       {/* Trajectory */}
       <section id="experience" className="mt-24">
