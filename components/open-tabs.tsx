@@ -480,14 +480,14 @@ function DockTile({
 function FinderIcon() {
   return (
     <span className="relative block h-full w-full" aria-hidden="true">
-      <span className="absolute inset-0 bg-gradient-to-b from-[#28abff] to-[#0a86f5]" />
-      <span className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-b from-[#eaf6ff] to-[#cbe8ff]" />
+      {/* left blue, right white — like the real Finder face */}
+      <span className="absolute inset-0 bg-white" />
+      <span className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-b from-[#2ea7ff] to-[#0a84f0]" />
       <svg viewBox="0 0 44 44" className="absolute inset-0 h-full w-full">
-        {/* eyes */}
-        <rect x="13.5" y="11" width="3.4" height="8.5" rx="1.7" fill="#2b415a" />
-        <rect x="27.1" y="11" width="3.4" height="8.5" rx="1.7" fill="#2b415a" />
-        {/* smile — subtle two-tone like the real face */}
-        <path d="M13 25 Q22 33 31 25" fill="none" stroke="#2b415a" strokeWidth="2.6" strokeLinecap="round" />
+        <rect x="13.5" y="11.5" width="3.4" height="8" rx="1.7" fill="#33475e" />
+        <rect x="27.1" y="11.5" width="3.4" height="8" rx="1.7" fill="#33475e" />
+        {/* simple smile */}
+        <path d="M13 24 Q22 31 31 24" fill="none" stroke="#33475e" strokeWidth="2.6" strokeLinecap="round" />
       </svg>
     </span>
   )
@@ -495,40 +495,33 @@ function FinderIcon() {
 
 function SafariIcon() {
   return (
-    <span className="relative flex h-full w-full items-center justify-center bg-gradient-to-b from-[#eef6ff] to-[#d4e9ff]" aria-hidden="true">
-      <span className="relative flex h-[86%] w-[86%] items-center justify-center rounded-full bg-gradient-to-b from-[#37a6ff] to-[#0866ea] ring-1 ring-white/40">
-        {/* tick ring */}
-        <span
-          className="absolute inset-[7%] rounded-full"
-          style={{
-            background:
-              'repeating-conic-gradient(from 0deg, rgba(255,255,255,0.9) 0deg 1.6deg, transparent 1.6deg 30deg)',
-            WebkitMask: 'radial-gradient(circle, transparent 66%, #000 67%)',
-            mask: 'radial-gradient(circle, transparent 66%, #000 67%)',
-          }}
-        />
-        {/* cardinal ticks */}
-        <span
-          className="absolute inset-[14%] rounded-full"
-          style={{
-            background:
-              'repeating-conic-gradient(from 0deg, rgba(255,255,255,0.95) 0deg 2.4deg, transparent 2.4deg 90deg)',
-            WebkitMask: 'radial-gradient(circle, transparent 62%, #000 63%)',
-            mask: 'radial-gradient(circle, transparent 62%, #000 63%)',
-          }}
-        />
-        {/* needle — red NE / white SW diamond */}
-        <span className="relative h-[58%] w-[58%] rotate-45">
+    <span className="flex h-full w-full items-center justify-center bg-white" aria-hidden="true">
+      {/* blue ring + light dial */}
+      <span className="relative flex h-[88%] w-[88%] items-center justify-center rounded-full bg-gradient-to-b from-[#3a9bf7] to-[#1477ec]">
+        <span className="relative flex h-[80%] w-[80%] items-center justify-center rounded-full bg-gradient-to-b from-[#eaf3ff] to-[#d3e6fb]">
+          {/* fine tick marks in blue */}
           <span
-            className="absolute left-1/2 top-0 h-1/2 w-[22%] -translate-x-1/2"
-            style={{ background: '#ff4b3e', clipPath: 'polygon(50% 0, 100% 100%, 0 100%)' }}
+            className="absolute inset-[6%] rounded-full"
+            style={{
+              background:
+                'repeating-conic-gradient(from 0deg, rgba(40,110,200,0.8) 0deg 1.5deg, transparent 1.5deg 15deg)',
+              WebkitMask: 'radial-gradient(circle, transparent 74%, #000 75%)',
+              mask: 'radial-gradient(circle, transparent 74%, #000 75%)',
+            }}
           />
-          <span
-            className="absolute bottom-0 left-1/2 h-1/2 w-[22%] -translate-x-1/2"
-            style={{ background: '#f4f4f4', clipPath: 'polygon(0 0, 100% 0, 50% 100%)' }}
-          />
+          {/* needle — red NE / silver SW diamond */}
+          <span className="relative h-[64%] w-[64%] rotate-45">
+            <span
+              className="absolute left-1/2 top-0 h-1/2 w-[20%] -translate-x-1/2"
+              style={{ background: '#f5493d', clipPath: 'polygon(50% 0, 100% 100%, 0 100%)' }}
+            />
+            <span
+              className="absolute bottom-0 left-1/2 h-1/2 w-[20%] -translate-x-1/2"
+              style={{ background: '#c8ccd2', clipPath: 'polygon(0 0, 100% 0, 50% 100%)' }}
+            />
+          </span>
+          <span className="absolute h-1.5 w-1.5 rounded-full bg-white ring-1 ring-black/10" />
         </span>
-        <span className="absolute h-1.5 w-1.5 rounded-full bg-white shadow" />
       </span>
     </span>
   )
@@ -536,16 +529,13 @@ function SafariIcon() {
 
 function WordIcon() {
   return (
-    <span className="relative flex h-full w-full overflow-hidden bg-white" aria-hidden="true">
-      {/* document tab */}
-      <span className="flex h-full w-[44%] items-center justify-center bg-gradient-to-b from-[#3b8ee2] to-[#215aa6]">
-        <span className="mac-font text-[15px] font-bold leading-none text-white">W</span>
-      </span>
-      {/* faint doc lines on the page */}
-      <span className="flex flex-1 flex-col justify-center gap-[3px] pl-[10%] pr-[16%]">
-        <span className="h-[2px] w-full rounded bg-[#2b5797]/25" />
-        <span className="h-[2px] w-full rounded bg-[#2b5797]/25" />
-        <span className="h-[2px] w-2/3 rounded bg-[#2b5797]/25" />
+    <span className="flex h-full w-full items-center justify-center bg-white" aria-hidden="true">
+      {/* the Word document: blue page with a lighter spine + white W */}
+      <span className="relative h-[68%] w-[62%] overflow-hidden rounded-[4px] bg-gradient-to-b from-[#41a5ee] to-[#2b7cd3] shadow-[0_1px_2px_rgba(0,0,0,0.2)]">
+        <span className="absolute inset-y-0 left-0 w-[22%] bg-[#2564b0]" />
+        <span className="mac-font absolute inset-0 flex items-center justify-center pl-[14%] text-[13px] font-bold leading-none text-white">
+          W
+        </span>
       </span>
     </span>
   )
@@ -554,22 +544,29 @@ function WordIcon() {
 function NotesIcon() {
   return (
     <span className="block h-full w-full bg-[#fffdf6]" aria-hidden="true">
-      <span className="block h-[30%] w-full bg-gradient-to-b from-[#ffe45e] to-[#ffd21f]" />
-      <span className="mx-auto mt-[15%] block h-[7%] w-[62%] rounded bg-[#d8bf7a]" />
-      <span className="mx-auto mt-[9%] block h-[7%] w-[62%] rounded bg-black/12" />
-      <span className="mx-auto mt-[9%] block h-[7%] w-[44%] rounded bg-black/12" />
+      {/* yellow header */}
+      <span className="block h-[26%] w-full bg-gradient-to-b from-[#ffe45e] to-[#ffd21f]" />
+      {/* full-width ruled lines */}
+      <span className="mt-[11%] flex flex-col gap-[11%] px-[12%]">
+        <span className="h-[3px] w-full rounded bg-black/12" />
+        <span className="h-[3px] w-full rounded bg-black/12" />
+        <span className="h-[3px] w-full rounded bg-black/12" />
+        <span className="h-[3px] w-[64%] rounded bg-black/12" />
+      </span>
     </span>
   )
 }
 
 function SpotifyIcon() {
   return (
-    <span className="flex h-full w-full items-center justify-center bg-gradient-to-b from-[#2ee066] to-[#12c04c]" aria-hidden="true">
-      <svg viewBox="0 0 28 28" className="h-[68%] w-[68%]">
-        <path d="M4.5 10 C11 7.6, 18.5 8.2, 24 11.5" fill="none" stroke="#08351a" strokeWidth="3" strokeLinecap="round" />
-        <path d="M6 14.6 C11.6 12.6, 17.6 13, 22 15.8" fill="none" stroke="#08351a" strokeWidth="2.6" strokeLinecap="round" />
-        <path d="M7.6 18.8 C11.8 17.4, 16 17.6, 19.4 19.4" fill="none" stroke="#08351a" strokeWidth="2.2" strokeLinecap="round" />
-      </svg>
+    <span className="flex h-full w-full items-center justify-center bg-black" aria-hidden="true">
+      <span className="relative flex h-[78%] w-[78%] items-center justify-center rounded-full bg-[#1ed760]">
+        <svg viewBox="0 0 28 28" className="h-[64%] w-[64%]">
+          <path d="M4.5 10 C11 7.6, 18.5 8.2, 24 11.5" fill="none" stroke="#000" strokeWidth="3" strokeLinecap="round" />
+          <path d="M6 14.6 C11.6 12.6, 17.6 13, 22 15.8" fill="none" stroke="#000" strokeWidth="2.6" strokeLinecap="round" />
+          <path d="M7.6 18.8 C11.8 17.4, 16 17.6, 19.4 19.4" fill="none" stroke="#000" strokeWidth="2.2" strokeLinecap="round" />
+        </svg>
+      </span>
     </span>
   )
 }
@@ -598,8 +595,8 @@ function PhotosIcon() {
 
 function RemindersIcon() {
   const rows: [string, string][] = [
-    ['#ff453a', 'w-[62%]'],
     ['#0a84ff', 'w-[62%]'],
+    ['#ff453a', 'w-[62%]'],
     ['#ff9f0a', 'w-[44%]'],
   ]
   return (
@@ -1043,7 +1040,7 @@ export function OpenTabs({ className }: { className?: string }) {
                         <DockTile label="Safari" onClick={() => launch('safari')} indicator={!wins.safari.closed && !wins.safari.min}>
                           <SafariIcon />
                         </DockTile>
-                        <DockTile label="Word" onClick={() => launch('word')} indicator={!wins.word.closed && !wins.word.min}>
+                        <DockTile label="Microsoft Word" onClick={() => launch('word')} indicator={!wins.word.closed && !wins.word.min}>
                           <WordIcon />
                         </DockTile>
                         <DockTile label="Notes" onClick={() => launch('notes')} indicator={!wins.notes.closed && !wins.notes.min}>
