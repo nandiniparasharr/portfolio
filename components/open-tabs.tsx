@@ -376,18 +376,37 @@ function AppleLogo() {
 }
 
 function StatusIcons() {
+  const stroke = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.6 } as const
   return (
-    <span className="flex items-center gap-2.5 text-white/85">
-      {/* control center */}
-      <span className="flex flex-col gap-[2px]" aria-hidden="true">
-        <span className="h-[3px] w-3.5 rounded-full bg-white/80" />
-        <span className="h-[3px] w-3.5 rounded-full bg-white/80" />
-      </span>
-      {/* wifi */}
-      <svg viewBox="0 0 24 20" className="h-3 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-        <path d="M3 7 a13 13 0 0 1 18 0" strokeLinecap="round" />
-        <path d="M6.5 11 a8 8 0 0 1 11 0" strokeLinecap="round" />
-        <circle cx="12" cy="15.6" r="1.3" fill="currentColor" stroke="none" />
+    <span className="flex items-center gap-[9px] text-white/85">
+      {/* swirl / now-playing spiral */}
+      <svg viewBox="0 0 24 24" className="h-3 w-3" {...stroke} aria-hidden="true">
+        <path d="M12 3 a9 9 0 1 0 9 9 a6.5 6.5 0 1 1 -6.5 -6.5 a4 4 0 1 0 4 4" strokeLinecap="round" />
+      </svg>
+      {/* sparkle */}
+      <svg viewBox="0 0 24 24" className="h-3 w-3" {...stroke} aria-hidden="true">
+        <line x1="12" y1="3" x2="12" y2="21" strokeLinecap="round" />
+        <line x1="3" y1="12" x2="21" y2="12" strokeLinecap="round" />
+        <line x1="6" y1="6" x2="18" y2="18" strokeLinecap="round" />
+        <line x1="18" y1="6" x2="6" y2="18" strokeLinecap="round" />
+      </svg>
+      {/* bluetooth */}
+      <svg viewBox="0 0 24 24" className="h-3.5 w-2.5" {...stroke} aria-hidden="true">
+        <path d="M8 8 L16 16 L12 20 V4 L16 8 L8 16" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+      {/* now playing */}
+      <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" {...stroke} aria-hidden="true">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M10 8.5 L16 12 L10 15.5 Z" fill="currentColor" stroke="none" />
+      </svg>
+      {/* screen mirroring */}
+      <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" {...stroke} aria-hidden="true">
+        <rect x="3" y="5" width="12" height="9" rx="2" />
+        <rect x="9" y="10" width="12" height="9" rx="2" fill="#1b1b2e" />
+      </svg>
+      {/* focus (crescent) */}
+      <svg viewBox="0 0 24 24" className="h-3 w-3" fill="currentColor" aria-hidden="true">
+        <path d="M20 14.5 A8 8 0 1 1 11 4 a6.5 6.5 0 0 0 9 10.5 z" />
       </svg>
       {/* battery */}
       <span className="flex items-center gap-1" aria-hidden="true">
@@ -398,14 +417,16 @@ function StatusIcons() {
         </span>
       </span>
       {/* spotlight */}
-      <svg viewBox="0 0 24 24" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
+      <svg viewBox="0 0 24 24" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
         <circle cx="10" cy="10" r="6" />
         <line x1="14.5" y1="14.5" x2="21" y2="21" strokeLinecap="round" />
       </svg>
-      {/* control center toggle */}
-      <svg viewBox="0 0 28 18" className="h-3 w-4.5" aria-hidden="true">
-        <rect x="0.5" y="0.5" width="27" height="17" rx="8.5" fill="none" stroke="currentColor" strokeWidth="1.4" opacity="0.7" />
-        <circle cx="9" cy="9" r="5.5" fill="currentColor" opacity="0.85" />
+      {/* control center */}
+      <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" aria-hidden="true">
+        <rect x="4" y="3" width="7" height="18" rx="3.5" fill="none" stroke="currentColor" strokeWidth="1.5" />
+        <rect x="13" y="3" width="7" height="18" rx="3.5" fill="none" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="7.5" cy="8" r="2" fill="currentColor" />
+        <circle cx="16.5" cy="16" r="2" fill="currentColor" />
       </svg>
     </span>
   )
