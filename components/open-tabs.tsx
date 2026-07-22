@@ -241,31 +241,43 @@ function SafariBody({ tab, setTab }: { tab: SafariTab; setTab: (t: SafariTab) =>
     <div className="mac-font bg-white">
       {/* Safari toolbar */}
       <div className="flex items-center gap-2 border-b border-black/10 bg-[#f6f5f4] px-3 py-1.5">
-        <ToolbarBtn>
-          <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <rect x="3" y="5" width="18" height="14" rx="2.5" />
-            <line x1="9" y1="5" x2="9" y2="19" />
+        {/* sidebar + dropdown chevron */}
+        <span className="flex items-center">
+          <ToolbarBtn>
+            <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <rect x="3" y="5" width="18" height="14" rx="2.5" />
+              <line x1="9" y1="5" x2="9" y2="19" />
+            </svg>
+          </ToolbarBtn>
+          <svg viewBox="0 0 24 24" className="h-2.5 w-2.5 text-black/30" fill="none" stroke="currentColor" strokeWidth="2.4">
+            <path d="M7 10 L12 15 L17 10" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-        </ToolbarBtn>
+        </span>
+        {/* back | forward */}
         <span className="flex items-center gap-1">
           <ToolbarBtn>
             <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.2">
               <path d="M15 6 L9 12 L15 18" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </ToolbarBtn>
+          <span className="h-3.5 w-px bg-black/15" />
           <ToolbarBtn dim>
             <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.2">
               <path d="M9 6 L15 12 L9 18" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </ToolbarBtn>
         </span>
-        {/* centered search pill */}
-        <span className="mx-auto flex w-[58%] items-center justify-center gap-1.5 rounded-lg bg-black/[0.07] px-3 py-[5px] text-[11px] text-black/55">
+        {/* centered search pill with refresh */}
+        <span className="relative mx-auto flex w-[58%] items-center justify-center gap-1.5 rounded-lg bg-black/[0.07] px-3 py-[5px] text-[11px] text-black/55">
           <svg viewBox="0 0 24 24" className="h-3 w-3 text-black/40" fill="none" stroke="currentColor" strokeWidth="2">
             <rect x="5" y="11" width="14" height="9" rx="2" />
             <path d="M8 11 V8 a4 4 0 0 1 8 0 v3" />
           </svg>
           {url}
+          <svg viewBox="0 0 24 24" className="absolute right-2 h-3 w-3 text-black/35" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+            <path d="M20 11 a8 8 0 1 0 -1.5 5" strokeLinecap="round" />
+            <path d="M20 5 V11 H14" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
         </span>
         {/* right cluster */}
         <span className="flex items-center gap-2">
@@ -331,15 +343,14 @@ function Clock({ big = false }: { big?: boolean }) {
   const time = now
     ? now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
     : '--:--'
-  if (!big)
-    return (
-      <span suppressHydrationWarning>
-        {now
-          ? now.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })
-          : ''}{' '}
-        {time}
-      </span>
-    )
+  if (!big) {
+    const label = now
+      ? `${now.toLocaleDateString('en-US', { weekday: 'short' })} ${now.getDate()} ` +
+        `${now.toLocaleDateString('en-US', { month: 'short' })} ` +
+        `${now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}`
+      : ''
+    return <span suppressHydrationWarning>{label}</span>
+  }
   return (
     <div className="pointer-events-none select-none text-center text-white/95 drop-shadow-[0_2px_14px_rgba(0,0,0,0.4)]">
       <p suppressHydrationWarning className="mac-font m-0 text-5xl font-semibold tracking-tight sm:text-7xl">
@@ -351,6 +362,52 @@ function Clock({ big = false }: { big?: boolean }) {
           : ''}
       </p>
     </div>
+  )
+}
+
+/* ---------- menu-bar glyphs ---------- */
+
+function AppleLogo() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-3 w-3" fill="currentColor" aria-hidden="true">
+      <path d="M17.6 12.7c0-2.1 1.7-3.1 1.8-3.2-1-1.4-2.5-1.6-3-1.7-1.3-.1-2.5.7-3.1.7s-1.6-.7-2.7-.7c-1.4 0-2.7.8-3.4 2.1-1.5 2.5-.4 6.3 1 8.3.7 1 1.5 2.2 2.6 2.1 1-.04 1.4-.7 2.7-.7s1.6.7 2.7.6c1.1-.02 1.8-1 2.5-2 .8-1.2 1.1-2.3 1.1-2.4-.02-.01-2.1-.8-2.2-3.2zM15.5 6.3c.6-.7 1-1.7.9-2.7-.9.04-1.9.6-2.5 1.3-.5.6-1 1.6-.9 2.6 1 .08 1.9-.5 2.5-1.2z" />
+    </svg>
+  )
+}
+
+function StatusIcons() {
+  return (
+    <span className="flex items-center gap-2.5 text-white/85">
+      {/* control center */}
+      <span className="flex flex-col gap-[2px]" aria-hidden="true">
+        <span className="h-[3px] w-3.5 rounded-full bg-white/80" />
+        <span className="h-[3px] w-3.5 rounded-full bg-white/80" />
+      </span>
+      {/* wifi */}
+      <svg viewBox="0 0 24 20" className="h-3 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+        <path d="M3 7 a13 13 0 0 1 18 0" strokeLinecap="round" />
+        <path d="M6.5 11 a8 8 0 0 1 11 0" strokeLinecap="round" />
+        <circle cx="12" cy="15.6" r="1.3" fill="currentColor" stroke="none" />
+      </svg>
+      {/* battery */}
+      <span className="flex items-center gap-1" aria-hidden="true">
+        <span className="text-[9px]">69%</span>
+        <span className="relative flex h-2.5 w-5 items-center rounded-[3px] border border-white/70 px-[1.5px]">
+          <span className="h-[6px] rounded-[1px] bg-white/90" style={{ width: '69%' }} />
+          <span className="absolute -right-[3px] top-1/2 h-1 w-[2px] -translate-y-1/2 rounded-r bg-white/70" />
+        </span>
+      </span>
+      {/* spotlight */}
+      <svg viewBox="0 0 24 24" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
+        <circle cx="10" cy="10" r="6" />
+        <line x1="14.5" y1="14.5" x2="21" y2="21" strokeLinecap="round" />
+      </svg>
+      {/* control center toggle */}
+      <svg viewBox="0 0 28 18" className="h-3 w-4.5" aria-hidden="true">
+        <rect x="0.5" y="0.5" width="27" height="17" rx="8.5" fill="none" stroke="currentColor" strokeWidth="1.4" opacity="0.7" />
+        <circle cx="9" cy="9" r="5.5" fill="currentColor" opacity="0.85" />
+      </svg>
+    </span>
   )
 }
 
@@ -739,14 +796,17 @@ export function OpenTabs({ className }: { className?: string }) {
                     style={{ opacity: screenOn }}
                   >
                     <span className="mac-font flex items-center gap-3">
-                      <span aria-hidden="true"></span>
+                      <AppleLogo />
                       {menu.map((m, i) => (
                         <span key={m} className={cn(i === 0 && 'font-bold', i > 2 && 'hidden sm:inline')}>
                           {m}
                         </span>
                       ))}
                     </span>
-                    <span className="mac-font">
+                    <span className="mac-font flex items-center gap-2.5">
+                      <span className="hidden sm:flex">
+                        <StatusIcons />
+                      </span>
                       <Clock />
                     </span>
                   </div>
