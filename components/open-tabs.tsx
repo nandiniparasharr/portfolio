@@ -15,7 +15,13 @@ const WINDOWS: { id: WinId; title: string; app: string }[] = [
   { id: 'safari', title: 'Nifty 50 & Market Indices', app: 'Safari' },
 ]
 
-const CASCADE_LEFT = ['2%', '11%', '5%']
+// Fixed home position per window so they read as three distinct windows in a
+// tidy down-right cascade (and don't reshuffle when focus changes).
+const HOME: Record<WinId, { left: string; top: number }> = {
+  safari: { left: '2%', top: 0 },
+  notes: { left: '15%', top: 34 },
+  word: { left: '28%', top: 68 },
+}
 
 const MENUS: Record<'finder' | WinId, string[]> = {
   finder: ['Finder', 'File', 'Edit', 'View', 'Go', 'Window', 'Help'],
@@ -594,8 +600,12 @@ export function OpenTabs({ className }: { className?: string }) {
   const lockOpacity = unlocked ? 0 : Math.min(Math.max((p - 0.2) / 0.12, 0), 1)
 
   const visibleWins = WINDOWS.filter((w) => !wins[w.id].closed && !wins[w.id].min)
+  // Background windows stack by cascade depth (higher = further back) so every
+  // title bar peeks through; the active window always sits on top.
   const stack = [
-    ...visibleWins.filter((w) => w.id !== active),
+    ...visibleWins
+      .filter((w) => w.id !== active)
+      .sort((a, b) => HOME[a.id].top - HOME[b.id].top),
     ...visibleWins.filter((w) => w.id === active),
   ]
   const focusNext = (except: WinId) => {
@@ -802,14 +812,15 @@ export function OpenTabs({ className }: { className?: string }) {
                             key={w.id}
                             data-active={isActive}
                             className={cn(
-                              'mac-window absolute w-[86%] sm:w-[78%]',
+                              'mac-window absolute w-[66%] sm:w-[62%]',
+                              !isActive && 'brightness-[0.96]',
                               dragId === w.id
                                 ? 'transition-none'
                                 : 'transition-[top,left,width] duration-500 ease-[cubic-bezier(0.34,1.3,0.64,1)]',
                             )}
                             style={{
-                              left: st.max ? '0%' : CASCADE_LEFT[i],
-                              top: st.max ? '0px' : `${i * 40}px`,
+                              left: st.max ? '0%' : HOME[w.id].left,
+                              top: st.max ? '0px' : `${HOME[w.id].top}px`,
                               width: st.max ? '100%' : undefined,
                               transform: st.max ? undefined : `translate(${st.dx}px, ${st.dy}px)`,
                               zIndex: 10 + i,
@@ -861,14 +872,13 @@ export function OpenTabs({ className }: { className?: string }) {
                                 {w.title}
                               </span>
                             </div>
-                            {isActive &&
-                              (w.id === 'word' ? (
-                                <WordBody />
-                              ) : w.id === 'notes' ? (
-                                <NotesBody />
-                              ) : (
-                                <SafariBody tab={safariTab} setTab={setSafariTab} />
-                              ))}
+                            {w.id === 'word' ? (
+                              <WordBody />
+                            ) : w.id === 'notes' ? (
+                              <NotesBody />
+                            ) : (
+                              <SafariBody tab={safariTab} setTab={setSafariTab} />
+                            )}
                           </div>
                         )
                       })}
