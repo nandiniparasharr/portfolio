@@ -1,20 +1,10 @@
 import type { Metadata } from 'next'
-import {
-  Container,
-  ImagePlaceholder,
-  LLink,
-  LedgerRow,
-  SectionLabel,
-} from '@/components/ledger'
+import { Container, LLink, SectionLabel } from '@/components/ledger'
+import { ProjectImage } from '@/components/project-image'
 import { Reveal } from '@/components/reveal'
 import { Trajectory } from '@/components/trajectory'
 import { OpenTabs } from '@/components/open-tabs'
-import {
-  certifications,
-  currently,
-  education,
-  site,
-} from '@/lib/content'
+import { certifications, education, site } from '@/lib/content'
 
 export const metadata: Metadata = {
   title: 'About — Nandini Parashar',
@@ -25,43 +15,34 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <Container className="pb-24 pt-18">
-      <div className="grid items-start gap-16 lg:grid-cols-[1fr_1.4fr]">
-        <div className="order-2 lg:order-1">
-          <ImagePlaceholder
-            ratio="4/5"
-            label="PORTRAIT — A REAL PHOTO, NOT A HEADSHOT"
+      <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <Reveal className="order-2 lg:order-1">
+          <ProjectImage
+            src="/about/moodboard.jpg"
+            alt="A moodboard of Nandini's notes, books, and current obsessions"
+            ratio="5/6"
+            fit="cover"
+            label="MOODBOARD — DROP IN YOUR COLLAGE (public/about/moodboard.jpg)"
           />
-          <div className="mt-5 border border-border bg-card p-4">
-            <SectionLabel tone="muted" className="mb-2">
-              Currently
-            </SectionLabel>
-            {currently.map((c, i) => (
-              <LedgerRow
-                key={c.label}
-                label={c.label}
-                value={c.value}
-                last={i === currently.length - 1}
-              />
-            ))}
-          </div>
-          <div className="mt-5">
-            <LLink href={site.resume} variant="ghost">
-              Download the CV ↗
-            </LLink>
-          </div>
-        </div>
+        </Reveal>
 
         <div className="order-1 lg:order-2">
-          <SectionLabel className="mb-4">About</SectionLabel>
-          <h1 className="text-display">
-            Jack of all trades, <em className="text-rose">on purpose</em>.
+          <SectionLabel className="mb-6">About</SectionLabel>
+          <h1 className="font-serif leading-[0.98] text-[clamp(2.75rem,6.5vw,4.75rem)]">
+            <span className="block text-foreground">Jack of</span>
+            <span className="block text-foreground">all trades.</span>
+            <span className="mt-2 block italic text-rose">on purpose.</span>
           </h1>
-          <p className="mt-6 max-w-lg text-lead text-muted-foreground">
+          <p className="mt-8 max-w-md text-lead text-muted-foreground">
             I work in finance and love it — and I refuse to stop there. This
             site is the archive of everything else: code, writing, design, and
             the reading that feeds all of it.
           </p>
-
+          <div className="mt-8">
+            <LLink href={site.resume} variant="ghost">
+              Download the CV ↗
+            </LLink>
+          </div>
         </div>
       </div>
 
