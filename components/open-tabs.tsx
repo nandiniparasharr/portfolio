@@ -834,10 +834,14 @@ export function OpenTabs({ className }: { className?: string }) {
                               left: st.max || isNarrow ? '0%' : HOME[w.id].left,
                               top: st.max ? '0px' : isNarrow ? '0px' : `${HOME[w.id].top}px`,
                               width: st.max || isNarrow ? '100%' : undefined,
-                              transform:
-                                st.max || isNarrow
-                                  ? undefined
+                              // Mobile: shrink the window 15% from the top so its
+                              // bottom clears the dock and all content stays readable.
+                              transform: st.max
+                                ? undefined
+                                : isNarrow
+                                  ? 'scale(0.85)'
                                   : `translate(${st.dx}px, ${st.dy}px)`,
+                              transformOrigin: isNarrow ? 'top center' : undefined,
                               zIndex: 10 + i,
                             }}
                             onPointerDownCapture={() => setActive(w.id)}
