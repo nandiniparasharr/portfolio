@@ -605,8 +605,7 @@ export function OpenTabs({ className }: { className?: string }) {
   const p = reduced || manual ? 1 : progress
   // Screen is always on: the lock screen shows the moment the monitor is
   // visible (no blank/black power-on). Scrolling brings in notifications,
-  // then unlocks to the desktop.
-  const screenOn = 1
+  // then unlocks to the desktop (where the menu bar appears).
   const notiIn = p > 0.15
   const unlocked = manual || p > 0.5
   const lockOpacity = unlocked ? 0 : 1
@@ -710,8 +709,8 @@ export function OpenTabs({ className }: { className?: string }) {
 
                   {/* menu bar */}
                   <div
-                    className="mac-glass-dark absolute inset-x-0 top-0 z-40 flex h-6 items-center justify-between rounded-none border-x-0 border-t-0 px-3 text-[10px] font-medium text-white/90"
-                    style={{ opacity: screenOn }}
+                    className="mac-glass-dark absolute inset-x-0 top-0 z-40 flex h-6 items-center justify-between rounded-none border-x-0 border-t-0 px-3 text-[10px] font-medium text-white/90 transition-opacity duration-300"
+                    style={{ opacity: unlocked ? 1 : 0, pointerEvents: unlocked ? 'auto' : 'none' }}
                   >
                     <span className="mac-font flex items-center gap-2.5 whitespace-nowrap">
                       <AppleLogo />
