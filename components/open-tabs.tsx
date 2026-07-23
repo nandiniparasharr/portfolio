@@ -580,16 +580,10 @@ export function OpenTabs({ className }: { className?: string }) {
   }, [])
 
   const p = reduced || manual ? 1 : progress
-  const open = Math.min(p / 0.24, 1)
-  const sceneTilt = 6 * (1 - open)
-  const lidAngle = -90 + open * 90
-  const screenOn = Math.min(Math.max((p - 0.05) / 0.14, 0), 1)
-  const sceneOpacity = reduced || manual ? 1 : Math.min(Math.max((p - 0.05) / 0.035, 0), 1)
-  const closedOpacity = 1 - sceneOpacity
-  const notiIn = p > 0.34
-  const unlocked = manual || p > 0.52
-  const lockOpacity = unlocked ? 0 : Math.min(Math.max((p - 0.22) / 0.12, 0), 1)
-  const aluOpacity = Math.max(1 - open * 2.4, 0)
+  const screenOn = reduced ? 1 : Math.min(Math.max((p - 0.04) / 0.14, 0), 1)
+  const notiIn = p > 0.3
+  const unlocked = manual || p > 0.5
+  const lockOpacity = unlocked ? 0 : Math.min(Math.max((p - 0.2) / 0.12, 0), 1)
 
   const visibleWins = WINDOWS.filter((w) => !wins[w.id].closed && !wins[w.id].min)
   const stack = [
@@ -644,51 +638,37 @@ export function OpenTabs({ className }: { className?: string }) {
     <div ref={sectionRef} className={cn('relative h-[220vh]', className)}>
       <div className="relative flex h-screen flex-col items-center justify-center px-2 sticky top-0">
         {/* ---------- CLOSED LAPTOP (floating, flat overlay) ---------- */}
-        <div
-          className="absolute inset-0 z-[80] flex items-center justify-center"
-          style={{ opacity: closedOpacity, pointerEvents: 'none' }}
-          aria-hidden={closedOpacity < 0.5}
-        >
-          <div className="mac-float w-full max-w-[560px] px-6">
-            <div
-              className="mac-lid-surface relative flex items-center justify-center rounded-[18px] border border-black/10"
-              style={{ aspectRatio: '16 / 10.6' }}
-            >
-              <span className="mac-engrave font-serif text-[34px] italic tracking-wide">
-                N—P
-              </span>
-            </div>
-            <div className="relative mx-auto -mt-px h-2.5 w-[103%] -translate-x-[1.5%] rounded-b-[10px] mac-lid-base border border-t-0 border-black/10">
-              <span className="absolute left-1/2 top-0 h-1 w-[16%] -translate-x-1/2 rounded-b-full bg-black/15" />
-            </div>
-            <div className="mac-float-shadow mx-auto mt-7 h-4 w-[70%] rounded-[50%] bg-black/45 blur-xl" />
+        <div className="relative mx-auto w-full max-w-[720px] pb-[78px]">
+          {/* ---------- DESK (placeholder — details later) ---------- */}
+          <div className="absolute inset-x-[-18%] bottom-[-14px] z-0 h-[56px]" aria-hidden="true">
+            {/* surface */}
+            <div className="absolute inset-x-0 top-0 h-[22px] bg-gradient-to-b from-[#7c6851] to-[#66543f]" />
+            <div className="absolute inset-x-0 top-0 h-px bg-white/18" />
+            {/* front edge */}
+            <div className="absolute inset-x-0 bottom-0 top-[22px] bg-gradient-to-b from-[#4c3d2d] to-[#392d20]" />
           </div>
-        </div>
-
-        <div
-          className="relative w-full max-w-[760px]"
-          style={{ perspective: '1500px', opacity: sceneOpacity }}
-        >
-          {/* ---------- 3D MACHINE ---------- */}
+          {/* contact shadow */}
           <div
-            className="relative"
-            style={{ transform: `rotateX(${sceneTilt}deg)`, transformStyle: 'preserve-3d' }}
+            className="absolute bottom-[28px] left-1/2 z-0 h-4 w-[44%] -translate-x-1/2 rounded-[50%] bg-black/35 blur-md"
+            aria-hidden="true"
+          />
+          {/* stand foot */}
+          <div
+            className="absolute bottom-[28px] left-1/2 z-[5] h-[13px] w-[40%] -translate-x-1/2 rounded-[50%] bg-gradient-to-b from-[#d4d1d7] to-[#8f8b95] shadow-[0_5px_9px_rgba(0,0,0,0.28)]"
+            aria-hidden="true"
+          />
+          {/* stand neck */}
+          <div
+            className="absolute bottom-[38px] left-1/2 z-[5] h-[44px] w-[13%] -translate-x-1/2 bg-gradient-to-r from-[#9d99a3] via-[#e7e4ea] to-[#9d99a3]"
+            aria-hidden="true"
+          />
+
+          {/* ---------- MONITOR SCREEN ---------- */}
+          <div
+            ref={screenRef}
+            className="relative z-10 w-full rounded-[16px] bg-gradient-to-b from-[#101013] to-[#050506] p-[6px] shadow-[0_1px_0_rgba(255,255,255,0.14)_inset,0_18px_40px_rgba(10,5,15,0.42)]"
+            onClick={() => !unlocked && setManual(true)}
           >
-            {/* Lid */}
-            <div
-              className="relative"
-              style={{
-                transform: `rotateX(${lidAngle}deg)`,
-                transformOrigin: 'bottom',
-                transformStyle: 'preserve-3d',
-              }}
-            >
-              <div
-                ref={screenRef}
-                className="relative rounded-[16px] bg-gradient-to-b from-[#0e0e11] to-[#050506] p-[5px] shadow-[0_1px_0_rgba(255,255,255,0.14)_inset,0_22px_40px_rgba(10,5,15,0.45)]"
-                style={{ backfaceVisibility: 'hidden' }}
-                onClick={() => !unlocked && setManual(true)}
-              >
                 <div className="mac-sunset relative aspect-[16/10] cursor-pointer overflow-hidden rounded-[11px]">
                   {/* wallpaper parallax layer (glow only, so edges never show) */}
                   <div
@@ -701,17 +681,9 @@ export function OpenTabs({ className }: { className?: string }) {
                     aria-hidden="true"
                   />
                   <div
-                    className="pointer-events-none absolute inset-0 z-50 bg-black transition-opacity duration-200"
+                    className="pointer-events-none absolute inset-0 z-[60] bg-black transition-opacity duration-200"
                     style={{ opacity: 1 - screenOn }}
                   />
-                  {/* aluminum lid-top while nearly closed */}
-                  <div
-                    className="mac-alu pointer-events-none absolute inset-0 z-[60] flex items-center justify-center"
-                    style={{ opacity: aluOpacity }}
-                    aria-hidden="true"
-                  >
-                    <span className="mac-engrave font-serif text-3xl italic">N—P</span>
-                  </div>
 
                   {/* menu bar */}
                   <div
@@ -926,43 +898,18 @@ export function OpenTabs({ className }: { className?: string }) {
                   </div>
                 </div>
 
-                {/* camera notch */}
-                <div
-                  className="pointer-events-none absolute left-1/2 top-[4px] z-[45] flex h-[11px] w-[72px] -translate-x-1/2 items-center justify-center rounded-b-[7px] bg-gradient-to-b from-[#0e0e11] to-[#050506]"
+                {/* camera in the top bezel */}
+                <span
+                  className="pointer-events-none absolute left-1/2 top-[3px] z-[45] h-[4px] w-[4px] -translate-x-1/2 rounded-full bg-[#243448] ring-1 ring-white/10"
                   aria-hidden="true"
-                >
-                  <span className="h-[4px] w-[4px] rounded-full bg-[#243448] ring-1 ring-white/10" />
-                </div>
+                />
               </div>
-            </div>
-
-            {/* bottom case (aluminum) */}
-            <div
-              className="absolute left-1/2 top-full z-0 w-[104%] -translate-x-1/2"
-              aria-hidden="true"
-            >
-              {/* hinge recess under the screen */}
-              <div className="mx-auto h-[5px] w-[34%] rounded-b-[3px] bg-gradient-to-b from-[#2c2c30] to-[#565359]" />
-              {/* aluminum body */}
-              <div className="relative mt-px h-[22px] rounded-b-[13px] bg-gradient-to-b from-[#d6d3d9] via-[#c0bcc4] to-[#a5a1ab] shadow-[0_12px_22px_rgba(0,0,0,0.32)]">
-                <span className="absolute inset-x-0 top-0 h-px bg-white/60" />
-                {/* front opening groove */}
-                <span className="absolute left-1/2 top-0 h-[6px] w-[12%] -translate-x-1/2 rounded-b-[7px] bg-gradient-to-b from-[#8f8b95] to-[#aca8b2]" />
-                {/* front lip */}
-                <span className="absolute inset-x-0 bottom-0 h-[3px] rounded-b-[13px] bg-gradient-to-b from-transparent to-white/25" />
-              </div>
-              {/* ground shadow */}
-              <div className="mx-auto mt-[7px] h-[10px] w-[80%] rounded-[50%] bg-black/25 blur-md" />
-            </div>
-          </div>
         </div>
 
-        <p className="mt-5 text-center font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
-          {closedOpacity > 0.5
-            ? 'Scroll to open the laptop'
-            : !unlocked
-              ? 'Scroll to unlock — or click the screen'
-              : 'Drag the windows · click a title to bring it forward'}
+        <p className="mt-6 text-center font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
+          {!unlocked
+            ? 'Scroll to unlock — or click the screen'
+            : 'Drag the windows · click a title to bring it forward'}
         </p>
       </div>
     </div>
