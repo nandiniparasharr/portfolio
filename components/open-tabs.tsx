@@ -456,10 +456,8 @@ function DockTile({
     >
       <span className="relative block h-10 w-10 sm:h-11 sm:w-11">
         {/* squircle body clips the icon; badge sits outside */}
-        <span className="absolute inset-0 overflow-hidden rounded-[23%] shadow-[0_3px_6px_rgba(0,0,0,0.28)] ring-1 ring-black/[0.06]">
+        <span className="absolute inset-0 overflow-hidden rounded-[23%] shadow-[0_3px_6px_rgba(0,0,0,0.28)]">
           {children}
-          {/* faint top sheen */}
-          <span className="pointer-events-none absolute inset-x-0 top-0 h-[38%] bg-gradient-to-b from-white/12 to-transparent" />
         </span>
         {badge && (
           <span className="mac-font absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#ff3b30] text-[9px] font-bold text-white ring-[1.5px] ring-white/80">
@@ -475,163 +473,25 @@ function DockTile({
   )
 }
 
-/* All icons fill the clipped squircle (h-full w-full). */
-
-function FinderIcon() {
+/* Real app icons, from /public/mac-icons. */
+function AppIcon({
+  src,
+  fit = 'cover',
+  bg,
+}: {
+  src: string
+  fit?: 'cover' | 'contain'
+  bg?: string
+}) {
   return (
-    <span className="relative block h-full w-full" aria-hidden="true">
-      {/* left blue, right white — like the real Finder face */}
-      <span className="absolute inset-0 bg-white" />
-      <span className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-b from-[#2ea7ff] to-[#0a84f0]" />
-      <svg viewBox="0 0 44 44" className="absolute inset-0 h-full w-full">
-        <rect x="13.5" y="11.5" width="3.4" height="8" rx="1.7" fill="#33475e" />
-        <rect x="27.1" y="11.5" width="3.4" height="8" rx="1.7" fill="#33475e" />
-        {/* simple smile */}
-        <path d="M13 24 Q22 31 31 24" fill="none" stroke="#33475e" strokeWidth="2.6" strokeLinecap="round" />
-      </svg>
-    </span>
-  )
-}
-
-function SafariIcon() {
-  return (
-    <span className="flex h-full w-full items-center justify-center bg-white" aria-hidden="true">
-      {/* blue ring + light dial */}
-      <span className="relative flex h-[88%] w-[88%] items-center justify-center rounded-full bg-gradient-to-b from-[#3a9bf7] to-[#1477ec]">
-        <span className="relative flex h-[80%] w-[80%] items-center justify-center rounded-full bg-gradient-to-b from-[#eaf3ff] to-[#d3e6fb]">
-          {/* fine tick marks in blue */}
-          <span
-            className="absolute inset-[6%] rounded-full"
-            style={{
-              background:
-                'repeating-conic-gradient(from 0deg, rgba(40,110,200,0.8) 0deg 1.5deg, transparent 1.5deg 15deg)',
-              WebkitMask: 'radial-gradient(circle, transparent 74%, #000 75%)',
-              mask: 'radial-gradient(circle, transparent 74%, #000 75%)',
-            }}
-          />
-          {/* needle — red NE / silver SW diamond */}
-          <span className="relative h-[64%] w-[64%] rotate-45">
-            <span
-              className="absolute left-1/2 top-0 h-1/2 w-[20%] -translate-x-1/2"
-              style={{ background: '#f5493d', clipPath: 'polygon(50% 0, 100% 100%, 0 100%)' }}
-            />
-            <span
-              className="absolute bottom-0 left-1/2 h-1/2 w-[20%] -translate-x-1/2"
-              style={{ background: '#c8ccd2', clipPath: 'polygon(0 0, 100% 0, 50% 100%)' }}
-            />
-          </span>
-          <span className="absolute h-1.5 w-1.5 rounded-full bg-white ring-1 ring-black/10" />
-        </span>
-      </span>
-    </span>
-  )
-}
-
-function WordIcon() {
-  return (
-    <span className="flex h-full w-full items-center justify-center bg-white" aria-hidden="true">
-      {/* the Word document: blue page with a lighter spine + white W */}
-      <span className="relative h-[68%] w-[62%] overflow-hidden rounded-[4px] bg-gradient-to-b from-[#41a5ee] to-[#2b7cd3] shadow-[0_1px_2px_rgba(0,0,0,0.2)]">
-        <span className="absolute inset-y-0 left-0 w-[22%] bg-[#2564b0]" />
-        <span className="mac-font absolute inset-0 flex items-center justify-center pl-[14%] text-[13px] font-bold leading-none text-white">
-          W
-        </span>
-      </span>
-    </span>
-  )
-}
-
-function NotesIcon() {
-  return (
-    <span className="block h-full w-full" aria-hidden="true">
-      <svg viewBox="0 0 44 44" className="h-full w-full" preserveAspectRatio="none">
-        <rect x="0" y="0" width="44" height="44" fill="#fffdf6" />
-        <rect x="0" y="0" width="44" height="13" fill="#ffd21f" />
-        <g stroke="#c7c1b4" strokeWidth="2" strokeLinecap="round">
-          <line x1="8" y1="21" x2="36" y2="21" />
-          <line x1="8" y1="28" x2="36" y2="28" />
-          <line x1="8" y1="35" x2="27" y2="35" />
-        </g>
-      </svg>
-    </span>
-  )
-}
-
-function SpotifyIcon() {
-  return (
-    <span className="flex h-full w-full items-center justify-center bg-black" aria-hidden="true">
-      <span className="relative flex h-[78%] w-[78%] items-center justify-center rounded-full bg-[#1ed760]">
-        <svg viewBox="0 0 28 28" className="h-[64%] w-[64%]">
-          <path d="M4.5 10 C11 7.6, 18.5 8.2, 24 11.5" fill="none" stroke="#000" strokeWidth="3" strokeLinecap="round" />
-          <path d="M6 14.6 C11.6 12.6, 17.6 13, 22 15.8" fill="none" stroke="#000" strokeWidth="2.6" strokeLinecap="round" />
-          <path d="M7.6 18.8 C11.8 17.4, 16 17.6, 19.4 19.4" fill="none" stroke="#000" strokeWidth="2.2" strokeLinecap="round" />
-        </svg>
-      </span>
-    </span>
-  )
-}
-
-function PhotosIcon() {
-  const petals = ['#fb3b30', '#ff8a00', '#ffcc00', '#34c759', '#00c7be', '#0a84ff', '#7d3ff0', '#ff2d92']
-  return (
-    <span className="flex h-full w-full items-center justify-center bg-white" aria-hidden="true">
-      <svg viewBox="0 0 40 40" className="h-[84%] w-[84%]" style={{ mixBlendMode: 'normal' }}>
-        {petals.map((c, i) => (
-          <ellipse
-            key={c}
-            cx="20"
-            cy="11"
-            rx="4.8"
-            ry="9"
-            fill={c}
-            opacity="0.82"
-            transform={`rotate(${i * 45} 20 20)`}
-          />
-        ))}
-      </svg>
-    </span>
-  )
-}
-
-function RemindersIcon() {
-  const rows: [string, string][] = [
-    ['#0a84ff', 'w-[62%]'],
-    ['#ff453a', 'w-[62%]'],
-    ['#ff9f0a', 'w-[44%]'],
-  ]
-  return (
-    <span className="flex h-full w-full items-center justify-center bg-white" aria-hidden="true">
-      <svg viewBox="0 0 44 44" className="h-[62%] w-[62%]">
-        {rows.map(([c, w], i) => {
-          const y = 6 + i * 16
-          const len = w.includes('44') ? 20 : 20
-          return (
-            <g key={c}>
-              <circle cx="6" cy={y} r="4.4" fill="white" stroke={c} strokeWidth="2.4" />
-              <line
-                x1="16"
-                y1={y}
-                x2={i === 2 ? 30 : 40}
-                y2={y}
-                stroke="#c9c9cf"
-                strokeWidth="2.4"
-                strokeLinecap="round"
-              />
-            </g>
-          )
-        })}
-      </svg>
-    </span>
-  )
-}
-
-function MailIcon() {
-  return (
-    <span className="flex h-full w-full items-center justify-center bg-gradient-to-b from-[#48adff] to-[#0a74f0]" aria-hidden="true">
-      <svg viewBox="0 0 28 28" className="h-[66%] w-[66%]">
-        <rect x="2.5" y="6" width="23" height="16" rx="3.5" fill="white" />
-        <path d="M3.6 8 L14 15.5 L24.4 8" fill="none" stroke="#0a74f0" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
-      </svg>
+    <span className={cn('flex h-full w-full items-center justify-center', bg)}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt=""
+        aria-hidden="true"
+        className={fit === 'cover' ? 'h-full w-full object-cover' : 'h-[74%] w-[74%] object-contain'}
+      />
     </span>
   )
 }
@@ -916,8 +776,8 @@ export function OpenTabs({ className }: { className?: string }) {
                           style={{ transitionDelay: `${i * 140}ms` }}
                         >
                           <span className="relative block h-8 w-8 flex-none">
-                            <span className="absolute inset-0 overflow-hidden rounded-[22%] ring-1 ring-black/10">
-                              {n.app === 'Mail' ? <MailIcon /> : <RemindersIcon />}
+                            <span className="absolute inset-0 overflow-hidden rounded-[22%]">
+                              <AppIcon src={n.app === 'Mail' ? '/mac-icons/mail.webp' : '/mac-icons/reminders.png'} />
                             </span>
                             {n.badge && (
                               <span className="mac-font absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#ff3b30] text-[9px] font-bold text-white ring-[1.5px] ring-white/80">
@@ -1045,20 +905,20 @@ export function OpenTabs({ className }: { className?: string }) {
                     {/* Dock */}
                     <div className="absolute bottom-2 left-1/2 z-40 -translate-x-1/2">
                       <div className="mac-glass flex items-end gap-1.5 rounded-2xl px-2.5 py-1.5 sm:gap-2">
-                        <DockTile label="Finder"><FinderIcon /></DockTile>
+                        <DockTile label="Finder"><AppIcon src="/mac-icons/finder.png" /></DockTile>
                         <DockTile label="Safari" onClick={() => launch('safari')} indicator={!wins.safari.closed && !wins.safari.min}>
-                          <SafariIcon />
+                          <AppIcon src="/mac-icons/safari.jpg" />
                         </DockTile>
                         <DockTile label="Microsoft Word" onClick={() => launch('word')} indicator={!wins.word.closed && !wins.word.min}>
-                          <WordIcon />
+                          <AppIcon src="/mac-icons/word.webp" fit="contain" bg="bg-white" />
                         </DockTile>
                         <DockTile label="Notes" onClick={() => launch('notes')} indicator={!wins.notes.closed && !wins.notes.min}>
-                          <NotesIcon />
+                          <AppIcon src="/mac-icons/notes.png" />
                         </DockTile>
-                        <DockTile label="Spotify"><SpotifyIcon /></DockTile>
-                        <DockTile label="Photos"><PhotosIcon /></DockTile>
-                        <DockTile label="Reminders"><RemindersIcon /></DockTile>
-                        <DockTile label="Mail" badge="1"><MailIcon /></DockTile>
+                        <DockTile label="Spotify"><AppIcon src="/mac-icons/spotify.webp" /></DockTile>
+                        <DockTile label="Photos"><AppIcon src="/mac-icons/photos.webp" /></DockTile>
+                        <DockTile label="Reminders"><AppIcon src="/mac-icons/reminders.png" /></DockTile>
+                        <DockTile label="Mail" badge="1"><AppIcon src="/mac-icons/mail.webp" /></DockTile>
                         <span className="mx-0.5 mb-1.5 h-8 w-px bg-white/30" aria-hidden="true" />
                         <DockTile label="Trash"><TrashIcon /></DockTile>
                       </div>
