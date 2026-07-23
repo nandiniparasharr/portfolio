@@ -681,13 +681,17 @@ export function OpenTabs({ className }: { className?: string }) {
     }
   }, [dragId, active])
 
-  const menu = unlocked ? MENUS[active] : MENUS.finder
+  // Always the Finder (desktop) menu, like a Mac's home screen.
+  const menu = MENUS.finder
 
   return (
     <div ref={sectionRef} className={cn('relative h-[220vh]', className)}>
-      <div className="relative flex h-screen flex-col items-center justify-center px-2 sticky top-0">
+      <div className="sticky top-0 flex h-screen flex-col items-center justify-center px-2 pt-[84px]">
         {/* ---------- CLOSED LAPTOP (floating, flat overlay) ---------- */}
-        <div className="relative -mx-7 w-[calc(100%+3.5rem)] pb-[62px] sm:mx-auto sm:w-full sm:max-w-[725px]">
+        {/* Width is also capped by viewport height (min with 80vh) so on short
+            screens the whole monitor shrinks to fit and never slides under the
+            page header. */}
+        <div className="relative -mx-7 w-[calc(100%+3.5rem)] pb-[62px] sm:mx-auto sm:w-full sm:max-w-[min(725px,80vh)]">
           {/* ---------- DESK (placeholder — details later) ---------- */}
           <div className="absolute inset-x-[-18%] bottom-[-10px] z-0 h-[39px]" aria-hidden="true">
             {/* surface */}
