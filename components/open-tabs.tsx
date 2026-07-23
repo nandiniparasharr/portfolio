@@ -37,11 +37,6 @@ const initialWins: Record<WinId, WinState> = {
   safari: { closed: false, min: false, max: false, dx: 0, dy: 0 },
 }
 
-const APP_DOT: Record<WinId, string> = {
-  word: 'bg-[#185abd]',
-  notes: 'bg-[#e7a33d]',
-  safari: 'bg-[#1f7cf6]',
-}
 
 /* ---------- window bodies ---------- */
 
@@ -890,7 +885,6 @@ export function OpenTabs({ className }: { className?: string }) {
                                   className="h-2.5 w-2.5 rounded-full bg-[#28c840] hover:brightness-90"
                                 />
                               </span>
-                              <span className={cn('h-2 w-2 flex-none rounded-full', APP_DOT[w.id])} aria-hidden="true" />
                               <span className="mac-font truncate text-[12px] font-medium text-black/75">
                                 {w.title}
                               </span>
