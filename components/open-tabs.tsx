@@ -416,9 +416,9 @@ function StatusIcons() {
       </svg>
       {/* battery */}
       <span className="flex items-center gap-1" aria-hidden="true">
-        <span className="text-[9px]">69%</span>
+        <span className="text-[9px]">85%</span>
         <span className="relative flex h-2.5 w-5 items-center rounded-[3px] border border-white/70 px-[1.5px]">
-          <span className="h-[6px] rounded-[1px] bg-white/90" style={{ width: '69%' }} />
+          <span className="h-[6px] rounded-[1px] bg-white/90" style={{ width: '85%' }} />
           <span className="absolute -right-[3px] top-1/2 h-1 w-[2px] -translate-y-1/2 rounded-r bg-white/70" />
         </span>
       </span>
@@ -897,11 +897,6 @@ export function OpenTabs({ className }: { className?: string }) {
                           </div>
                         )
                       })}
-                      {visibleWins.length === 0 && (
-                        <p className="mac-font absolute inset-x-0 top-1/3 text-center text-[13px] font-medium text-white/80 drop-shadow">
-                          All closed. The dock brings them back.
-                        </p>
-                      )}
                     </div>
 
                     {/* Dock */}
