@@ -907,13 +907,13 @@ export function OpenTabs({ className }: { className?: string }) {
                     <div className="absolute bottom-1.5 left-1/2 z-40 w-full max-w-[96%] -translate-x-1/2 sm:bottom-2 sm:w-auto sm:max-w-none">
                       <div className="mac-glass flex items-end justify-center gap-1 rounded-2xl px-1.5 py-1 sm:gap-2 sm:px-2.5 sm:py-1.5">
                         <DockTile label="Finder"><AppIcon src="/mac-icons/finder.png" /></DockTile>
-                        <DockTile label="Safari" onClick={() => launch('safari')} indicator={!wins.safari.closed && !wins.safari.min}>
+                        <DockTile label="Safari" onClick={() => launch('safari')} indicator={!wins.safari.closed}>
                           <AppIcon src="/mac-icons/safari.jpg" />
                         </DockTile>
-                        <DockTile label="Microsoft Word" onClick={() => launch('word')} indicator={!wins.word.closed && !wins.word.min}>
+                        <DockTile label="Microsoft Word" onClick={() => launch('word')} indicator={!wins.word.closed}>
                           <AppIcon src="/mac-icons/word.webp" fit="contain" bg="bg-white" />
                         </DockTile>
-                        <DockTile label="Notes" onClick={() => launch('notes')} indicator={!wins.notes.closed && !wins.notes.min}>
+                        <DockTile label="Notes" onClick={() => launch('notes')} indicator={!wins.notes.closed}>
                           <AppIcon src="/mac-icons/notes.png" />
                         </DockTile>
                         <DockTile label="Spotify"><AppIcon src="/mac-icons/spotify.webp" /></DockTile>
