@@ -526,7 +526,7 @@ export function OpenTabs({ className }: { className?: string }) {
   const [dragId, setDragId] = useState<WinId | null>(null)
   const dragStart = useRef({ x: 0, y: 0, dx: 0, dy: 0 })
   const [reduced, setReduced] = useState(false)
-  const [par, setPar] = useState({ x: 0, y: 0 })
+  const lastP = useRef(0)
 
   useEffect(() => {
     setReduced(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
@@ -540,6 +540,10 @@ export function OpenTabs({ className }: { className?: string }) {
         const rect = el.getBoundingClientRect()
         const total = rect.height - window.innerHeight
         const p = total > 0 ? Math.min(Math.max(-rect.top / total, 0), 1) : 1
+        // Nothing visual changes once past the unlock point — skip re-renders
+        // while both the old and new values sit in that settled band.
+        if (p >= 0.5 && lastP.current >= 0.5) return
+        lastP.current = p
         setProgress(p)
       })
     }
@@ -558,18 +562,22 @@ export function OpenTabs({ className }: { className?: string }) {
     const el = screenRef.current
     if (!el) return
     let raf = 0
+    // Drive parallax through CSS variables (no React re-render per move)
     const onMove = (e: PointerEvent) => {
       if (raf) return
       raf = requestAnimationFrame(() => {
         raf = 0
         const r = el.getBoundingClientRect()
-        setPar({
-          x: ((e.clientX - r.left) / r.width - 0.5) * 2,
-          y: ((e.clientY - r.top) / r.height - 0.5) * 2,
-        })
+        const x = ((e.clientX - r.left) / r.width - 0.5) * 2
+        const y = ((e.clientY - r.top) / r.height - 0.5) * 2
+        el.style.setProperty('--wpx', `${x * -6}px`)
+        el.style.setProperty('--wpy', `${y * -6}px`)
       })
     }
-    const onLeave = () => setPar({ x: 0, y: 0 })
+    const onLeave = () => {
+      el.style.setProperty('--wpx', '0px')
+      el.style.setProperty('--wpy', '0px')
+    }
     el.addEventListener('pointermove', onMove)
     el.addEventListener('pointerleave', onLeave)
     return () => {
@@ -630,36 +638,33 @@ export function OpenTabs({ className }: { className?: string }) {
   }, [dragId])
 
   const menu = unlocked ? MENUS[active] : MENUS.finder
-  // wallpaper parallax offsets
-  const wpx = par.x * -6
-  const wpy = par.y * -6
 
   return (
     <div ref={sectionRef} className={cn('relative h-[220vh]', className)}>
       <div className="relative flex h-screen flex-col items-center justify-center px-2 sticky top-0">
         {/* ---------- CLOSED LAPTOP (floating, flat overlay) ---------- */}
-        <div className="relative mx-auto w-full max-w-[720px] pb-[78px]">
+        <div className="relative mx-auto w-full max-w-[612px] pb-[62px]">
           {/* ---------- DESK (placeholder — details later) ---------- */}
-          <div className="absolute inset-x-[-18%] bottom-[-14px] z-0 h-[56px]" aria-hidden="true">
+          <div className="absolute inset-x-[-18%] bottom-[-10px] z-0 h-[39px]" aria-hidden="true">
             {/* surface */}
-            <div className="absolute inset-x-0 top-0 h-[22px] bg-gradient-to-b from-[#7c6851] to-[#66543f]" />
+            <div className="absolute inset-x-0 top-0 h-[15px] bg-gradient-to-b from-[#7c6851] to-[#66543f]" />
             <div className="absolute inset-x-0 top-0 h-px bg-white/18" />
             {/* front edge */}
-            <div className="absolute inset-x-0 bottom-0 top-[22px] bg-gradient-to-b from-[#4c3d2d] to-[#392d20]" />
+            <div className="absolute inset-x-0 bottom-0 top-[15px] bg-gradient-to-b from-[#4c3d2d] to-[#392d20]" />
           </div>
           {/* contact shadow */}
           <div
-            className="absolute bottom-[28px] left-1/2 z-0 h-4 w-[44%] -translate-x-1/2 rounded-[50%] bg-black/35 blur-md"
+            className="absolute bottom-[22px] left-1/2 z-0 h-3.5 w-[44%] -translate-x-1/2 rounded-[50%] bg-black/35 blur-md"
             aria-hidden="true"
           />
           {/* stand foot */}
           <div
-            className="absolute bottom-[28px] left-1/2 z-[5] h-[13px] w-[40%] -translate-x-1/2 rounded-[50%] bg-gradient-to-b from-[#d4d1d7] to-[#8f8b95] shadow-[0_5px_9px_rgba(0,0,0,0.28)]"
+            className="absolute bottom-[22px] left-1/2 z-[5] h-[11px] w-[38%] -translate-x-1/2 rounded-[50%] bg-gradient-to-b from-[#d4d1d7] to-[#8f8b95] shadow-[0_4px_8px_rgba(0,0,0,0.28)]"
             aria-hidden="true"
           />
           {/* stand neck */}
           <div
-            className="absolute bottom-[38px] left-1/2 z-[5] h-[44px] w-[13%] -translate-x-1/2 bg-gradient-to-r from-[#9d99a3] via-[#e7e4ea] to-[#9d99a3]"
+            className="absolute bottom-[29px] left-1/2 z-[5] h-[36px] w-[12%] -translate-x-1/2 bg-gradient-to-r from-[#9d99a3] via-[#e7e4ea] to-[#9d99a3]"
             aria-hidden="true"
           />
 
@@ -674,7 +679,7 @@ export function OpenTabs({ className }: { className?: string }) {
                   <div
                     className="pointer-events-none absolute inset-0"
                     style={{
-                      transform: `translate(${wpx}px, ${wpy}px)`,
+                      transform: 'translate(var(--wpx,0px), var(--wpy,0px))',
                       background:
                         'radial-gradient(70% 45% at 50% 72%, rgba(255,206,140,0.55), transparent 60%)',
                     }}
@@ -711,7 +716,7 @@ export function OpenTabs({ className }: { className?: string }) {
                     aria-hidden="true"
                     className="absolute inset-x-0 bottom-0 h-[30%] bg-[#301538]/50"
                     style={{
-                      transform: `translate(${wpx * 1.6}px, 0)`,
+                      transform: 'translate(calc(var(--wpx,0px) * 1.6), 0)',
                       clipPath: 'polygon(0 62%, 10% 44%, 22% 58%, 34% 34%, 47% 56%, 60% 40%, 73% 60%, 86% 46%, 100% 58%, 100% 100%, 0 100%)',
                     }}
                   />
@@ -719,14 +724,14 @@ export function OpenTabs({ className }: { className?: string }) {
                     aria-hidden="true"
                     className="absolute inset-x-0 bottom-0 h-[22%] bg-[#1f0d26]/80"
                     style={{
-                      transform: `translate(${wpx * 2.4}px, 0)`,
+                      transform: 'translate(calc(var(--wpx,0px) * 2.4), 0)',
                       clipPath: 'polygon(0 70%, 14% 48%, 30% 66%, 46% 42%, 62% 64%, 78% 50%, 92% 66%, 100% 56%, 100% 100%, 0 100%)',
                     }}
                   />
 
                   {/* -------- LOCK SCREEN -------- */}
                   <div
-                    className="absolute inset-0 z-30 transition-all duration-500"
+                    className="absolute inset-0 z-30 transition-[opacity,transform] duration-500 will-change-[opacity,transform]"
                     style={{
                       opacity: lockOpacity,
                       transform: unlocked ? 'translateY(-6%)' : 'none',
@@ -781,7 +786,7 @@ export function OpenTabs({ className }: { className?: string }) {
 
                   {/* -------- DESKTOP -------- */}
                   <div
-                    className="absolute inset-0 z-20 transition-all duration-500"
+                    className="absolute inset-0 z-20 transition-[opacity,transform] duration-500"
                     style={{
                       opacity: unlocked ? 1 : 0,
                       transform: unlocked ? 'scale(1)' : 'scale(1.045)',

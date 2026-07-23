@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   },
 }
 
-const themeInit = `try{const t=localStorage.getItem('theme');const d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',d?'dark':'light')}catch(e){}`
+const themeInit = `try{const t=localStorage.getItem('theme');const d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',d?'dark':'light')}catch(e){}try{if('scrollRestoration' in history){history.scrollRestoration='manual'}}catch(e){}`
 
 export default function RootLayout({
   children,
