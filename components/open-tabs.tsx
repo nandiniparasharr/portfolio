@@ -665,7 +665,7 @@ export function OpenTabs({ className }: { className?: string }) {
     <div ref={sectionRef} className={cn('relative h-[220vh]', className)}>
       <div className="relative flex h-screen flex-col items-center justify-center px-2 sticky top-0">
         {/* ---------- CLOSED LAPTOP (floating, flat overlay) ---------- */}
-        <div className="relative -mx-7 w-[calc(100%+3.5rem)] pb-[62px] sm:mx-auto sm:w-full sm:max-w-[612px]">
+        <div className="relative -mx-7 w-[calc(100%+3.5rem)] pb-[62px] sm:mx-auto sm:w-full sm:max-w-[520px]">
           {/* ---------- DESK (placeholder — details later) ---------- */}
           <div className="absolute inset-x-[-18%] bottom-[-10px] z-0 h-[39px]" aria-hidden="true">
             {/* surface */}
@@ -713,15 +713,21 @@ export function OpenTabs({ className }: { className?: string }) {
                     className="mac-glass-dark absolute inset-x-0 top-0 z-40 flex h-6 items-center justify-between rounded-none border-x-0 border-t-0 px-3 text-[10px] font-medium text-white/90"
                     style={{ opacity: screenOn }}
                   >
-                    <span className="mac-font flex items-center gap-3">
+                    <span className="mac-font flex items-center gap-2.5 whitespace-nowrap">
                       <AppleLogo />
                       {menu.map((m, i) => (
-                        <span key={m} className={cn(i === 0 && 'font-bold', i > 2 && 'hidden sm:inline')}>
+                        <span
+                          key={m}
+                          className={cn(
+                            i === 0 && 'font-bold',
+                            i > 4 ? 'hidden' : i > 2 && 'hidden sm:inline',
+                          )}
+                        >
                           {m}
                         </span>
                       ))}
                     </span>
-                    <span className="mac-font flex items-center gap-2.5">
+                    <span className="mac-font flex items-center gap-2.5 whitespace-nowrap">
                       <span className="hidden sm:flex">
                         <StatusIcons />
                       </span>
