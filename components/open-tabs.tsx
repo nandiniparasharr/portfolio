@@ -359,10 +359,10 @@ function Clock({ big = false }: { big?: boolean }) {
   }
   return (
     <div className="pointer-events-none select-none text-center text-white/95 drop-shadow-[0_2px_14px_rgba(0,0,0,0.4)]">
-      <p suppressHydrationWarning className="mac-font m-0 text-5xl font-semibold tracking-tight sm:text-7xl">
+      <p suppressHydrationWarning className="mac-font m-0 text-[2.25rem] font-semibold tracking-tight sm:text-7xl">
         {time}
       </p>
-      <p suppressHydrationWarning className="mac-font m-0 mt-1 text-sm font-medium">
+      <p suppressHydrationWarning className="mac-font m-0 mt-0.5 text-[11px] font-medium sm:mt-1 sm:text-sm">
         {now
           ? now.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })
           : ''}
@@ -757,46 +757,46 @@ export function OpenTabs({ className }: { className?: string }) {
                       pointerEvents: unlocked ? 'none' : 'auto',
                     }}
                   >
-                    <div className="absolute inset-x-0 top-[15%]">
+                    <div className="absolute inset-x-0 top-[4%] sm:top-[15%]">
                       <Clock big />
                     </div>
 
-                    <div className="absolute right-3 top-9 z-40 flex w-52 flex-col gap-2 sm:w-56">
+                    <div className="absolute inset-x-4 top-[30%] z-40 mx-auto flex max-w-[15rem] flex-col gap-1.5 sm:inset-x-auto sm:right-3 sm:top-9 sm:mx-0 sm:w-56 sm:max-w-none sm:gap-2">
                       {[
                         { app: 'Mail', badge: true },
                         { app: 'Reminders', badge: false },
                       ].map((n, i) => (
                         <div
                           key={n.app}
-                          className={cn('mac-noti mac-glass flex items-center gap-2.5 rounded-2xl p-2.5', notiIn && 'is-in')}
+                          className={cn('mac-noti mac-glass flex items-center gap-2 rounded-2xl p-2 sm:gap-2.5 sm:p-2.5', notiIn && 'is-in')}
                           style={{ transitionDelay: `${i * 140}ms` }}
                         >
-                          <span className="relative block h-8 w-8 flex-none">
+                          <span className="relative block h-7 w-7 flex-none sm:h-8 sm:w-8">
                             <span className="absolute inset-0 overflow-hidden rounded-[22%]">
                               <AppIcon src={n.app === 'Mail' ? '/mac-icons/mail.webp' : '/mac-icons/reminders.png'} />
                             </span>
                             {n.badge && (
-                              <span className="mac-font absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#ff3b30] text-[9px] font-bold text-white ring-[1.5px] ring-white/80">
+                              <span className="mac-font absolute -right-1 -top-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#ff3b30] text-[8px] font-bold text-white ring-[1.5px] ring-white/80 sm:h-4 sm:w-4 sm:text-[9px]">
                                 1
                               </span>
                             )}
                           </span>
                           <span className="mac-font min-w-0">
-                            <span className="block text-[12px] font-semibold leading-tight text-black/85">{n.app}</span>
-                            <span className="block text-[11px] leading-tight text-black/55">Notification</span>
+                            <span className="block text-[11px] font-semibold leading-tight text-black/85 sm:text-[12px]">{n.app}</span>
+                            <span className="block text-[10px] leading-tight text-black/55 sm:text-[11px]">Notification</span>
                           </span>
                         </div>
                       ))}
                     </div>
 
-                    <div className="absolute inset-x-0 bottom-[9%] mx-auto flex w-max flex-col items-center gap-1.5">
-                      <span className="mac-glass flex h-12 w-12 items-center justify-center rounded-full font-serif text-xl italic text-white/90">
+                    <div className="absolute inset-x-0 bottom-[4%] mx-auto flex w-max flex-col items-center gap-1 sm:bottom-[9%] sm:gap-1.5">
+                      <span className="mac-glass flex h-9 w-9 items-center justify-center rounded-full font-serif text-lg italic text-white/90 sm:h-12 sm:w-12 sm:text-xl">
                         N
                       </span>
-                      <span className="mac-font text-[13px] font-semibold text-white/95 drop-shadow">
+                      <span className="mac-font text-[12px] font-semibold text-white/95 drop-shadow sm:text-[13px]">
                         Nandini
                       </span>
-                      <svg viewBox="0 0 16 16" className="mac-lock h-3.5 w-3.5 text-white/85" aria-hidden="true">
+                      <svg viewBox="0 0 16 16" className="mac-lock h-3 w-3 text-white/85 sm:h-3.5 sm:w-3.5" aria-hidden="true">
                         <rect x="3" y="7" width="10" height="7" rx="1.5" fill="currentColor" />
                         <path d="M5 7 V5.5 a3 3 0 0 1 6 0 V7" fill="none" stroke="currentColor" strokeWidth="1.5" />
                       </svg>
