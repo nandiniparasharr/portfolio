@@ -232,77 +232,87 @@ function ToolbarBtn({ children, dim = false }: { children: React.ReactNode; dim?
   )
 }
 
+const SAFARI_URL: Record<SafariTab, string> = {
+  nifty: 'nseindia.com',
+  book: 'books.apple.com',
+}
+
+// Safari's unified toolbar — rendered inline in the window title bar (next to
+// the traffic lights) so it reads like a real Safari window, with no separate
+// page-title row.
+function SafariToolbar({ tab }: { tab: SafariTab }) {
+  const url = SAFARI_URL[tab]
+  return (
+    <div className="flex flex-1 items-center gap-2">
+      {/* sidebar + dropdown chevron */}
+      <span className="flex items-center">
+        <ToolbarBtn>
+          <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <rect x="3" y="5" width="18" height="14" rx="2.5" />
+            <line x1="9" y1="5" x2="9" y2="19" />
+          </svg>
+        </ToolbarBtn>
+        <svg viewBox="0 0 24 24" className="h-2.5 w-2.5 text-black/30" fill="none" stroke="currentColor" strokeWidth="2.4">
+          <path d="M7 10 L12 15 L17 10" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </span>
+      {/* back forward */}
+      <span className="flex items-center gap-1.5">
+        <ToolbarBtn>
+          <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.2">
+            <path d="M15 6 L9 12 L15 18" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </ToolbarBtn>
+        <ToolbarBtn dim>
+          <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.2">
+            <path d="M9 6 L15 12 L9 18" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </ToolbarBtn>
+      </span>
+      {/* centered search pill with refresh */}
+      <span className="relative mx-auto flex w-[56%] items-center justify-center gap-1.5 rounded-lg bg-black/[0.07] px-3 py-[5px] text-[11px] text-black/55">
+        <svg viewBox="0 0 24 24" className="h-3 w-3 text-black/40" fill="none" stroke="currentColor" strokeWidth="2">
+          <rect x="5" y="11" width="14" height="9" rx="2" />
+          <path d="M8 11 V8 a4 4 0 0 1 8 0 v3" />
+        </svg>
+        {url}
+        <svg viewBox="0 0 24 24" className="absolute right-2 h-3 w-3 text-black/35" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+          <path d="M20 11 a8 8 0 1 0 -1.5 5" strokeLinecap="round" />
+          <path d="M20 5 V11 H14" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </span>
+      {/* right cluster */}
+      <span className="flex items-center gap-2">
+        <ToolbarBtn>
+          <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="M12 3 V15 M8 7 L12 3 L16 7" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M6 12 V20 H18 V12" strokeLinecap="round" />
+          </svg>
+        </ToolbarBtn>
+        <ToolbarBtn>
+          <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <line x1="12" y1="6" x2="12" y2="18" strokeLinecap="round" />
+            <line x1="6" y1="12" x2="18" y2="12" strokeLinecap="round" />
+          </svg>
+        </ToolbarBtn>
+        <ToolbarBtn>
+          <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <rect x="4" y="6" width="12" height="12" rx="2" />
+            <rect x="9" y="3" width="12" height="12" rx="2" fill="#ece9e6" />
+          </svg>
+        </ToolbarBtn>
+      </span>
+    </div>
+  )
+}
+
 function SafariBody({ tab, setTab }: { tab: SafariTab; setTab: (t: SafariTab) => void }) {
-  const tabs: { id: SafariTab; label: string; url: string }[] = [
-    { id: 'nifty', label: 'Nifty 50 — NSE', url: 'nseindia.com' },
-    { id: 'book', label: 'Zero to One', url: 'books.apple.com' },
+  const tabs: { id: SafariTab; label: string }[] = [
+    { id: 'nifty', label: 'Nifty 50 — NSE' },
+    { id: 'book', label: 'Zero to One' },
   ]
-  const url = tabs.find((t) => t.id === tab)?.url ?? ''
   return (
     <div className="mac-font bg-white">
-      {/* Safari toolbar */}
-      <div className="flex items-center gap-2 border-b border-black/10 bg-[#f6f5f4] px-3 py-1.5">
-        {/* sidebar + dropdown chevron */}
-        <span className="flex items-center">
-          <ToolbarBtn>
-            <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <rect x="3" y="5" width="18" height="14" rx="2.5" />
-              <line x1="9" y1="5" x2="9" y2="19" />
-            </svg>
-          </ToolbarBtn>
-          <svg viewBox="0 0 24 24" className="h-2.5 w-2.5 text-black/30" fill="none" stroke="currentColor" strokeWidth="2.4">
-            <path d="M7 10 L12 15 L17 10" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </span>
-        {/* back | forward */}
-        <span className="flex items-center gap-1">
-          <ToolbarBtn>
-            <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.2">
-              <path d="M15 6 L9 12 L15 18" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </ToolbarBtn>
-          <span className="h-3.5 w-px bg-black/15" />
-          <ToolbarBtn dim>
-            <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.2">
-              <path d="M9 6 L15 12 L9 18" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </ToolbarBtn>
-        </span>
-        {/* centered search pill with refresh */}
-        <span className="relative mx-auto flex w-[58%] items-center justify-center gap-1.5 rounded-lg bg-black/[0.07] px-3 py-[5px] text-[11px] text-black/55">
-          <svg viewBox="0 0 24 24" className="h-3 w-3 text-black/40" fill="none" stroke="currentColor" strokeWidth="2">
-            <rect x="5" y="11" width="14" height="9" rx="2" />
-            <path d="M8 11 V8 a4 4 0 0 1 8 0 v3" />
-          </svg>
-          {url}
-          <svg viewBox="0 0 24 24" className="absolute right-2 h-3 w-3 text-black/35" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-            <path d="M20 11 a8 8 0 1 0 -1.5 5" strokeLinecap="round" />
-            <path d="M20 5 V11 H14" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </span>
-        {/* right cluster */}
-        <span className="flex items-center gap-2">
-          <ToolbarBtn>
-            <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path d="M12 3 V15 M8 7 L12 3 L16 7" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M6 12 V20 H18 V12" strokeLinecap="round" />
-            </svg>
-          </ToolbarBtn>
-          <ToolbarBtn>
-            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <line x1="12" y1="6" x2="12" y2="18" strokeLinecap="round" />
-              <line x1="6" y1="12" x2="18" y2="12" strokeLinecap="round" />
-            </svg>
-          </ToolbarBtn>
-          <ToolbarBtn>
-            <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <rect x="4" y="6" width="12" height="12" rx="2" />
-              <rect x="9" y="3" width="12" height="12" rx="2" fill="#f6f5f4" />
-            </svg>
-          </ToolbarBtn>
-        </span>
-      </div>
-
       {/* clean tab bar */}
       <div className="flex items-stretch gap-1.5 border-b border-black/10 bg-[#eceae8] px-2 pt-1.5">
         {tabs.map((t) => (
@@ -885,9 +895,13 @@ export function OpenTabs({ className }: { className?: string }) {
                                   className="h-2.5 w-2.5 rounded-full bg-[#28c840] hover:brightness-90"
                                 />
                               </span>
-                              <span className="mac-font truncate text-[12px] font-medium text-black/75">
-                                {w.title}
-                              </span>
+                              {w.id === 'safari' ? (
+                                <SafariToolbar tab={safariTab} />
+                              ) : (
+                                <span className="mac-font truncate text-[12px] font-medium text-black/75">
+                                  {w.title}
+                                </span>
+                              )}
                             </div>
                             {w.id === 'word' ? (
                               <WordBody />
