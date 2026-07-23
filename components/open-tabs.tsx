@@ -691,7 +691,7 @@ export function OpenTabs({ className }: { className?: string }) {
         {/* Width is also capped by viewport height (min with 80vh) so on short
             screens the whole monitor shrinks to fit and never slides under the
             page header. */}
-        <div className="relative -mx-7 w-[calc(100%+3.5rem)] pb-[62px] sm:mx-auto sm:w-full sm:max-w-[min(725px,80vh)]">
+        <div className="relative -mx-7 w-[calc(100%+3.5rem)] pb-[62px] sm:mx-auto sm:w-full sm:max-w-[min(838px,88vh)]">
           {/* ---------- DESK (placeholder — details later) ---------- */}
           <div className="absolute inset-x-[-18%] bottom-[-10px] z-0 h-[39px]" aria-hidden="true">
             {/* surface */}
