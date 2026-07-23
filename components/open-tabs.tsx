@@ -665,7 +665,7 @@ export function OpenTabs({ className }: { className?: string }) {
     <div ref={sectionRef} className={cn('relative h-[220vh]', className)}>
       <div className="relative flex h-screen flex-col items-center justify-center px-2 sticky top-0">
         {/* ---------- CLOSED LAPTOP (floating, flat overlay) ---------- */}
-        <div className="relative -mx-7 w-[calc(100%+3.5rem)] pb-[62px] sm:mx-auto sm:w-full sm:max-w-[520px]">
+        <div className="relative -mx-7 w-[calc(100%+3.5rem)] pb-[62px] sm:mx-auto sm:w-full sm:max-w-[725px]">
           {/* ---------- DESK (placeholder — details later) ---------- */}
           <div className="absolute inset-x-[-18%] bottom-[-10px] z-0 h-[39px]" aria-hidden="true">
             {/* surface */}
