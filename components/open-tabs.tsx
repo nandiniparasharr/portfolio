@@ -603,10 +603,13 @@ export function OpenTabs({ className }: { className?: string }) {
   }, [])
 
   const p = reduced || manual ? 1 : progress
-  const screenOn = reduced ? 1 : Math.min(Math.max((p - 0.04) / 0.14, 0), 1)
-  const notiIn = p > 0.3
+  // Screen is always on: the lock screen shows the moment the monitor is
+  // visible (no blank/black power-on). Scrolling brings in notifications,
+  // then unlocks to the desktop.
+  const screenOn = 1
+  const notiIn = p > 0.15
   const unlocked = manual || p > 0.5
-  const lockOpacity = unlocked ? 0 : Math.min(Math.max((p - 0.2) / 0.12, 0), 1)
+  const lockOpacity = unlocked ? 0 : 1
 
   const visibleWins = WINDOWS.filter((w) => !wins[w.id].closed && !wins[w.id].min)
   // Background windows stack by cascade depth (higher = further back) so every
@@ -703,10 +706,6 @@ export function OpenTabs({ className }: { className?: string }) {
                         'radial-gradient(70% 45% at 50% 72%, rgba(255,206,140,0.55), transparent 60%)',
                     }}
                     aria-hidden="true"
-                  />
-                  <div
-                    className="pointer-events-none absolute inset-0 z-[60] bg-black transition-opacity duration-200"
-                    style={{ opacity: 1 - screenOn }}
                   />
 
                   {/* menu bar */}
