@@ -111,17 +111,17 @@ function NotesBody() {
 // Latest available snapshot — edit these figures (or wire a keyed market API)
 // and the panel presents them with a live-updating IST timestamp.
 const NIFTY = {
-  level: '26,215.65',
-  change: '+138.20',
-  pct: '+0.53%',
+  level: '24,286.90',
+  change: '+68.35',
+  pct: '+0.28%',
   up: true,
 }
 const MOVERS = [
-  ['RELIANCE', '1,304.75', '+0.88%', true],
-  ['HDFCBANK', '1,725.40', '+0.55%', true],
-  ['ICICIBANK', '1,278.35', '+0.72%', true],
-  ['TCS', '4,088.10', '-0.31%', false],
-  ['INFY', '1,932.60', '+0.47%', true],
+  ['RELIANCE', '1,294.90', '-0.35%', false],
+  ['HDFCBANK', '753.15', '+0.48%', true],
+  ['ICICIBANK', '1,436.00', '+0.71%', true],
+  ['TCS', '2,242.90', '+1.57%', true],
+  ['INFY', '1,054.00', '+0.42%', true],
 ] as const
 
 function NiftyTab() {
@@ -535,6 +535,7 @@ export function OpenTabs({ className }: { className?: string }) {
   const [safariTab, setSafariTab] = useState<SafariTab>('nifty')
   const [wins, setWins] = useState(initialWins)
   const [dragId, setDragId] = useState<WinId | null>(null)
+  const [overTrash, setOverTrash] = useState(false)
   const dragStart = useRef({ x: 0, y: 0, dx: 0, dy: 0 })
   const [reduced, setReduced] = useState(false)
   const [isNarrow, setIsNarrow] = useState(false)
@@ -641,10 +642,20 @@ export function OpenTabs({ className }: { className?: string }) {
     dragStart.current = { x: e.clientX, y: e.clientY, dx: wins[id].dx, dy: wins[id].dy }
   }
 
-  // Window drag via document-level listeners (robust inside the 3D context)
+  // Is a screen point over the Trash dock icon?
+  const pointOverTrash = (x: number, y: number) => {
+    const el = document.querySelector('button[aria-label="Trash"]')
+    if (!el) return false
+    const r = el.getBoundingClientRect()
+    return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom
+  }
+
+  // Window drag via document-level listeners (robust inside the 3D context).
+  // Dropping a window onto the Trash closes the app.
   useEffect(() => {
     if (!dragId) return
     const move = (e: PointerEvent) => {
+      setOverTrash(pointOverTrash(e.clientX, e.clientY))
       setWins((prev) => ({
         ...prev,
         [dragId]: {
@@ -654,14 +665,21 @@ export function OpenTabs({ className }: { className?: string }) {
         },
       }))
     }
-    const up = () => setDragId(null)
+    const up = (e: PointerEvent) => {
+      if (pointOverTrash(e.clientX, e.clientY)) {
+        patch(dragId, { closed: true, dx: 0, dy: 0 })
+        if (active === dragId) focusNext(dragId)
+      }
+      setOverTrash(false)
+      setDragId(null)
+    }
     window.addEventListener('pointermove', move)
     window.addEventListener('pointerup', up)
     return () => {
       window.removeEventListener('pointermove', move)
       window.removeEventListener('pointerup', up)
     }
-  }, [dragId])
+  }, [dragId, active])
 
   const menu = unlocked ? MENUS[active] : MENUS.finder
 
@@ -852,6 +870,7 @@ export function OpenTabs({ className }: { className?: string }) {
                                   : `translate(${st.dx}px, ${st.dy}px)`,
                               transformOrigin: isNarrow ? 'top center' : undefined,
                               zIndex: 10 + i,
+                              opacity: dragId === w.id && overTrash ? 0.5 : undefined,
                             }}
                             onPointerDownCapture={() => setActive(w.id)}
                           >
@@ -933,7 +952,14 @@ export function OpenTabs({ className }: { className?: string }) {
                         <DockTile label="Reminders"><AppIcon src="/mac-icons/reminders.png" /></DockTile>
                         <DockTile label="Mail" badge="1"><AppIcon src="/mac-icons/mail.webp" /></DockTile>
                         <span className="mx-0.5 mb-1.5 h-6 w-px bg-white/30 sm:h-8" aria-hidden="true" />
-                        <DockTile label="Trash"><TrashIcon /></DockTile>
+                        <span
+                          className={cn(
+                            'origin-bottom rounded-2xl transition-transform duration-150',
+                            dragId && overTrash && 'scale-125',
+                          )}
+                        >
+                          <DockTile label="Trash"><TrashIcon /></DockTile>
+                        </span>
                       </div>
                     </div>
                   </div>

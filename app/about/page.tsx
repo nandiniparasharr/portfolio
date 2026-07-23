@@ -50,7 +50,7 @@ export default function AboutPage() {
       <section className="mt-24">
         <Reveal>
           <SectionLabel tone="muted" className="mb-8 justify-center">
-            Inside my head
+            On my desk
           </SectionLabel>
         </Reveal>
         <Reveal delay={80}>
