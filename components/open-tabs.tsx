@@ -581,7 +581,7 @@ export function OpenTabs({ className }: { className?: string }) {
 
   const p = reduced || manual ? 1 : progress
   const open = Math.min(p / 0.24, 1)
-  const sceneTilt = 40 * (1 - open)
+  const sceneTilt = 6 * (1 - open)
   const lidAngle = -90 + open * 90
   const screenOn = Math.min(Math.max((p - 0.05) / 0.14, 0), 1)
   const sceneOpacity = reduced || manual ? 1 : Math.min(Math.max((p - 0.05) / 0.035, 0), 1)
@@ -685,11 +685,11 @@ export function OpenTabs({ className }: { className?: string }) {
             >
               <div
                 ref={screenRef}
-                className="rounded-t-[14px] bg-[#141017] p-[6px] pb-0"
+                className="relative rounded-[16px] bg-gradient-to-b from-[#0e0e11] to-[#050506] p-[5px] shadow-[0_1px_0_rgba(255,255,255,0.14)_inset,0_22px_40px_rgba(10,5,15,0.45)]"
                 style={{ backfaceVisibility: 'hidden' }}
                 onClick={() => !unlocked && setManual(true)}
               >
-                <div className="mac-sunset relative aspect-[16/10] cursor-pointer overflow-hidden rounded-t-[9px]">
+                <div className="mac-sunset relative aspect-[16/10] cursor-pointer overflow-hidden rounded-[11px]">
                   {/* wallpaper parallax layer (glow only, so edges never show) */}
                   <div
                     className="pointer-events-none absolute inset-0"
@@ -925,30 +925,34 @@ export function OpenTabs({ className }: { className?: string }) {
                     </div>
                   </div>
                 </div>
+
+                {/* camera notch */}
+                <div
+                  className="pointer-events-none absolute left-1/2 top-[4px] z-[45] flex h-[11px] w-[72px] -translate-x-1/2 items-center justify-center rounded-b-[7px] bg-gradient-to-b from-[#0e0e11] to-[#050506]"
+                  aria-hidden="true"
+                >
+                  <span className="h-[4px] w-[4px] rounded-full bg-[#243448] ring-1 ring-white/10" />
+                </div>
               </div>
             </div>
 
-            {/* keyboard deck */}
+            {/* bottom case (aluminum) */}
             <div
-              className="mac-alu absolute left-0 right-0 top-full rounded-b-[16px] border-t border-black/20"
-              style={{
-                height: 'min(46vw, 300px)',
-                transform: 'rotateX(-90deg)',
-                transformOrigin: 'top',
-                backfaceVisibility: 'hidden',
-              }}
+              className="absolute left-1/2 top-full z-0 w-[104%] -translate-x-1/2"
               aria-hidden="true"
             >
-              <div className="absolute left-1/2 top-[7%] h-[46%] w-[72%] -translate-x-1/2 rounded-md bg-black/10 p-1.5">
-                <div
-                  className="h-full w-full opacity-60"
-                  style={{
-                    backgroundImage:
-                      'repeating-linear-gradient(to right, rgba(0,0,0,0.25) 0 6%, transparent 6% 8%), repeating-linear-gradient(to bottom, rgba(0,0,0,0.25) 0 14%, transparent 14% 19%)',
-                  }}
-                />
+              {/* hinge recess under the screen */}
+              <div className="mx-auto h-[5px] w-[34%] rounded-b-[3px] bg-gradient-to-b from-[#2c2c30] to-[#565359]" />
+              {/* aluminum body */}
+              <div className="relative mt-px h-[22px] rounded-b-[13px] bg-gradient-to-b from-[#d6d3d9] via-[#c0bcc4] to-[#a5a1ab] shadow-[0_12px_22px_rgba(0,0,0,0.32)]">
+                <span className="absolute inset-x-0 top-0 h-px bg-white/60" />
+                {/* front opening groove */}
+                <span className="absolute left-1/2 top-0 h-[6px] w-[12%] -translate-x-1/2 rounded-b-[7px] bg-gradient-to-b from-[#8f8b95] to-[#aca8b2]" />
+                {/* front lip */}
+                <span className="absolute inset-x-0 bottom-0 h-[3px] rounded-b-[13px] bg-gradient-to-b from-transparent to-white/25" />
               </div>
-              <div className="absolute bottom-[9%] left-1/2 h-[30%] w-[30%] -translate-x-1/2 rounded-md border border-black/15 bg-black/5" />
+              {/* ground shadow */}
+              <div className="mx-auto mt-[7px] h-[10px] w-[80%] rounded-[50%] bg-black/25 blur-md" />
             </div>
           </div>
         </div>
