@@ -53,9 +53,9 @@ function WordBody() {
           <span key={m} className={i === 0 ? 'font-semibold text-[#185abd]' : ''}>{m}</span>
         ))}
       </div>
-      <div className="bg-[#e8e6e3] px-6 py-4 sm:px-10">
-        <div className="mx-auto max-w-md bg-white px-6 py-5 shadow-sm">
-          <h4 className="mac-font m-0 text-[19px] font-bold leading-snug text-black">
+      <div className="bg-[#e8e6e3] px-4 py-3 sm:px-10 sm:py-4">
+        <div className="mx-auto max-w-md bg-white px-4 py-4 shadow-sm sm:px-6 sm:py-5">
+          <h4 className="mac-font m-0 text-[17px] font-bold leading-snug text-black sm:text-[19px]">
             Compounding Ideas,
             <br />
             Not Just Money
@@ -460,7 +460,7 @@ function DockTile({
       onClick={onClick}
       className="mac-dock-icon flex flex-col items-center gap-0.5"
     >
-      <span className="relative block h-10 w-10 sm:h-11 sm:w-11">
+      <span className="relative block h-[30px] w-[30px] sm:h-11 sm:w-11">
         {/* squircle body clips the icon; badge sits outside */}
         <span className="absolute inset-0 overflow-hidden rounded-[23%] shadow-[0_3px_6px_rgba(0,0,0,0.28)]">
           {children}
@@ -532,7 +532,16 @@ export function OpenTabs({ className }: { className?: string }) {
   const [dragId, setDragId] = useState<WinId | null>(null)
   const dragStart = useRef({ x: 0, y: 0, dx: 0, dy: 0 })
   const [reduced, setReduced] = useState(false)
+  const [isNarrow, setIsNarrow] = useState(false)
   const lastP = useRef(0)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 639px)')
+    const onNarrow = () => setIsNarrow(mq.matches)
+    onNarrow()
+    mq.addEventListener('change', onNarrow)
+    return () => mq.removeEventListener('change', onNarrow)
+  }, [])
 
   useEffect(() => {
     setReduced(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
@@ -653,7 +662,7 @@ export function OpenTabs({ className }: { className?: string }) {
     <div ref={sectionRef} className={cn('relative h-[220vh]', className)}>
       <div className="relative flex h-screen flex-col items-center justify-center px-2 sticky top-0">
         {/* ---------- CLOSED LAPTOP (floating, flat overlay) ---------- */}
-        <div className="relative mx-auto w-full max-w-[612px] pb-[62px]">
+        <div className="relative -mx-7 w-[calc(100%+3.5rem)] pb-[62px] sm:mx-auto sm:w-full sm:max-w-[612px]">
           {/* ---------- DESK (placeholder — details later) ---------- */}
           <div className="absolute inset-x-[-18%] bottom-[-10px] z-0 h-[39px]" aria-hidden="true">
             {/* surface */}
@@ -684,7 +693,7 @@ export function OpenTabs({ className }: { className?: string }) {
             className="relative z-10 w-full rounded-[16px] bg-gradient-to-b from-[#101013] to-[#050506] p-[6px] shadow-[0_1px_0_rgba(255,255,255,0.14)_inset,0_18px_40px_rgba(10,5,15,0.42)]"
             onClick={() => !unlocked && setManual(true)}
           >
-                <div className="mac-sunset relative aspect-[16/10] cursor-pointer overflow-hidden rounded-[11px]">
+                <div className="mac-sunset relative aspect-[4/3] cursor-pointer overflow-hidden rounded-[11px] sm:aspect-[16/10]">
                   {/* wallpaper parallax layer (glow only, so edges never show) */}
                   <div
                     className="pointer-events-none absolute inset-0"
@@ -812,17 +821,23 @@ export function OpenTabs({ className }: { className?: string }) {
                             key={w.id}
                             data-active={isActive}
                             className={cn(
-                              'mac-window absolute w-[66%] sm:w-[62%]',
+                              'mac-window absolute',
+                              // Mobile: one centered window at a time (the dock
+                              // switches apps). Desktop: the cascade.
+                              isNarrow ? 'w-full' : 'w-[66%] sm:w-[62%]',
                               !isActive && 'brightness-[0.96]',
                               dragId === w.id
                                 ? 'transition-none'
                                 : 'transition-[top,left,width] duration-500 ease-[cubic-bezier(0.34,1.3,0.64,1)]',
                             )}
                             style={{
-                              left: st.max ? '0%' : HOME[w.id].left,
-                              top: st.max ? '0px' : `${HOME[w.id].top}px`,
-                              width: st.max ? '100%' : undefined,
-                              transform: st.max ? undefined : `translate(${st.dx}px, ${st.dy}px)`,
+                              left: st.max || isNarrow ? '0%' : HOME[w.id].left,
+                              top: st.max ? '0px' : isNarrow ? '0px' : `${HOME[w.id].top}px`,
+                              width: st.max || isNarrow ? '100%' : undefined,
+                              transform:
+                                st.max || isNarrow
+                                  ? undefined
+                                  : `translate(${st.dx}px, ${st.dy}px)`,
                               zIndex: 10 + i,
                             }}
                             onPointerDownCapture={() => setActive(w.id)}
@@ -890,8 +905,8 @@ export function OpenTabs({ className }: { className?: string }) {
                     </div>
 
                     {/* Dock */}
-                    <div className="absolute bottom-2 left-1/2 z-40 -translate-x-1/2">
-                      <div className="mac-glass flex items-end gap-1.5 rounded-2xl px-2.5 py-1.5 sm:gap-2">
+                    <div className="absolute bottom-1.5 left-1/2 z-40 w-full max-w-[96%] -translate-x-1/2 sm:bottom-2 sm:w-auto sm:max-w-none">
+                      <div className="mac-glass flex items-end justify-center gap-1 rounded-2xl px-1.5 py-1 sm:gap-2 sm:px-2.5 sm:py-1.5">
                         <DockTile label="Finder"><AppIcon src="/mac-icons/finder.png" /></DockTile>
                         <DockTile label="Safari" onClick={() => launch('safari')} indicator={!wins.safari.closed && !wins.safari.min}>
                           <AppIcon src="/mac-icons/safari.jpg" />
@@ -906,7 +921,7 @@ export function OpenTabs({ className }: { className?: string }) {
                         <DockTile label="Photos"><AppIcon src="/mac-icons/photos.webp" /></DockTile>
                         <DockTile label="Reminders"><AppIcon src="/mac-icons/reminders.png" /></DockTile>
                         <DockTile label="Mail" badge="1"><AppIcon src="/mac-icons/mail.webp" /></DockTile>
-                        <span className="mx-0.5 mb-1.5 h-8 w-px bg-white/30" aria-hidden="true" />
+                        <span className="mx-0.5 mb-1.5 h-6 w-px bg-white/30 sm:h-8" aria-hidden="true" />
                         <DockTile label="Trash"><TrashIcon /></DockTile>
                       </div>
                     </div>
@@ -923,8 +938,10 @@ export function OpenTabs({ className }: { className?: string }) {
 
         <p className="mt-6 text-center font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
           {!unlocked
-            ? 'Scroll to unlock — or click the screen'
-            : 'Drag the windows · click a title to bring it forward'}
+            ? 'Scroll to unlock — or tap the screen'
+            : isNarrow
+              ? 'Tap the dock to switch apps'
+              : 'Drag the windows · click a title to bring it forward'}
         </p>
       </div>
     </div>
