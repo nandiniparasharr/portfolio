@@ -472,7 +472,7 @@ function DockTile({
         )}
       </span>
       <span
-        className={cn('h-1 w-1 rounded-full bg-white/90', indicator ? 'opacity-100' : 'opacity-0')}
+        className={cn('h-[5px] w-[5px] rounded-full bg-black/55', indicator ? 'opacity-100' : 'opacity-0')}
         aria-hidden="true"
       />
     </button>
