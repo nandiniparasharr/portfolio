@@ -127,20 +127,19 @@ const MOVERS = [
 function NiftyTab() {
   const [ts, setTs] = useState('')
   useEffect(() => {
-    const fmt = () =>
-      setTs(
-        new Intl.DateTimeFormat('en-IN', {
-          day: '2-digit',
-          month: 'short',
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: false,
-          timeZone: 'Asia/Kolkata',
-        }).format(new Date()),
-      )
-    fmt()
-    const id = setInterval(fmt, 30000)
-    return () => clearInterval(id)
+    // Markets show the previous session's close (not a live tick): step back
+    // to the most recent weekday.
+    const d = new Date()
+    d.setDate(d.getDate() - 1)
+    while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() - 1)
+    setTs(
+      new Intl.DateTimeFormat('en-IN', {
+        weekday: 'short',
+        day: '2-digit',
+        month: 'short',
+        timeZone: 'Asia/Kolkata',
+      }).format(d),
+    )
   }, [])
   const green = '#1d8a4a'
   const red = '#c33b2e'
@@ -149,13 +148,12 @@ function NiftyTab() {
       <div className="flex items-center justify-between">
         <p className="m-0 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-black/45">
           Nifty 50
-          <span className="inline-flex items-center gap-1 rounded-full bg-[#eafaf0] px-1.5 py-0.5 text-[9px] font-bold text-[#1d8a4a]">
-            <span className="mac-lock h-1.5 w-1.5 rounded-full bg-[#1d8a4a]" />
-            LIVE
+          <span className="inline-flex items-center rounded-full bg-black/[0.06] px-1.5 py-0.5 text-[9px] font-bold tracking-wide text-black/45">
+            PREV CLOSE
           </span>
         </p>
         <span suppressHydrationWarning className="text-[10px] text-black/40">
-          NSE · {ts} IST
+          NSE · {ts}
         </span>
       </div>
       <div className="mt-1 grid gap-5 sm:grid-cols-[1.3fr_1fr]">
@@ -686,7 +684,7 @@ export function OpenTabs({ className }: { className?: string }) {
 
   return (
     <div ref={sectionRef} className={cn('relative h-[220vh]', className)}>
-      <div className="sticky top-0 flex h-screen flex-col items-center justify-center px-2 pt-[84px]">
+      <div className="sticky top-0 flex h-[100dvh] flex-col items-center justify-center px-2 pt-[84px]">
         {/* ---------- CLOSED LAPTOP (floating, flat overlay) ---------- */}
         {/* Width is also capped by viewport height (min with 80vh) so on short
             screens the whole monitor shrinks to fit and never slides under the
