@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
 
 /* A peek into my laptop mid-thought. Scroll opens the lid, greets you at
@@ -108,41 +108,72 @@ function NotesBody() {
   )
 }
 
-// Latest available snapshot — edit these figures (or wire a keyed market API)
-// and the panel presents them with a live-updating IST timestamp.
-const NIFTY = {
-  level: '24,286.90',
-  change: '+68.35',
-  pct: '+0.28%',
-  up: true,
+type Quote = {
+  key: string
+  label: string
+  level: number
+  change: number
+  pct: number
+  up: boolean
 }
-const MOVERS = [
-  ['RELIANCE', '1,294.90', '-0.35%', false],
-  ['HDFCBANK', '753.15', '+0.48%', true],
-  ['ICICIBANK', '1,436.00', '+0.71%', true],
-  ['TCS', '2,242.90', '+1.57%', true],
-  ['INFY', '1,054.00', '+0.42%', true],
-] as const
+
+// Shown only if the live /api/nifty fetch fails — a recent close snapshot.
+const FALLBACK: Quote[] = [
+  { key: 'nifty', label: 'NIFTY 50', level: 24286.9, change: 68.35, pct: 0.28, up: true },
+  { key: 'RELIANCE', label: 'RELIANCE', level: 1294.9, change: -4.55, pct: -0.35, up: false },
+  { key: 'HDFCBANK', label: 'HDFCBANK', level: 1002.4, change: 4.8, pct: 0.48, up: true },
+  { key: 'ICICIBANK', label: 'ICICIBANK', level: 1436.0, change: 10.1, pct: 0.71, up: true },
+  { key: 'TCS', label: 'TCS', level: 3138.5, change: 48.6, pct: 1.57, up: true },
+  { key: 'INFY', label: 'INFY', level: 1543.2, change: 6.45, pct: 0.42, up: true },
+]
+
+const inr = (n: number) =>
+  n.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+const signed = (n: number) => (n >= 0 ? '+' : '') + inr(n)
+const pctStr = (n: number) => (n >= 0 ? '+' : '') + n.toFixed(2) + '%'
 
 function NiftyTab() {
-  const [ts, setTs] = useState('')
+  const [rows, setRows] = useState<Quote[]>(FALLBACK)
+  const [asOf, setAsOf] = useState<number | null>(null)
+
   useEffect(() => {
-    // Markets show the previous session's close (not a live tick): step back
-    // to the most recent weekday.
-    const d = new Date()
-    d.setDate(d.getDate() - 1)
-    while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() - 1)
-    setTs(
-      new Intl.DateTimeFormat('en-IN', {
-        weekday: 'short',
-        day: '2-digit',
-        month: 'short',
-        timeZone: 'Asia/Kolkata',
-      }).format(d),
-    )
+    let cancelled = false
+    fetch('/api/nifty')
+      .then((r) => r.json())
+      .then((j) => {
+        if (!cancelled && j?.ok && Array.isArray(j.data) && j.data.length) {
+          setRows(j.data)
+          if (typeof j.asOf === 'number') setAsOf(j.asOf)
+        }
+      })
+      .catch(() => {})
+    return () => {
+      cancelled = true
+    }
   }, [])
+
+  const dateLabel = useMemo(() => {
+    const d = asOf
+      ? new Date(asOf * 1000)
+      : (() => {
+          const x = new Date()
+          x.setDate(x.getDate() - 1)
+          while (x.getDay() === 0 || x.getDay() === 6) x.setDate(x.getDate() - 1)
+          return x
+        })()
+    return new Intl.DateTimeFormat('en-IN', {
+      weekday: 'short',
+      day: '2-digit',
+      month: 'short',
+      timeZone: 'Asia/Kolkata',
+    }).format(d)
+  }, [asOf])
+
+  const nifty = rows.find((r) => r.key === 'nifty') ?? FALLBACK[0]
+  const movers = rows.filter((r) => r.key !== 'nifty')
   const green = '#1d8a4a'
   const red = '#c33b2e'
+  const trend = nifty.up ? green : red
   return (
     <div className="mac-font bg-white px-5 py-4">
       <div className="flex items-center justify-between">
@@ -153,22 +184,22 @@ function NiftyTab() {
           </span>
         </p>
         <span suppressHydrationWarning className="text-[10px] text-black/40">
-          NSE · {ts}
+          NSE · {dateLabel}
         </span>
       </div>
       <div className="mt-1 grid gap-5 sm:grid-cols-[1.3fr_1fr]">
         <div>
-          <p className="m-0 text-[26px] font-bold leading-none text-black">
-            {NIFTY.level}
+          <p suppressHydrationWarning className="m-0 text-[26px] font-bold leading-none text-black">
+            {inr(nifty.level)}
           </p>
-          <p className="m-0 mt-1 text-[13px] font-semibold" style={{ color: NIFTY.up ? green : red }}>
-            {NIFTY.up ? '▲' : '▼'} {NIFTY.change} ({NIFTY.pct})
+          <p suppressHydrationWarning className="m-0 mt-1 text-[13px] font-semibold" style={{ color: trend }}>
+            {nifty.up ? '▲' : '▼'} {signed(nifty.change)} ({pctStr(nifty.pct)})
           </p>
           <svg viewBox="0 0 200 44" className="mt-2 h-11 w-full" aria-hidden="true">
             <defs>
               <linearGradient id="niftyfill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stopColor={green} stopOpacity="0.18" />
-                <stop offset="1" stopColor={green} stopOpacity="0" />
+                <stop offset="0" stopColor={trend} stopOpacity="0.18" />
+                <stop offset="1" stopColor={trend} stopOpacity="0" />
               </linearGradient>
             </defs>
             <path
@@ -178,7 +209,7 @@ function NiftyTab() {
             <path
               d="M0 34 L14 30 L26 33 L40 25 L54 28 L68 19 L82 24 L96 15 L110 21 L124 12 L138 17 L152 8 L166 14 L182 6 L200 10"
               fill="none"
-              stroke={green}
+              stroke={trend}
               strokeWidth="2"
             />
           </svg>
@@ -188,11 +219,13 @@ function NiftyTab() {
             Watchlist
           </p>
           <ul className="m-0 mt-1.5 flex list-none flex-col gap-1.5 p-0">
-            {MOVERS.map(([n, px, chg, up]) => (
-              <li key={n} className="flex items-baseline justify-between gap-3 text-[12px]">
-                <span className="font-semibold text-black/80">{n}</span>
-                <span className="text-black/50">{px}</span>
-                <span style={{ color: up ? green : red }}>{chg}</span>
+            {movers.map((m) => (
+              <li key={m.key} className="flex items-baseline justify-between gap-3 text-[12px]">
+                <span className="font-semibold text-black/80">{m.label}</span>
+                <span suppressHydrationWarning className="text-black/50">{inr(m.level)}</span>
+                <span suppressHydrationWarning style={{ color: m.up ? green : red }}>
+                  {pctStr(m.pct)}
+                </span>
               </li>
             ))}
           </ul>
