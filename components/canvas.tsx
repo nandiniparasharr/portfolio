@@ -75,56 +75,76 @@ const LINKS: Obj[] = [
   { id: 'contact', label: 'Contact', x: 0, y: 0, blurb: 'Roles, collaborations, or a good book recommendation.', href: '/contact', ready: true },
 ]
 
-/* ---------- the icons ---------- */
+/* ---------- the icons ----------
+   Little coloured objects, not grey line art. The ground is deliberately
+   quiet, so all the colour on the page lives here. */
 
 function Icon({ id }: { id: string }) {
-  const s = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.6, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const }
   switch (id) {
-    case 'research':
+    case 'research': // a research note
       return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M6 3h8l4 4v14H6z" {...s} />
-          <path d="M14 3v4h4" {...s} />
-          <path d="M9 12h6M9 15h6M9 18h3" {...s} />
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="9" y="5" width="27" height="38" rx="2" fill="#fff" stroke="#d9d5cb" strokeWidth="1.3" />
+          <rect x="9" y="5" width="27" height="9" rx="2" fill="#3d5a99" />
+          <rect x="13" y="19" width="19" height="2.2" rx="1.1" fill="#c9c5bb" />
+          <rect x="13" y="24" width="14" height="2.2" rx="1.1" fill="#c9c5bb" />
+          <rect x="13" y="31" width="4" height="8" rx="1" fill="#d33f5f" />
+          <rect x="19" y="28" width="4" height="11" rx="1" fill="#e8a33d" />
+          <rect x="25" y="33" width="4" height="6" rx="1" fill="#2a9d8f" />
         </svg>
       )
-    case 'model':
+    case 'model': // a spreadsheet
       return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <rect x="3" y="4" width="18" height="16" {...s} />
-          <path d="M3 9h18M3 14.5h18M9 9v11M15 9v11" {...s} />
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="5" y="9" width="38" height="30" rx="2.5" fill="#fff" stroke="#d9d5cb" strokeWidth="1.3" />
+          <rect x="5" y="9" width="38" height="7" rx="2.5" fill="#2a9d8f" />
+          <rect x="5" y="13.5" width="38" height="2.5" fill="#2a9d8f" />
+          <path d="M17 16v23M29 16v23M5 24.5h38M5 32h38" stroke="#e2ded4" strokeWidth="1.2" />
+          <rect x="18" y="17.5" width="10" height="6" fill="#cdeadb" />
+          <rect x="30" y="25.5" width="12" height="6" fill="#f8d7d0" />
+          <rect x="6" y="33" width="10" height="5" fill="#cdeadb" />
         </svg>
       )
-    case 'prism':
+    case 'prism': // performance chart
       return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M3 20h18" {...s} />
-          <rect x="5" y="12" width="3.4" height="8" {...s} />
-          <rect x="10.3" y="7" width="3.4" height="13" {...s} />
-          <rect x="15.6" y="4" width="3.4" height="16" {...s} />
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="5" y="7" width="38" height="34" rx="2.5" fill="#fff" stroke="#d9d5cb" strokeWidth="1.3" />
+          <rect x="11" y="24" width="6" height="12" rx="1.2" fill="#4361a8" />
+          <rect x="21" y="17" width="6" height="19" rx="1.2" fill="#d33f5f" />
+          <rect x="31" y="12" width="6" height="24" rx="1.2" fill="#e8a33d" />
+          <path d="M11 21 L24 14 L37 8" stroke="#2a9d8f" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          <circle cx="37" cy="8" r="2.6" fill="#2a9d8f" />
         </svg>
       )
-    case 'essays':
+    case 'essays': // a book
       return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M4 19.5V5a1 1 0 0 1 1-1h13a1 1 0 0 1 1 1v15H6a2 2 0 0 1-2-2Z" {...s} />
-          <path d="M4 19.5A2 2 0 0 1 6 18h13" {...s} />
-          <path d="M8.5 8h7M8.5 11.5h5" {...s} />
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M11 6h24a2 2 0 0 1 2 2v34H13a2 2 0 0 1-2-2z" fill="#7b4b8a" />
+          <path d="M11 38a2 2 0 0 1 2-2h24v6H13a2 2 0 0 1-2-2z" fill="#5f3a6b" />
+          <rect x="11" y="6" width="5" height="36" fill="#5f3a6b" />
+          <rect x="20" y="14" width="13" height="2.4" rx="1.2" fill="#e8d9ef" />
+          <rect x="20" y="20" width="9" height="2.4" rx="1.2" fill="#e8d9ef" opacity="0.75" />
+          <rect x="30" y="4" width="4" height="14" fill="#e8a33d" />
         </svg>
       )
-    case 'beauty':
+    case 'beauty': // a lipstick
       return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <rect x="8" y="12" width="8" height="9" {...s} />
-          <path d="M9.6 12V7.2q0-2.4 2.4-2.4t2.4 2.4V12" {...s} />
-          <path d="M8 15.5h8" {...s} />
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="17" y="24" width="14" height="19" rx="2" fill="#d9a441" />
+          <rect x="17" y="24" width="14" height="4" fill="#c08f2f" />
+          <rect x="18.5" y="12" width="11" height="12" fill="#e7cf8f" />
+          <path d="M18.5 13 L18.5 6.5 Q24 2.5 29.5 8 L29.5 13 Z" fill="#d33f5f" />
+          <path d="M24 4.2 Q29.5 3.6 29.5 8 L29.5 13 L24 13 Z" fill="#b8304d" />
         </svg>
       )
-    case 'luxury':
+    case 'luxury': // a handbag
       return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M4 9h16l-1.2 11H5.2z" {...s} />
-          <path d="M8.6 9V7a3.4 3.4 0 0 1 6.8 0v2" {...s} />
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M15 17V13a9 9 0 0 1 18 0v4" stroke="#b07a3a" strokeWidth="2.6" fill="none" strokeLinecap="round" />
+          <path d="M8 17h32l-2.6 24H10.6z" fill="#c98a45" />
+          <path d="M8 17h32l-0.6 5.6H8.6z" fill="#e0a95f" />
+          <rect x="21" y="25" width="6" height="7" rx="1.4" fill="#e8c76f" />
+          <rect x="22.6" y="27" width="2.8" height="3" rx="0.8" fill="#a86f2e" />
         </svg>
       )
     default:
@@ -153,12 +173,12 @@ export function Canvas() {
             <EaselScene />
             {/* artifacts, laid over the canvas face of the SVG */}
             <div className="np-board">
-              {OBJECTS.map((o) => (
+              {OBJECTS.map((o, i) => (
                 <button
                   key={o.id}
                   type="button"
                   className="np-pin"
-                  style={{ left: `${o.x}%`, top: `${o.y}%` }}
+                  style={{ left: `${o.x}%`, top: `${o.y}%`, ['--i' as string]: i }}
                   onClick={() => setOpen(o)}
                   aria-label={o.label}
                 >

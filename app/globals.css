@@ -145,6 +145,9 @@
   }
   body {
     @apply bg-background text-foreground;
+    /* Studio White: near-white ground with a faint dot grid */
+    background-image: radial-gradient(circle, var(--np-dot) 1.15px, transparent 1.15px);
+    background-size: 26px 26px;
     font-size: 15px;
     line-height: 1.55;
     overflow-x: clip;
@@ -559,7 +562,9 @@ button:hover > .np-arrow,
   container-type: inline-size;
   position: relative;
   width: 100%;
-  max-width: 520px;
+  max-width: 540px;
+  /* the whole thing leans, canvas and artifacts together */
+  transform: rotate(-3.2deg);
 }
 .np-scene-svg { display: block; width: 100%; height: auto; }
 
@@ -567,9 +572,9 @@ button:hover > .np-arrow,
    (viewBox 500x530 · rect x70 y86 w240 h272) */
 .np-board {
   position: absolute;
-  left: 17.2%;
+  left: 22.4%;
   top: 18.11%;
-  width: 42.4%;
+  width: 55.2%;
   height: 48.68%;
 }
 
@@ -577,22 +582,33 @@ button:hover > .np-arrow,
 .np-pin {
   position: absolute;
   transform: translate(-50%, -50%);
-  width: 12cqw;
-  max-width: 58px;
-  min-width: 34px;
+  width: 17cqw;
+  max-width: 84px;
+  min-width: 46px;
   aspect-ratio: 1;
   display: grid;
   place-items: center;
   padding: 0;
   border: 0;
   background: none;
-  color: var(--np-ink-2);
   cursor: pointer;
-  transition: color var(--dur-1) var(--ease-swift), transform var(--dur-1) var(--ease-swift);
+  opacity: 0;
+  animation: np-pin-in 620ms var(--ease-expo) forwards;
+  animation-delay: calc(var(--i, 0) * 90ms + 220ms);
+  transition: transform 220ms var(--ease-expo), filter 220ms var(--ease-swift);
+  filter: drop-shadow(0 3px 6px rgba(23, 24, 27, 0.14));
 }
-.np-pin svg { width: 68%; height: 68%; }
-.np-pin:hover, .np-pin:focus-visible { color: var(--np-rose); transform: translate(-50%, -50%) scale(1.12); }
-.np-pin:focus-visible { outline: 2px solid var(--np-rose); outline-offset: 2px; }
+.np-pin svg { width: 100%; height: 100%; display: block; }
+.np-pin:hover, .np-pin:focus-visible {
+  transform: translate(-50%, -50%) scale(1.14) rotate(2deg);
+  filter: drop-shadow(0 8px 16px rgba(23, 24, 27, 0.22));
+}
+.np-pin:focus-visible { outline: 2px solid var(--np-rose); outline-offset: 6px; }
+
+@keyframes np-pin-in {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.72); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
 
 /* the label only appears on hover — the canvas stays clean */
 .np-pin-tip {
@@ -612,13 +628,6 @@ button:hover > .np-arrow,
 }
 .np-pin:hover .np-pin-tip,
 .np-pin:focus-visible .np-pin-tip { opacity: 1; }
-
-/* the girl breathes, very slightly */
-.np-girl { transform-origin: 416px 500px; animation: np-sway 6s ease-in-out infinite; }
-@keyframes np-sway {
-  0%, 100% { transform: rotate(0deg); }
-  50% { transform: rotate(-1.1deg); }
-}
 
 /* ---------- the name ---------- */
 .np-idcol { max-width: 30rem; }
@@ -701,8 +710,7 @@ button:hover > .np-arrow,
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .np-girl { animation: none; }
-  .np-pin { transition: none; }
+  .np-pin { animation: none; opacity: 1; transition: none; }
 }
 
 /* ---------- panel ---------- */
