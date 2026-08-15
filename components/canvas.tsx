@@ -192,7 +192,7 @@ export function Canvas() {
 
         {/* ---------------- right: the name ---------------- */}
         <div className="np-idcol">
-          <p className="np-id-role">Equity research &amp; valuation</p>
+          <p className="np-id-role">Hi, I&apos;m</p>
           <h1 className="np-id-name">
             Nandini{' '}
             <Link href="/about" className="np-id-link">
