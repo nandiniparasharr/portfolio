@@ -562,7 +562,7 @@ button:hover > .np-arrow,
   container-type: inline-size;
   position: relative;
   width: 100%;
-  max-width: 459px;
+  max-width: 436px;
   margin-left: -2%;
   /* the whole thing leans, canvas and artifacts together */
   transform: rotate(-3.2deg);
@@ -571,12 +571,13 @@ button:hover > .np-arrow,
 
 /* the canvas face, mapped onto the SVG's white rectangle
    (viewBox 500x530 · rect x70 y86 w240 h272) */
+/* mapped onto the SVG canvas rect: x74 y88 w236 h282 of 384x530 */
 .np-board {
   position: absolute;
-  left: 22.4%;
-  top: 18.11%;
-  width: 55.2%;
-  height: 48.68%;
+  left: 19.27%;
+  top: 16.6%;
+  width: 61.46%;
+  height: 53.21%;
 }
 
 /* ---------- icon artifacts ---------- */
