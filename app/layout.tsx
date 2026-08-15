@@ -1,13 +1,13 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata } from 'next'
-import { Instrument_Serif, Archivo, IBM_Plex_Mono } from 'next/font/google'
+import { Cormorant_Garamond, Archivo, IBM_Plex_Mono } from 'next/font/google'
 import './globals.css'
 import { Shell } from '@/components/shell'
 
-const instrument = Instrument_Serif({
-  variable: '--font-instrument',
+const cormorant = Cormorant_Garamond({
+  variable: '--font-cormorant',
   subsets: ['latin'],
-  weight: '400',
+  weight: ['400', '500', '600'],
   style: ['normal', 'italic'],
 })
 const archivo = Archivo({
@@ -42,7 +42,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${instrument.variable} ${archivo.variable} ${plexMono.variable} bg-background`}
+      className={`${cormorant.variable} ${archivo.variable} ${plexMono.variable} bg-background`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
