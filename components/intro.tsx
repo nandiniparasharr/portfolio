@@ -10,7 +10,9 @@ export function Intro() {
     if (sessionStorage.getItem('np-intro')) return
     sessionStorage.setItem('np-intro', '1')
     setShow(true)
-    const t = setTimeout(() => setShow(false), 2400)
+    // 3.2s, not 2.4s — the "new site coming" line lands at 900ms and needs
+    // time on screen to actually be read before the sheet lifts.
+    const t = setTimeout(() => setShow(false), 3200)
     return () => clearTimeout(t)
   }, [])
 
@@ -31,6 +33,12 @@ export function Intro() {
           style={{ ['--stage-delay' as string]: '500ms' }}
         >
           Portfolio — 2026
+        </p>
+        <p
+          className="np-stage mt-6 font-mono text-[10px] uppercase tracking-[0.18em] text-rose"
+          style={{ ['--stage-delay' as string]: '900ms' }}
+        >
+          New site coming — stay tuned
         </p>
       </div>
     </div>
