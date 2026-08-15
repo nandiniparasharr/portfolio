@@ -2,55 +2,45 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { cn } from '@/lib/utils'
+import { EaselScene } from '@/components/easel-scene'
 
 /* ------------------------------------------------------------------
-   THE EASEL
-   Left half: a canvas standing on an easel, artifacts arranged on it,
-   small link tiles resting on the ledge.
-   Right half: the name. "Parashar" opens the About page.
+   HOME
+   Left: a wooden easel holding a canvas, painted by the girl beside it.
+   Icon-sized artifacts sit on the canvas; each opens a panel.
+   Right: the name. "Parashar" opens the About page.
    ------------------------------------------------------------------ */
-
-type Kind = 'photo' | 'drawn'
 
 type Obj = {
   id: string
   label: string
-  kind: Kind
-  /** position on the board, % */
+  /** position on the canvas face, % */
   x: number
   y: number
-  /** width in cqw, relative to the board */
-  w: number
-  rot?: number
   blurb: string
   href?: string
   ready: boolean
 }
 
-/** Artifacts pinned to the canvas. */
 const OBJECTS: Obj[] = [
   {
     id: 'research',
     label: 'Research',
-    kind: 'photo',
-    x: 7, y: 8, w: 31, rot: -2.6,
+    x: 20, y: 15,
     blurb: 'Company profiles and research notes — the write-ups behind the models.',
     ready: false,
   },
   {
     id: 'model',
     label: 'Models',
-    kind: 'photo',
-    x: 55, y: 11, w: 34, rot: 2,
+    x: 62, y: 12,
     blurb: 'DCFs, unit economics and scenario work, with what each one concluded.',
     ready: false,
   },
   {
     id: 'prism',
     label: 'Portfolio Prism',
-    kind: 'photo',
-    x: 6, y: 47, w: 31, rot: 1.6,
+    x: 30, y: 42,
     blurb: 'A robo-advisor model and risk analytics dashboard, built and shipped.',
     href: 'https://portfolio-prism.vercel.app',
     ready: false,
@@ -58,8 +48,7 @@ const OBJECTS: Obj[] = [
   {
     id: 'essays',
     label: 'Essays',
-    kind: 'photo',
-    x: 58, y: 52, w: 30, rot: -1.8,
+    x: 68, y: 45,
     blurb: 'Essays on markets, machines and the things I cannot stop analysing.',
     href: 'https://substack.com/@archivesbynan',
     ready: false,
@@ -67,121 +56,80 @@ const OBJECTS: Obj[] = [
   {
     id: 'beauty',
     label: 'Beauty',
-    kind: 'drawn',
-    x: 45, y: 32, w: 8,
+    x: 22, y: 72,
     blurb: 'Consumer sector coverage — unit economics and brand equity, in lipstick.',
     ready: false,
   },
   {
     id: 'luxury',
     label: 'Luxury',
-    kind: 'drawn',
-    x: 39, y: 66, w: 13,
+    x: 60, y: 74,
     blurb: 'What a handbag costs to make, and what it costs to want.',
     ready: false,
   },
 ]
 
-/** Small things resting on the easel ledge. */
-const TILES: Obj[] = [
-  {
-    id: 'cv',
-    label: 'CV',
-    kind: 'drawn',
-    x: 0, y: 0, w: 0,
-    blurb: 'The short, formal version.',
-    href: '/NandiniParashar_CV.pdf',
-    ready: true,
-  },
-  {
-    id: 'linkedin',
-    label: 'LinkedIn',
-    kind: 'drawn',
-    x: 0, y: 0, w: 0,
-    blurb: 'The professional record.',
-    href: 'https://www.linkedin.com/in/nandiniparashar/',
-    ready: true,
-  },
-  {
-    id: 'contact',
-    label: 'Contact',
-    kind: 'drawn',
-    x: 0, y: 0, w: 0,
-    blurb: 'Roles, collaborations, or a good book recommendation.',
-    href: '/contact',
-    ready: true,
-  },
+const LINKS: Obj[] = [
+  { id: 'cv', label: 'CV', x: 0, y: 0, blurb: 'The short, formal version.', href: '/NandiniParashar_CV.pdf', ready: true },
+  { id: 'linkedin', label: 'LinkedIn', x: 0, y: 0, blurb: 'The professional record.', href: 'https://www.linkedin.com/in/nandiniparashar/', ready: true },
+  { id: 'contact', label: 'Contact', x: 0, y: 0, blurb: 'Roles, collaborations, or a good book recommendation.', href: '/contact', ready: true },
 ]
 
-/* ---------- artwork ---------- */
+/* ---------- the icons ---------- */
 
-function PhotoArt({ id }: { id: string }) {
-  if (id === 'model') {
-    return (
-      <div className="np-cells">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <i
-            key={i}
-            className={
-              i < 5 ? 'hd' : i === 7 || i === 14 || i === 18 ? 'up' : i === 11 ? 'dn' : ''
-            }
-          />
-        ))}
-      </div>
-    )
+function Icon({ id }: { id: string }) {
+  const s = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.6, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const }
+  switch (id) {
+    case 'research':
+      return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 3h8l4 4v14H6z" {...s} />
+          <path d="M14 3v4h4" {...s} />
+          <path d="M9 12h6M9 15h6M9 18h3" {...s} />
+        </svg>
+      )
+    case 'model':
+      return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="16" {...s} />
+          <path d="M3 9h18M3 14.5h18M9 9v11M15 9v11" {...s} />
+        </svg>
+      )
+    case 'prism':
+      return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 20h18" {...s} />
+          <rect x="5" y="12" width="3.4" height="8" {...s} />
+          <rect x="10.3" y="7" width="3.4" height="13" {...s} />
+          <rect x="15.6" y="4" width="3.4" height="16" {...s} />
+        </svg>
+      )
+    case 'essays':
+      return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 19.5V5a1 1 0 0 1 1-1h13a1 1 0 0 1 1 1v15H6a2 2 0 0 1-2-2Z" {...s} />
+          <path d="M4 19.5A2 2 0 0 1 6 18h13" {...s} />
+          <path d="M8.5 8h7M8.5 11.5h5" {...s} />
+        </svg>
+      )
+    case 'beauty':
+      return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="8" y="12" width="8" height="9" {...s} />
+          <path d="M9.6 12V7.2q0-2.4 2.4-2.4t2.4 2.4V12" {...s} />
+          <path d="M8 15.5h8" {...s} />
+        </svg>
+      )
+    case 'luxury':
+      return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 9h16l-1.2 11H5.2z" {...s} />
+          <path d="M8.6 9V7a3.4 3.4 0 0 1 6.8 0v2" {...s} />
+        </svg>
+      )
+    default:
+      return null
   }
-  if (id === 'essays') {
-    return (
-      <div className="np-sheet-inner">
-        {['m', '', 's', 'm', '', 's'].map((c, i) => (
-          <span key={i} className={cn('np-ln', c)} />
-        ))}
-      </div>
-    )
-  }
-  if (id === 'prism') {
-    return (
-      <div className="np-sheet-inner">
-        <span className="np-ln-hd" />
-        <div className="np-chart">
-          {[38, 62, 48, 80, 58, 88].map((h, i) => (
-            <i key={i} style={{ height: `${h}%` }} />
-          ))}
-        </div>
-      </div>
-    )
-  }
-  return (
-    <div className="np-sheet-inner">
-      <span className="np-ln-hd" />
-      <span className="np-ln m" />
-      <span className="np-ln" />
-      <span className="np-ln s" />
-      <div className="np-chart">
-        {[42, 66, 51, 88, 72].map((h, i) => (
-          <i key={i} style={{ height: `${h}%` }} />
-        ))}
-      </div>
-    </div>
-  )
-}
-
-function DrawnArt({ id }: { id: string }) {
-  if (id === 'luxury') {
-    return (
-      <svg viewBox="0 0 80 70" className="np-draw" aria-hidden="true">
-        <path d="M24 30 V20 a16 16 0 0 1 32 0 V30" className="st" />
-        <rect x="8" y="30" width="64" height="38" rx="3" className="fl" />
-      </svg>
-    )
-  }
-  return (
-    <svg viewBox="0 0 40 88" className="np-draw" aria-hidden="true">
-      <rect x="9" y="40" width="22" height="44" rx="2" className="fl-2" />
-      <rect x="12" y="14" width="16" height="28" rx="2" className="fl" />
-      <path d="M12 16 L12 6 Q20 0 28 8 L28 16 Z" className="fl" />
-    </svg>
-  )
 }
 
 /* ---------- page ---------- */
@@ -196,47 +144,26 @@ export function Canvas() {
     return () => window.removeEventListener('keydown', esc)
   }, [open])
 
-  const all = [...OBJECTS, ...TILES]
-
   return (
     <>
       <div className="np-hero">
         {/* ---------------- left: the easel ---------------- */}
         <div className="np-easel-col">
-          <div className="np-easel">
-            <span className="np-leg np-leg-l" aria-hidden="true" />
-            <span className="np-leg np-leg-r" aria-hidden="true" />
-
+          <div className="np-scene">
+            <EaselScene />
+            {/* artifacts, laid over the canvas face of the SVG */}
             <div className="np-board">
               {OBJECTS.map((o) => (
                 <button
                   key={o.id}
                   type="button"
-                  className={cn('np-obj', `np-obj-${o.kind}`)}
-                  style={{
-                    left: `${o.x}%`,
-                    top: `${o.y}%`,
-                    ['--w' as string]: `${o.w}cqw`,
-                    ['--rot' as string]: `${o.rot ?? 0}deg`,
-                  }}
+                  className="np-pin"
+                  style={{ left: `${o.x}%`, top: `${o.y}%` }}
                   onClick={() => setOpen(o)}
-                  aria-label={`${o.label} — open`}
+                  aria-label={o.label}
                 >
-                  <span className="np-obj-art">
-                    {o.kind === 'photo' ? <PhotoArt id={o.id} /> : <DrawnArt id={o.id} />}
-                  </span>
-                  <span className="np-obj-label">{o.label}</span>
-                </button>
-              ))}
-            </div>
-
-            {/* the ledge, and the small things resting on it */}
-            <div className="np-ledge" aria-hidden="true" />
-            <div className="np-tray">
-              {TILES.map((t) => (
-                <button key={t.id} type="button" className="np-tile" onClick={() => setOpen(t)}>
-                  <span className="np-tile-dot" />
-                  {t.label}
+                  <Icon id={o.id} />
+                  <span className="np-pin-tip">{o.label}</span>
                 </button>
               ))}
             </div>
@@ -257,17 +184,20 @@ export function Canvas() {
             everything else.
           </p>
           <span className="np-id-bar" />
-          <p className="np-id-hint">
-            Tap anything on the canvas — or start with{' '}
-            <Link href="/about">the story</Link>.
-          </p>
+          <nav className="np-id-links" aria-label="Quick links">
+            {LINKS.map((l) => (
+              <button key={l.id} type="button" onClick={() => setOpen(l)}>
+                {l.label}
+              </button>
+            ))}
+          </nav>
         </div>
       </div>
 
       {/* ---------------- mobile index ---------------- */}
       <div className="np-mobile-list">
         <ul>
-          {all.map((o) => (
+          {[...OBJECTS, ...LINKS].map((o) => (
             <li key={o.id}>
               <button type="button" onClick={() => setOpen(o)}>
                 <span className="np-list-label">{o.label}</span>

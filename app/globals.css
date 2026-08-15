@@ -541,167 +541,84 @@ button:hover > .np-arrow,
 }
 
 /* ==================================================================
-   THE EASEL — v2 home
-   Left: a canvas on a stand, artifacts on it, tiles on the ledge.
-   Right: the name, with "Parashar" opening the About page.
+   HOME — the easel scene
    ================================================================== */
 .np-hero {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 40px 24px 96px;
+  padding: 32px 24px 88px;
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-  gap: clamp(32px, 5vw, 72px);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
+  gap: clamp(28px, 4.5vw, 64px);
   align-items: center;
-  min-height: calc(100vh - 200px);
 }
 
-/* ---------- the easel ---------- */
+/* ---------- the scene ---------- */
 .np-easel-col { display: flex; justify-content: center; }
-.np-easel {
-  position: relative;
-  width: 100%;
-  max-width: 540px;
-  /* room below the board for the ledge and the splayed legs */
-  padding-bottom: 104px;
-}
-
-/* legs run behind the board and splay out below it */
-.np-leg {
-  position: absolute;
-  top: 3%;
-  bottom: 0;
-  width: 10px;
-  background: linear-gradient(90deg, #b9b5ad, #d6d2ca 45%, #a8a49c);
-  box-shadow: 0 2px 5px rgba(23, 24, 27, 0.14);
-}
-.np-leg-l { left: 12%; transform: rotate(6.5deg); transform-origin: top center; }
-.np-leg-r { right: 12%; transform: rotate(-6.5deg); transform-origin: top center; }
-
-/* the canvas itself */
-.np-board {
+.np-scene {
   container-type: inline-size;
   position: relative;
-  aspect-ratio: 6 / 5;
-  background-color: var(--np-paper-raised);
-  background-image: radial-gradient(circle, var(--np-dot) 1.15px, transparent 1.15px);
-  background-size: 24px 24px;
-  border: 1px solid var(--np-line);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.6) inset,
-    0 14px 34px rgba(23, 24, 27, 0.11),
-    0 2px 6px rgba(23, 24, 27, 0.06);
+  width: 100%;
+  max-width: 520px;
+}
+.np-scene-svg { display: block; width: 100%; height: auto; }
+
+/* the canvas face, mapped onto the SVG's white rectangle
+   (viewBox 500x530 · rect x70 y86 w240 h272) */
+.np-board {
+  position: absolute;
+  left: 17.2%;
+  top: 18.11%;
+  width: 42.4%;
+  height: 48.68%;
 }
 
-/* the ledge the canvas rests on */
-.np-ledge {
+/* ---------- icon artifacts ---------- */
+.np-pin {
   position: absolute;
-  left: 1%;
-  right: 1%;
-  bottom: 92px;
-  height: 14px;
-  background: linear-gradient(180deg, #d8d4cc, #b3afa7 62%, #97938c);
-  box-shadow: 0 6px 14px rgba(23, 24, 27, 0.16);
-}
-
-/* things resting on the ledge */
-/* the tiles rest ON the ledge, in front of the canvas */
-.np-tray {
-  position: absolute;
-  left: 0; right: 0;
-  bottom: 106px;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.np-tile {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--np-paper-raised);
-  border: 1px solid var(--np-line);
-  padding: 9px 13px;
-  cursor: pointer;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-  color: var(--np-ink);
-  box-shadow: 0 6px 14px rgba(23, 24, 27, 0.1);
-  transition: transform var(--dur-1) var(--ease-swift), border-color var(--dur-1);
-}
-.np-tile:hover { transform: translateY(-3px); border-color: var(--np-ink-3); }
-.np-tile:focus-visible { outline: 2px solid var(--np-rose); outline-offset: 3px; }
-.np-tile-dot { width: 8px; height: 8px; background: var(--np-rose); flex: none; }
-
-/* ---------- artifacts on the board ---------- */
-.np-obj {
-  position: absolute;
-  width: var(--w);
+  transform: translate(-50%, -50%);
+  width: 12cqw;
+  max-width: 58px;
+  min-width: 34px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
   padding: 0;
   border: 0;
   background: none;
+  color: var(--np-ink-2);
   cursor: pointer;
-  text-align: center;
-  transition: transform 0.22s var(--ease-swift);
+  transition: color var(--dur-1) var(--ease-swift), transform var(--dur-1) var(--ease-swift);
 }
-.np-obj:hover, .np-obj:focus-visible { transform: translateY(-4px); }
-.np-obj:focus-visible { outline: 2px solid var(--np-rose); outline-offset: 5px; }
+.np-pin svg { width: 68%; height: 68%; }
+.np-pin:hover, .np-pin:focus-visible { color: var(--np-rose); transform: translate(-50%, -50%) scale(1.12); }
+.np-pin:focus-visible { outline: 2px solid var(--np-rose); outline-offset: 2px; }
 
-.np-obj-label {
-  display: block;
+/* the label only appears on hover — the canvas stays clean */
+.np-pin-tip {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
   font-family: var(--font-mono);
-  font-size: 2.5cqw;
-  letter-spacing: 0.1em;
+  font-size: 9.5px;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
   color: var(--np-ink-2);
-  margin-top: 2cqw;
   white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-1) var(--ease-swift);
 }
+.np-pin:hover .np-pin-tip,
+.np-pin:focus-visible .np-pin-tip { opacity: 1; }
 
-/* photographic artifacts — framed, shadowed, slightly askew */
-.np-obj-photo .np-obj-art {
-  display: block;
-  background: var(--np-paper-raised);
-  padding: 1.6cqw;
-  box-shadow:
-    0 0.5cqw 1.4cqw rgba(23, 24, 27, 0.16),
-    0 2.4cqw 4.4cqw rgba(23, 24, 27, 0.12);
-  transform: rotate(var(--rot));
+/* the girl breathes, very slightly */
+.np-girl { transform-origin: 416px 500px; animation: np-sway 6s ease-in-out infinite; }
+@keyframes np-sway {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-1.1deg); }
 }
-.np-sheet-inner {
-  background: #fff;
-  padding: 2cqw;
-  display: flex;
-  flex-direction: column;
-  gap: 1.1cqw;
-  aspect-ratio: 4 / 3;
-}
-.np-ln { height: 0.85cqw; background: var(--np-line); border-radius: 1px; }
-.np-ln.s { width: 58%; }
-.np-ln.m { width: 82%; }
-.np-ln-hd { height: 1.9cqw; width: 66%; background: var(--np-ink); border-radius: 1px; }
-.np-chart { display: flex; align-items: flex-end; gap: 0.8cqw; flex: 1; margin-top: 0.7cqw; }
-.np-chart i { flex: 1; background: var(--np-rose); opacity: 0.8; }
-.np-cells {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1px;
-  background: var(--np-line);
-  border: 1px solid var(--np-line);
-  aspect-ratio: 5 / 3;
-}
-.np-cells i { background: #fff; }
-.np-cells i.hd { background: var(--np-line); }
-.np-cells i.up { background: #cfe6d5; }
-.np-cells i.dn { background: #f1d6d0; }
-
-/* illustrated objects — flat, unframed */
-.np-draw { display: block; width: 100%; height: auto; }
-.np-draw .fl { fill: var(--np-rose); }
-.np-draw .fl-2 { fill: var(--np-ink-2); opacity: 0.42; }
-.np-draw .st { stroke: var(--np-rose); fill: none; stroke-width: 2.4; stroke-linecap: round; }
 
 /* ---------- the name ---------- */
 .np-idcol { max-width: 30rem; }
@@ -716,7 +633,7 @@ button:hover > .np-arrow,
 .np-id-name {
   font-family: var(--font-serif);
   font-weight: 400;
-  font-size: clamp(3rem, 6.6vw, 5rem);
+  font-size: clamp(3rem, 6.4vw, 4.9rem);
   line-height: 1;
   letter-spacing: -0.014em;
   margin: 0 0 22px;
@@ -729,8 +646,7 @@ button:hover > .np-arrow,
   border-bottom: 1px solid transparent;
   transition: border-color var(--dur-1) var(--ease-swift);
 }
-.np-id-link:hover,
-.np-id-link:focus-visible { border-bottom-color: var(--np-rose); }
+.np-id-link:hover, .np-id-link:focus-visible { border-bottom-color: var(--np-rose); }
 .np-id-line {
   font-family: var(--font-sans);
   font-size: 1.0625rem;
@@ -740,34 +656,33 @@ button:hover > .np-arrow,
   max-width: 34ch;
 }
 .np-id-bar { display: block; width: 76px; height: 2px; background: var(--np-rose); margin: 26px 0 0; }
-.np-id-hint {
+.np-id-links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; }
+.np-id-links button {
   font-family: var(--font-mono);
   font-size: 10px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: var(--np-ink-3);
-  margin: 22px 0 0;
+  color: var(--np-ink-2);
+  background: none;
+  border: 1px solid var(--np-line);
+  padding: 9px 14px;
+  cursor: pointer;
+  transition: color var(--dur-1), border-color var(--dur-1);
 }
-.np-id-hint a { color: var(--np-ink-2); }
-.np-id-hint a:hover { color: var(--np-rose); }
+.np-id-links button:hover { color: var(--np-ink); border-color: var(--np-ink-3); }
 
 /* ---------- mobile ---------- */
 .np-mobile-list { display: none; }
 
 @media (max-width: 900px) {
-  .np-hero {
-    grid-template-columns: 1fr;
-    min-height: 0;
-    padding-bottom: 40px;
-  }
-  /* name first — identity before exploration */
+  .np-hero { grid-template-columns: 1fr; padding-bottom: 40px; }
   .np-idcol { order: -1; max-width: none; }
-  .np-easel { max-width: 420px; margin: 0 auto; }
+  .np-scene { max-width: 420px; }
 }
-
 @media (max-width: 620px) {
   /* the easel does not survive a phone: swap it for a plain index */
   .np-easel-col { display: none; }
+  .np-id-links { display: none; }
   .np-mobile-list { display: block; max-width: 1180px; margin: 0 auto; padding: 0 24px 72px; }
   .np-mobile-list ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--np-line); }
   .np-mobile-list li { border-bottom: 1px solid var(--np-line); }
@@ -783,6 +698,11 @@ button:hover > .np-arrow,
     display: block; font-family: var(--font-sans); font-size: 0.9063rem;
     color: var(--np-ink-2);
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .np-girl { animation: none; }
+  .np-pin { transition: none; }
 }
 
 /* ---------- panel ---------- */
