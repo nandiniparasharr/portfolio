@@ -5,46 +5,44 @@ import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
 
 /* ------------------------------------------------------------------
-   THE CANVAS
-   A dot-grid surface with a fixed identity anchor and a scatter of
-   objects. Clicking an object opens its panel.
-
-   Objects carry placeholder bodies for now; real content drops into
-   OBJECTS as it arrives.
+   THE EASEL
+   Left half: a canvas standing on an easel, artifacts arranged on it,
+   small link tiles resting on the ledge.
+   Right half: the name. "Parashar" opens the About page.
    ------------------------------------------------------------------ */
 
-type Kind = 'photo' | 'drawn' | 'tile'
+type Kind = 'photo' | 'drawn'
 
 type Obj = {
   id: string
   label: string
   kind: Kind
-  /** desktop position, % of the canvas */
+  /** position on the board, % */
   x: number
   y: number
-  /** width in container-query units (cqw) */
+  /** width in cqw, relative to the board */
   w: number
   rot?: number
-  /** what the panel says until the real content lands */
   blurb: string
   href?: string
   ready: boolean
 }
 
+/** Artifacts pinned to the canvas. */
 const OBJECTS: Obj[] = [
   {
     id: 'research',
-    label: 'Equity research',
+    label: 'Research',
     kind: 'photo',
-    x: 46, y: 6, w: 18, rot: -2.4,
+    x: 7, y: 8, w: 31, rot: -2.6,
     blurb: 'Company profiles and research notes — the write-ups behind the models.',
     ready: false,
   },
   {
     id: 'model',
-    label: 'Valuation models',
+    label: 'Models',
     kind: 'photo',
-    x: 70, y: 27, w: 20, rot: 1.8,
+    x: 55, y: 11, w: 34, rot: 2,
     blurb: 'DCFs, unit economics and scenario work, with what each one concluded.',
     ready: false,
   },
@@ -52,42 +50,45 @@ const OBJECTS: Obj[] = [
     id: 'prism',
     label: 'Portfolio Prism',
     kind: 'photo',
-    x: 47, y: 44, w: 17, rot: 1.4,
+    x: 6, y: 47, w: 31, rot: 1.6,
     blurb: 'A robo-advisor model and risk analytics dashboard, built and shipped.',
     href: 'https://portfolio-prism.vercel.app',
     ready: false,
   },
   {
     id: 'essays',
-    label: 'Archives by Nan',
+    label: 'Essays',
     kind: 'photo',
-    x: 29, y: 56, w: 15, rot: 2.6,
+    x: 58, y: 52, w: 30, rot: -1.8,
     blurb: 'Essays on markets, machines and the things I cannot stop analysing.',
     href: 'https://substack.com/@archivesbynan',
     ready: false,
   },
   {
     id: 'beauty',
-    label: 'Beauty coverage',
+    label: 'Beauty',
     kind: 'drawn',
-    x: 5, y: 56, w: 4.5,
+    x: 45, y: 32, w: 8,
     blurb: 'Consumer sector coverage — unit economics and brand equity, in lipstick.',
     ready: false,
   },
   {
     id: 'luxury',
-    label: 'Luxury coverage',
+    label: 'Luxury',
     kind: 'drawn',
-    x: 18, y: 69, w: 7,
+    x: 39, y: 66, w: 13,
     blurb: 'What a handbag costs to make, and what it costs to want.',
     ready: false,
   },
+]
+
+/** Small things resting on the easel ledge. */
+const TILES: Obj[] = [
   {
     id: 'cv',
     label: 'CV',
-    kind: 'tile',
-    x: 46, y: 74, w: 0,
-    rot: -1.2,
+    kind: 'drawn',
+    x: 0, y: 0, w: 0,
     blurb: 'The short, formal version.',
     href: '/NandiniParashar_CV.pdf',
     ready: true,
@@ -95,23 +96,36 @@ const OBJECTS: Obj[] = [
   {
     id: 'linkedin',
     label: 'LinkedIn',
-    kind: 'tile',
-    x: 66, y: 78, w: 0,
-    rot: 1.1,
+    kind: 'drawn',
+    x: 0, y: 0, w: 0,
     blurb: 'The professional record.',
     href: 'https://www.linkedin.com/in/nandiniparashar/',
     ready: true,
   },
+  {
+    id: 'contact',
+    label: 'Contact',
+    kind: 'drawn',
+    x: 0, y: 0, w: 0,
+    blurb: 'Roles, collaborations, or a good book recommendation.',
+    href: '/contact',
+    ready: true,
+  },
 ]
 
-/* ---------- object artwork ---------- */
+/* ---------- artwork ---------- */
 
 function PhotoArt({ id }: { id: string }) {
   if (id === 'model') {
     return (
       <div className="np-cells">
         {Array.from({ length: 20 }).map((_, i) => (
-          <i key={i} className={i < 5 ? 'hd' : i === 7 || i === 14 || i === 18 ? 'up' : i === 11 ? 'dn' : ''} />
+          <i
+            key={i}
+            className={
+              i < 5 ? 'hd' : i === 7 || i === 14 || i === 18 ? 'up' : i === 11 ? 'dn' : ''
+            }
+          />
         ))}
       </div>
     )
@@ -170,11 +184,10 @@ function DrawnArt({ id }: { id: string }) {
   )
 }
 
-/* ---------- the canvas ---------- */
+/* ---------- page ---------- */
 
 export function Canvas() {
   const [open, setOpen] = useState<Obj | null>(null)
-  const [listView, setListView] = useState(false)
 
   useEffect(() => {
     if (!open) return
@@ -183,80 +196,89 @@ export function Canvas() {
     return () => window.removeEventListener('keydown', esc)
   }, [open])
 
-  const anchor = (
-    <div className="np-anchor">
-      <p className="np-anchor-role">Equity research &amp; valuation</p>
-      <h1 className="np-anchor-name">
-        Nandini <em>Parashar</em>
-      </h1>
-      <p className="np-anchor-line">
-        I analyse things for a living. And then, for fun, I analyse everything
-        else.
-      </p>
-      <span className="np-anchor-bar" />
-    </div>
-  )
+  const all = [...OBJECTS, ...TILES]
 
   return (
     <>
-      <div className="np-canvas-wrap">
-        {/* desktop: the spatial canvas */}
-        <div className={cn('np-canvas', listView && 'is-hidden')}>
-          {anchor}
-          {OBJECTS.map((o) => (
-            <button
-              key={o.id}
-              type="button"
-              className={cn('np-obj', `np-obj-${o.kind}`)}
-              style={{
-                left: `${o.x}%`,
-                top: `${o.y}%`,
-                ['--w' as string]: o.w ? `${o.w}cqw` : 'auto',
-                ['--rot' as string]: `${o.rot ?? 0}deg`,
-              }}
-              onClick={() => setOpen(o)}
-              aria-label={`${o.label} — open`}
-            >
-              <span className="np-obj-art">
-                {o.kind === 'photo' && <PhotoArt id={o.id} />}
-                {o.kind === 'drawn' && <DrawnArt id={o.id} />}
-                {o.kind === 'tile' && (
-                  <span className="np-tile">
-                    <span className="np-tile-dot" />
-                    {o.label}
+      <div className="np-hero">
+        {/* ---------------- left: the easel ---------------- */}
+        <div className="np-easel-col">
+          <div className="np-easel">
+            <span className="np-leg np-leg-l" aria-hidden="true" />
+            <span className="np-leg np-leg-r" aria-hidden="true" />
+
+            <div className="np-board">
+              {OBJECTS.map((o) => (
+                <button
+                  key={o.id}
+                  type="button"
+                  className={cn('np-obj', `np-obj-${o.kind}`)}
+                  style={{
+                    left: `${o.x}%`,
+                    top: `${o.y}%`,
+                    ['--w' as string]: `${o.w}cqw`,
+                    ['--rot' as string]: `${o.rot ?? 0}deg`,
+                  }}
+                  onClick={() => setOpen(o)}
+                  aria-label={`${o.label} — open`}
+                >
+                  <span className="np-obj-art">
+                    {o.kind === 'photo' ? <PhotoArt id={o.id} /> : <DrawnArt id={o.id} />}
                   </span>
-                )}
-              </span>
-              {o.kind !== 'tile' && <span className="np-obj-label">{o.label}</span>}
-            </button>
-          ))}
-        </div>
-
-        {/* the index — the escape hatch for anyone who doesn't want to explore */}
-        <div className={cn('np-list', !listView && 'is-hidden')}>
-          {anchor}
-          <ul className="np-list-items">
-            {OBJECTS.map((o) => (
-              <li key={o.id}>
-                <button type="button" onClick={() => setOpen(o)}>
-                  <span className="np-list-label">{o.label}</span>
-                  <span className="np-list-blurb">{o.blurb}</span>
+                  <span className="np-obj-label">{o.label}</span>
                 </button>
-              </li>
-            ))}
-          </ul>
+              ))}
+            </div>
+
+            {/* the ledge, and the small things resting on it */}
+            <div className="np-ledge" aria-hidden="true" />
+            <div className="np-tray">
+              {TILES.map((t) => (
+                <button key={t.id} type="button" className="np-tile" onClick={() => setOpen(t)}>
+                  <span className="np-tile-dot" />
+                  {t.label}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <button
-          type="button"
-          className="np-view-toggle"
-          onClick={() => setListView((v) => !v)}
-        >
-          {listView ? 'Canvas view' : 'Index view'}
-        </button>
+        {/* ---------------- right: the name ---------------- */}
+        <div className="np-idcol">
+          <p className="np-id-role">Equity research &amp; valuation</p>
+          <h1 className="np-id-name">
+            Nandini{' '}
+            <Link href="/about" className="np-id-link">
+              Parashar
+            </Link>
+          </h1>
+          <p className="np-id-line">
+            I analyse things for a living. And then, for fun, I analyse
+            everything else.
+          </p>
+          <span className="np-id-bar" />
+          <p className="np-id-hint">
+            Tap anything on the canvas — or start with{' '}
+            <Link href="/about">the story</Link>.
+          </p>
+        </div>
       </div>
 
-      {/* panel */}
+      {/* ---------------- mobile index ---------------- */}
+      <div className="np-mobile-list">
+        <ul>
+          {all.map((o) => (
+            <li key={o.id}>
+              <button type="button" onClick={() => setOpen(o)}>
+                <span className="np-list-label">{o.label}</span>
+                <span className="np-list-blurb">{o.blurb}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* ---------------- panel ---------------- */}
       {open && (
         <div className="np-panel-scrim" onClick={() => setOpen(null)} role="presentation">
           <div
@@ -266,7 +288,12 @@ export function Canvas() {
             aria-label={open.label}
             onClick={(e) => e.stopPropagation()}
           >
-            <button type="button" className="np-panel-close" onClick={() => setOpen(null)} aria-label="Close">
+            <button
+              type="button"
+              className="np-panel-close"
+              onClick={() => setOpen(null)}
+              aria-label="Close"
+            >
               ✕
             </button>
             <p className="np-panel-kicker">{open.ready ? 'Link' : 'In progress'}</p>
