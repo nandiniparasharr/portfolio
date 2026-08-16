@@ -75,19 +75,6 @@ const LINKS: Obj[] = [
   { id: 'contact', label: 'Contact', x: 0, y: 0, blurb: 'say hello', href: '/contact', ready: true },
 ]
 
-/* a small hand-drawn arrow pointing up at its link */
-function CaptionArrow() {
-  return (
-    <svg viewBox="0 0 22 16" className="np-quick-arrow" aria-hidden="true">
-      <path
-        d="M2 14 C4 6, 10 2, 19 3"
-        fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"
-      />
-      <path d="M19 3 L14 2 M19 3 L17 7.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-    </svg>
-  )
-}
-
 /* ---------- the icons ----------
    Little coloured objects, not grey line art. The ground is deliberately
    quiet, so all the colour on the page lives here. */
@@ -231,10 +218,6 @@ export function Canvas() {
                       {l.label}
                     </Link>
                   )}
-                  <span className="np-quick-cap">
-                    <CaptionArrow />
-                    {l.blurb}
-                  </span>
                 </span>
               )
             })}

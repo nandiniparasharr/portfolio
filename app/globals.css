@@ -804,16 +804,14 @@ button:hover > .np-arrow,
   .np-panel-scrim { animation: none; }
 }
 
-/* ---------- quick links: plum, bold, with a calligraphy caption ---------- */
+/* ---------- quick links: plum and bold ---------- */
 .np-id-links {
   display: flex;
-  gap: clamp(14px, 2.4vw, 30px);
+  gap: 10px;
   flex-wrap: wrap;
   margin-top: 28px;
-  align-items: flex-start;
 }
-.np-quick { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-
+.np-quick { display: inline-flex; }
 .np-quick-btn {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -835,19 +833,63 @@ button:hover > .np-arrow,
   background: var(--np-plum-tint);
 }
 
-.np-quick-cap {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-family: var(--font-script);
-  font-size: 1.0625rem;
-  line-height: 1.2;
-  color: var(--np-plum);
-  white-space: nowrap;
-}
-.np-quick-arrow { width: 18px; height: 13px; flex: none; opacity: 0.7; }
+/* ==================================================================
+   THE STREETLIGHT — dark mode only
+   Switches on with the dark theme and washes warm light across the
+   page. Sits behind the content; the header already has its own
+   stacking context.
+   ================================================================== */
+.np-lamp { display: none; }
+.np-content { position: relative; z-index: 1; }
 
-@media (max-width: 520px) {
-  .np-quick-cap { font-size: 0.9375rem; }
-  .np-id-links { gap: 14px; }
+[data-theme='dark'] .np-lamp {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  animation: np-lamp-on 900ms var(--ease-swift) both;
+}
+[data-theme='dark'] .np-lamp-svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 300px;
+}
+/* the wash is what actually lifts the page out of flat near-black */
+[data-theme='dark'] .np-lamp-wash {
+  position: absolute;
+  left: -6%;
+  top: -14%;
+  width: 132%;
+  height: 128%;
+  /* three overlapping pools: hot at the lamp, then reaching far enough
+     right to actually lift the text column out of flat black */
+  background:
+    radial-gradient(46% 38% at 10% 12%, rgba(255, 216, 154, 0.20), transparent 70%),
+    radial-gradient(68% 58% at 30% 38%, rgba(255, 210, 148, 0.10), transparent 74%),
+    radial-gradient(78% 70% at 62% 44%, rgba(255, 214, 158, 0.062), transparent 78%);
+}
+
+@keyframes np-lamp-on {
+  0% { opacity: 0; }
+  35% { opacity: 0.45; }
+  48% { opacity: 0.18; }
+  100% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-theme='dark'] .np-lamp { animation: none; }
+}
+
+/* the lamp lifts the ground, but the text needs real contrast too */
+[data-theme='dark'] .np-quick-btn { color: #cbb3c6; border-color: #3b3e46; }
+[data-theme='dark'] .np-quick-btn:hover,
+[data-theme='dark'] .np-quick-btn:focus-visible { color: var(--np-rose); border-color: #cbb3c6; }
+
+@media (max-width: 900px) {
+  /* on narrow screens the lamp would sit on top of the content */
+  [data-theme='dark'] .np-lamp-svg { opacity: 0.5; }
 }

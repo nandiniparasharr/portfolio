@@ -5,6 +5,7 @@ import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { CommandPalette } from '@/components/command-palette'
 import { Intro } from '@/components/intro'
+import { StreetLamp } from '@/components/street-lamp'
 
 export function Shell({ children }: { children: ReactNode }) {
   const [paletteOpen, setPaletteOpen] = useState(false)
@@ -21,11 +22,12 @@ export function Shell({ children }: { children: ReactNode }) {
   }, [])
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="np-shell flex min-h-screen flex-col">
+      <StreetLamp />
       <Intro />
       <SiteHeader onOpenPalette={() => setPaletteOpen(true)} />
-      <main className="flex-1">{children}</main>
-      <SiteFooter />
+      <main className="np-content flex-1">{children}</main>
+      <div className="np-content"><SiteFooter /></div>
       <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
     </div>
   )
