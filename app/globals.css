@@ -10,6 +10,7 @@
   --font-serif: var(--font-cormorant), Cochin, Baskerville, Georgia, serif;
   --font-heading: var(--font-cormorant), Cochin, Baskerville, Georgia, serif;
   --font-mono: var(--font-plex-mono), 'SFMono-Regular', Consolas, monospace;
+  --font-script: var(--font-parisienne), 'Snell Roundhand', 'Apple Chancery', cursive;
 
   --color-background: var(--color-page);
   --color-foreground: var(--np-ink);
@@ -801,4 +802,52 @@ button:hover > .np-arrow,
 @media (prefers-reduced-motion: reduce) {
   .np-obj, .np-tile { transition: none; }
   .np-panel-scrim { animation: none; }
+}
+
+/* ---------- quick links: plum, bold, with a calligraphy caption ---------- */
+.np-id-links {
+  display: flex;
+  gap: clamp(14px, 2.4vw, 30px);
+  flex-wrap: wrap;
+  margin-top: 28px;
+  align-items: flex-start;
+}
+.np-quick { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+
+.np-quick-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--np-plum);
+  text-decoration: none;
+  border: 1px solid var(--np-line);
+  padding: 10px 16px;
+  transition: color var(--dur-1) var(--ease-swift),
+              border-color var(--dur-1) var(--ease-swift),
+              background var(--dur-1) var(--ease-swift);
+}
+.np-quick-btn:hover,
+.np-quick-btn:focus-visible {
+  color: var(--np-rose);
+  border-color: var(--np-plum);
+  background: var(--np-plum-tint);
+}
+
+.np-quick-cap {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-script);
+  font-size: 1.0625rem;
+  line-height: 1.2;
+  color: var(--np-plum);
+  white-space: nowrap;
+}
+.np-quick-arrow { width: 18px; height: 13px; flex: none; opacity: 0.7; }
+
+@media (max-width: 520px) {
+  .np-quick-cap { font-size: 0.9375rem; }
+  .np-id-links { gap: 14px; }
 }

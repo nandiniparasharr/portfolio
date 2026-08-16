@@ -1,6 +1,6 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata } from 'next'
-import { Cormorant_Garamond, Archivo, IBM_Plex_Mono } from 'next/font/google'
+import { Cormorant_Garamond, Archivo, IBM_Plex_Mono, Parisienne } from 'next/font/google'
 import './globals.css'
 import { Shell } from '@/components/shell'
 
@@ -14,6 +14,11 @@ const archivo = Archivo({
   variable: '--font-archivo',
   subsets: ['latin'],
   weight: ['400', '500', '600'],
+})
+const parisienne = Parisienne({
+  variable: '--font-parisienne',
+  subsets: ['latin'],
+  weight: '400',
 })
 const plexMono = IBM_Plex_Mono({
   variable: '--font-plex-mono',
@@ -42,7 +47,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${cormorant.variable} ${archivo.variable} ${plexMono.variable} bg-background`}
+      className={`${cormorant.variable} ${archivo.variable} ${parisienne.variable} ${plexMono.variable} bg-background`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
