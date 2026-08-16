@@ -4,9 +4,9 @@
    piece. The canvas face is left blank — the artifacts are laid over it
    by Canvas, and the two are tilted together by .np-scene.
 
-   The wood is a pale, desaturated oak rather than a saturated gold: the
-   ground is quiet, and the only real colour on the page belongs to the
-   artifacts on the canvas. */
+   The wood is a warm, muted brown — real timber rather than the earlier
+   cartoon gold, but held back enough that the artifacts on the canvas
+   stay the brightest thing on the page. */
 
 export function EaselScene() {
   return (
@@ -18,20 +18,20 @@ export function EaselScene() {
     >
       <defs>
         <linearGradient id="np-wood" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stopColor="#b3a692" />
-          <stop offset="0.3" stopColor="#ded5c6" />
-          <stop offset="0.66" stopColor="#cec4b2" />
-          <stop offset="1" stopColor="#a99c88" />
+          <stop offset="0" stopColor="#6f4f36" />
+          <stop offset="0.3" stopColor="#b08a66" />
+          <stop offset="0.66" stopColor="#9a7550" />
+          <stop offset="1" stopColor="#6a4a31" />
         </linearGradient>
         <linearGradient id="np-wood-dk" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stopColor="#968a76" />
-          <stop offset="0.5" stopColor="#b6a994" />
-          <stop offset="1" stopColor="#8d8168" />
+          <stop offset="0" stopColor="#5b3f2b" />
+          <stop offset="0.5" stopColor="#87643f" />
+          <stop offset="1" stopColor="#523825" />
         </linearGradient>
         <linearGradient id="np-tray" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#e4dccf" />
-          <stop offset="0.5" stopColor="#cec4b2" />
-          <stop offset="1" stopColor="#a79a86" />
+          <stop offset="0" stopColor="#b98f68" />
+          <stop offset="0.5" stopColor="#96704c" />
+          <stop offset="1" stopColor="#6b4a30" />
         </linearGradient>
         <linearGradient id="np-canvas-face" x1="0.1" y1="0" x2="0.6" y2="1">
           <stop offset="0" stopColor="#ffffff" />
@@ -59,7 +59,7 @@ export function EaselScene() {
       <rect x="151" y="30" width="10" height="26" rx="2.5" fill="url(#np-wood)" />
       <rect x="223" y="30" width="10" height="26" rx="2.5" fill="url(#np-wood)" />
       <rect x="151" y="26" width="82" height="9" rx="3" fill="url(#np-wood-dk)" />
-      <circle cx="192" cy="43" r="5" fill="#bdb19d" />
+      <circle cx="192" cy="43" r="5" fill="#8a6845" />
 
       {/* ---------- the canvas — wider and a little taller ---------- */}
       <rect x="78" y="92" width="236" height="282" fill="#ded8ca" opacity="0.45" />
@@ -72,12 +72,12 @@ export function EaselScene() {
 
       {/* ---------- tray ---------- */}
       <rect x="68" y="370" width="248" height="11" rx="2" fill="url(#np-tray)" />
-      <rect x="68" y="380" width="248" height="8" rx="2" fill="#a79a86" />
-      <rect x="68" y="380" width="248" height="2" fill="#95886f" opacity="0.55" />
+      <rect x="68" y="380" width="248" height="8" rx="2" fill="#6b4a30" />
+      <rect x="68" y="380" width="248" height="2" fill="#573b25" opacity="0.55" />
 
       {/* a brush on the tray */}
       <g transform="rotate(-3 140 368)">
-        <rect x="106" y="364" width="68" height="4.5" rx="2.2" fill="#9a8b76" />
+        <rect x="106" y="364" width="68" height="4.5" rx="2.2" fill="#7d6046" />
         <rect x="172" y="363" width="13" height="6.5" rx="2" fill="#c9c6c0" />
         <path d="M185 363.5 L199 366.2 L185 369.5 Z" fill="#b8496a" />
       </g>

@@ -564,8 +564,10 @@ button:hover > .np-arrow,
   width: 100%;
   max-width: 436px;
   margin-left: -2%;
-  /* the whole thing leans, canvas and artifacts together */
-  transform: rotate(-3.2deg);
+  /* leans, and turns into the page — svg and artifact overlay together,
+     so the pins stay locked to the canvas face */
+  transform: perspective(1700px) rotateY(12deg) rotate(-2.4deg);
+  transform-origin: 38% 50%;
 }
 .np-scene-svg { display: block; width: 100%; height: auto; }
 
