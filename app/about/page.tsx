@@ -65,7 +65,7 @@ export default function AboutPage() {
             <SectionLabel index="02" className="mb-6">
               Education
             </SectionLabel>
-            <div className="np-rule-draw h-0.5 bg-border-strong" />
+            <div className="np-rule-draw h-[1.5px] bg-border-strong" />
           </Reveal>
           <Reveal>
             <EducationFolder />
@@ -76,7 +76,7 @@ export default function AboutPage() {
             <SectionLabel index="03" className="mb-6">
               Credentials
             </SectionLabel>
-            <div className="np-rule-draw h-0.5 bg-border-strong" />
+            <div className="np-rule-draw h-[1.5px] bg-border-strong" />
           </Reveal>
           {certifications.map((cert, i) => (
             <Reveal key={cert.name} delay={i * 60}>
