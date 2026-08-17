@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
-import { EducationCard } from '@/components/education-card'
+import { EducationFolder } from '@/components/education-folder'
 import { Container, LLink, SectionLabel } from '@/components/ledger'
 import { ProjectImage } from '@/components/project-image'
 import { Reveal } from '@/components/reveal'
 import { OpenTabs } from '@/components/open-tabs'
-import { certifications, education, site } from '@/lib/content'
+import { certifications, site } from '@/lib/content'
 
 export const metadata: Metadata = {
   title: 'About — Nandini Parashar',
@@ -67,23 +67,9 @@ export default function AboutPage() {
             </SectionLabel>
             <div className="np-rule-draw h-0.5 bg-border-strong" />
           </Reveal>
-          <div className="np-cred-row mt-8">
-            {education.map((item, i) => (
-              <Reveal
-                key={item.title}
-                delay={i * 90}
-                className="flex flex-1 basis-[216px] justify-center"
-              >
-                <EducationCard
-                  title={item.title}
-                  brand={item.brand}
-                  image={item.image}
-                  icon={item.icon}
-                  alt={`${item.title} — ${item.institution}`}
-                />
-              </Reveal>
-            ))}
-          </div>
+          <Reveal>
+            <EducationFolder variant="ink" />
+          </Reveal>
         </div>
         <div>
           <Reveal>
