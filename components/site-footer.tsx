@@ -1,12 +1,15 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { site } from '@/lib/content'
 
-/** Local time in Delhi, ticking. Renders after mount to avoid hydration drift. */
+/* Local time in Delhi, ticking. The text is written straight to the DOM
+   node rather than through state — a setState every second would re-render
+   the whole footer on every page of the site. It also pauses while the tab
+   is hidden, so a backgrounded tab costs nothing. */
 function DelhiClock() {
-  const [time, setTime] = useState<string | null>(null)
+  const ref = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
     const fmt = new Intl.DateTimeFormat('en-IN', {
@@ -16,13 +19,35 @@ function DelhiClock() {
       hour12: false,
       timeZone: 'Asia/Kolkata',
     })
-    const tick = () => setTime(fmt.format(new Date()))
-    tick()
-    const id = setInterval(tick, 1000)
-    return () => clearInterval(id)
+    let id = 0
+    const tick = () => {
+      if (ref.current) ref.current.textContent = `Delhi ${fmt.format(new Date())} IST`
+    }
+    const start = () => {
+      tick()
+      id = window.setInterval(tick, 1000)
+    }
+    const stop = () => {
+      window.clearInterval(id)
+      id = 0
+    }
+    const onVisibility = () => {
+      stop()
+      if (!document.hidden) start()
+    }
+    start()
+    document.addEventListener('visibilitychange', onVisibility)
+    return () => {
+      stop()
+      document.removeEventListener('visibilitychange', onVisibility)
+    }
   }, [])
 
-  return <span suppressHydrationWarning>Delhi {time ?? '—:—:—'} IST</span>
+  return (
+    <span ref={ref} suppressHydrationWarning>
+      Delhi —:—:— IST
+    </span>
+  )
 }
 
 const siteLinks = [

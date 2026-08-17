@@ -10,7 +10,6 @@
   --font-serif: var(--font-cormorant), Cochin, Baskerville, Georgia, serif;
   --font-heading: var(--font-cormorant), Cochin, Baskerville, Georgia, serif;
   --font-mono: var(--font-plex-mono), 'SFMono-Regular', Consolas, monospace;
-  --font-script: var(--font-parisienne), 'Snell Roundhand', 'Apple Chancery', cursive;
 
   --color-background: var(--color-page);
   --color-foreground: var(--np-ink);
@@ -155,18 +154,33 @@
     @apply font-sans;
     scroll-behavior: smooth;
     scroll-padding-top: 6rem;
+    /* The ground colour lives here, not on the body: the dot grid below is a
+       negative-z-index child of the body, and such a child paints behind its
+       parent's own background. */
+    background-color: var(--color-background);
+    transition: background-color var(--dur-0) var(--ease-swift);
   }
   body {
-    @apply bg-background text-foreground;
-    /* Studio White: near-white ground with a faint dot grid */
-    background-image: radial-gradient(circle, var(--np-dot) 1.15px, transparent 1.15px);
-    background-size: 26px 26px;
+    @apply text-foreground;
+    background: transparent;
     font-size: 15px;
     line-height: 1.55;
     overflow-x: clip;
-    transition:
-      background-color var(--dur-0) var(--ease-swift),
-      color var(--dur-0) var(--ease-swift);
+    transition: color var(--dur-0) var(--ease-swift);
+  }
+  /* Studio White: near-white ground with a faint dot grid.
+     The grid is a viewport-pinned layer rather than the body's background. As
+     a body background it is a document-height gradient the compositor re-tiles
+     as you scroll; pinned to the viewport it paints once and never again — and
+     since the pattern is uniform, it looks identical either way. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: radial-gradient(circle, var(--np-dot) 1.15px, transparent 1.15px);
+    background-size: 26px 26px;
   }
   h1,
   h2,
@@ -435,18 +449,33 @@ button:hover > .np-arrow,
   }
 }
 
+/* Frosted glass. Each backdrop-filter is a separate blur pass the compositor
+   redoes whenever anything behind it moves, and the desk scene has four of
+   them over a drifting wallpaper. The radius is kept small (the backdrop is a
+   smooth gradient, so a wide blur bought almost nothing visually) and the
+   saturate pass is gone. Below sm the filter is dropped altogether in favour
+   of a slightly more opaque fill — phones pay the most for it and show it the
+   least. */
 .mac-glass {
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(16px) saturate(1.4);
-  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  background: rgba(255, 255, 255, 0.72);
   border: 1px solid rgba(255, 255, 255, 0.45);
   box-shadow: 0 10px 30px rgba(20, 10, 20, 0.25);
 }
 .mac-glass-dark {
-  background: rgba(30, 22, 34, 0.5);
-  backdrop-filter: blur(16px) saturate(1.4);
-  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  background: rgba(30, 22, 34, 0.68);
   border: 1px solid rgba(255, 255, 255, 0.18);
+}
+@media (min-width: 640px) {
+  .mac-glass {
+    background: rgba(255, 255, 255, 0.58);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+  }
+  .mac-glass-dark {
+    background: rgba(30, 22, 34, 0.54);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+  }
 }
 
 /* macOS window chrome */
