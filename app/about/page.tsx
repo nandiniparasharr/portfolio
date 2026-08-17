@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { EducationCard } from '@/components/education-card'
 import { Container, LLink, SectionLabel } from '@/components/ledger'
 import { ProjectImage } from '@/components/project-image'
 import { Reveal } from '@/components/reveal'
@@ -66,22 +67,23 @@ export default function AboutPage() {
             </SectionLabel>
             <div className="np-rule-draw h-0.5 bg-border-strong" />
           </Reveal>
-          {education.map((item, i) => (
-            <Reveal
-              key={item.title}
-              delay={i * 80}
-              className="border-b border-border py-6"
-            >
-              <p className="m-0 font-mono text-[11px] uppercase tracking-[0.08em] text-faint">
-                {item.date}
-              </p>
-              <h3 className="mt-1 text-h3">{item.title}</h3>
-              <p className="m-0 mt-1 text-sm text-rose">{item.institution}</p>
-              <p className="m-0 mt-3 text-sm text-muted-foreground">
-                {item.note}
-              </p>
-            </Reveal>
-          ))}
+          <div className="np-cred-row mt-8">
+            {education.map((item, i) => (
+              <Reveal
+                key={item.title}
+                delay={i * 90}
+                className="flex flex-1 basis-[216px] justify-center"
+              >
+                <EducationCard
+                  title={item.title}
+                  brand={item.brand}
+                  image={item.image}
+                  icon={item.icon}
+                  alt={`${item.title} — ${item.institution}`}
+                />
+              </Reveal>
+            ))}
+          </div>
         </div>
         <div>
           <Reveal>

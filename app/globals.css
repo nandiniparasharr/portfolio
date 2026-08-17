@@ -679,6 +679,134 @@ button:hover > .np-arrow,
 .np-pin:hover .np-pin-tip,
 .np-pin:focus-visible .np-pin-tip { opacity: 1; }
 
+/* ---------- credential cards (education) ----------
+   Product-card silhouette: dark slab, inset light image panel, circular mark.
+   These are the one deliberately rounded surface in the system — the shape is
+   the whole point of the reference, and squaring them loses it. */
+.np-cred-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+}
+.np-cred {
+  --cred-bg: #17181b;
+  --cred-fg: #f7f6f3;
+  --cred-panel: #ffffff;
+  flex: 1 1 216px;
+  max-width: 288px;
+  margin: 0;
+  padding: 12px 12px 20px;
+  border-radius: 26px;
+  background: var(--cred-bg);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform var(--dur-2) var(--ease-expo),
+    box-shadow var(--dur-2) var(--ease-swift);
+}
+[data-theme='dark'] .np-cred {
+  --cred-bg: #0e0f12;
+  /* the panel stays light in both themes: what goes in it is a certificate or
+     a photograph, and a dark panel would fight the artwork */
+  --cred-panel: #f4f3ef;
+  /* the slab sits a shade below the page in dark mode, so a hairline ring
+     (inset, to avoid shifting the padding) keeps the rounded shape readable */
+  box-shadow:
+    0 2px 16px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+[data-theme='dark'] .np-cred:hover {
+  box-shadow:
+    var(--shadow-pop),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+.np-cred:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-pop);
+}
+
+.np-cred-frame {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 17px;
+  overflow: hidden;
+  background: var(--cred-panel);
+  display: grid;
+  place-items: center;
+}
+.np-cred-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 9%;
+  transition: transform var(--dur-3) var(--ease-expo);
+}
+.np-cred:hover .np-cred-img {
+  transform: scale(1.06);
+}
+.np-cred-drop {
+  padding: 0 12px;
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  line-height: 1.7;
+  letter-spacing: 0.1em;
+  text-align: center;
+  color: #a8a6a0;
+  word-break: break-all;
+}
+/* light circle with a dark glyph, as in the reference — the fill is a shade
+   off the panel so the edge reads without a border */
+.np-cred-badge {
+  position: absolute;
+  top: 11px;
+  right: 11px;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: #f0efeb;
+  color: #17181b;
+  box-shadow: 0 1px 3px rgba(23, 24, 27, 0.14);
+}
+.np-cred-badge svg {
+  width: 17px;
+  height: 17px;
+  display: block;
+}
+
+.np-cred-title {
+  margin: 17px 2px 0;
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  color: var(--cred-fg);
+  /* the reference clips a long name to one line — keep that behaviour */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.np-cred-brand {
+  margin: 5px 2px 0;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  color: rgba(247, 246, 243, 0.58);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .np-cred,
+  .np-cred-img {
+    transition: none;
+  }
+  .np-cred:hover {
+    transform: none;
+  }
+  .np-cred:hover .np-cred-img {
+    transform: none;
+  }
+}
+
 /* ---------- the name ---------- */
 .np-idcol { max-width: 30rem; }
 .np-id-role {
