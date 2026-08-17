@@ -98,6 +98,12 @@
   --color-link: var(--np-plum);
   --color-link-hover: var(--np-rose);
 
+  /* the footer is a dark slab in light mode; in dark it must stay dark
+     rather than flipping to a cream block via --np-ink */
+  --np-footer-bg: #17181b;
+  --np-footer-fg: #f7f6f3;
+  --np-footer-rule: rgba(247, 246, 243, 0.18);
+
   --shadow-card-var: 0 2px 16px rgba(36, 28, 34, 0.1);
   --shadow-pop-var: 0 12px 40px rgba(36, 28, 34, 0.18);
 
@@ -112,9 +118,9 @@
   --np-paper: #16171a;
   --np-paper-raised: #1e2025;
   --np-paper-sunken: #101114;
-  --np-ink: #ece9e4;
-  --np-ink-2: #a3a5ab;
-  --np-ink-3: #75777d;
+  --np-ink: #ffffff;
+  --np-ink-2: #d3d4d7;
+  --np-ink-3: #94969c;
   /* muted, not neon — the old #e0708d went candy-pink on near-black */
   --np-rose: #d4788f;
   --np-rose-deep: #e08fa2;
@@ -130,6 +136,11 @@
 
   --color-on-accent-var: #1a141a;
   --color-on-inverse-var: #1a141a;
+
+  /* a shade below the page, so it reads as a footer without inverting */
+  --np-footer-bg: #0e0f12;
+  --np-footer-fg: #ffffff;
+  --np-footer-rule: rgba(255, 255, 255, 0.14);
 
   --shadow-card-var: 0 2px 16px rgba(0, 0, 0, 0.35);
   --shadow-pop-var: 0 12px 40px rgba(0, 0, 0, 0.5);
@@ -166,6 +177,10 @@
   }
   ::selection {
     background: var(--np-rose-tint);
+  }
+  /* light text on a dark ground reads thin, so dark mode carries more weight */
+  [data-theme='dark'] body {
+    font-weight: 500;
   }
   button {
     border-radius: 0;
@@ -833,63 +848,8 @@ button:hover > .np-arrow,
   background: var(--np-plum-tint);
 }
 
-/* ==================================================================
-   THE STREETLIGHT — dark mode only
-   Switches on with the dark theme and washes warm light across the
-   page. Sits behind the content; the header already has its own
-   stacking context.
-   ================================================================== */
-.np-lamp { display: none; }
-.np-content { position: relative; z-index: 1; }
-
-[data-theme='dark'] .np-lamp {
-  display: block;
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-  animation: np-lamp-on 900ms var(--ease-swift) both;
-}
-[data-theme='dark'] .np-lamp-svg {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 300px;
-}
-/* the wash is what actually lifts the page out of flat near-black */
-[data-theme='dark'] .np-lamp-wash {
-  position: absolute;
-  left: -6%;
-  top: -14%;
-  width: 132%;
-  height: 128%;
-  /* three overlapping pools: hot at the lamp, then reaching far enough
-     right to actually lift the text column out of flat black */
-  background:
-    radial-gradient(46% 38% at 10% 12%, rgba(255, 216, 154, 0.20), transparent 70%),
-    radial-gradient(68% 58% at 30% 38%, rgba(255, 210, 148, 0.10), transparent 74%),
-    radial-gradient(78% 70% at 62% 44%, rgba(255, 214, 158, 0.062), transparent 78%);
-}
-
-@keyframes np-lamp-on {
-  0% { opacity: 0; }
-  35% { opacity: 0.45; }
-  48% { opacity: 0.18; }
-  100% { opacity: 1; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  [data-theme='dark'] .np-lamp { animation: none; }
-}
-
-/* the lamp lifts the ground, but the text needs real contrast too */
-[data-theme='dark'] .np-quick-btn { color: #cbb3c6; border-color: #3b3e46; }
-[data-theme='dark'] .np-quick-btn:hover,
-[data-theme='dark'] .np-quick-btn:focus-visible { color: var(--np-rose); border-color: #cbb3c6; }
-
-@media (max-width: 900px) {
-  /* on narrow screens the lamp would sit on top of the content */
-  [data-theme='dark'] .np-lamp-svg { opacity: 0.5; }
-}
+/* ---------- footer: a dark slab in both themes ---------- */
+.np-footer { background: var(--np-footer-bg); color: var(--np-footer-fg); }
+.np-footer a { color: var(--np-footer-fg); }
+.np-footer-rule { border-color: var(--np-footer-rule); }
+.np-footer-strip-end { background: var(--np-footer-bg); }
