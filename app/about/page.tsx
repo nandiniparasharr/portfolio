@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { Container, LLink, SectionLabel } from '@/components/ledger'
 import { ProjectImage } from '@/components/project-image'
 import { Reveal } from '@/components/reveal'
-import { Trajectory } from '@/components/trajectory'
 import { OpenTabs } from '@/components/open-tabs'
 import { certifications, education, site } from '@/lib/content'
 
@@ -58,22 +57,11 @@ export default function AboutPage() {
         </Reveal>
       </section>
 
-      {/* Trajectory */}
-      <section id="experience" className="mt-24">
-        <Reveal>
-          <SectionLabel index="02" className="mb-6">
-            Trajectory
-          </SectionLabel>
-          <div className="np-rule-draw h-0.5 bg-border-strong" />
-        </Reveal>
-        <Trajectory />
-      </section>
-
       {/* Education & credentials */}
       <section className="mt-24 grid items-start gap-16 lg:grid-cols-2">
         <div>
           <Reveal>
-            <SectionLabel index="03" className="mb-6">
+            <SectionLabel index="02" className="mb-6">
               Education
             </SectionLabel>
             <div className="np-rule-draw h-0.5 bg-border-strong" />
@@ -97,7 +85,7 @@ export default function AboutPage() {
         </div>
         <div>
           <Reveal>
-            <SectionLabel index="04" className="mb-6">
+            <SectionLabel index="03" className="mb-6">
               Credentials
             </SectionLabel>
             <div className="np-rule-draw h-0.5 bg-border-strong" />
