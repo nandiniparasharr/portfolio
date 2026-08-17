@@ -13,10 +13,12 @@ import { education } from '@/lib/content'
    shifts. The only compositing expense is one backdrop-filter on the lip,
    dropped entirely on small screens. */
 
-export type FolderVariant = 'ink' | 'plum' | 'paper'
+/* 'auto' is the shipped look — paper in light mode, plum in dark. The three
+   named variants stay available as fixed overrides. */
+export type FolderVariant = 'auto' | 'ink' | 'plum' | 'paper'
 
 export function EducationFolder({
-  variant = 'ink',
+  variant = 'auto',
 }: {
   variant?: FolderVariant
 }) {

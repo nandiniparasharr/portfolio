@@ -68,7 +68,7 @@ export default function AboutPage() {
             <div className="np-rule-draw h-0.5 bg-border-strong" />
           </Reveal>
           <Reveal>
-            <EducationFolder variant="ink" />
+            <EducationFolder />
           </Reveal>
         </div>
         <div>
