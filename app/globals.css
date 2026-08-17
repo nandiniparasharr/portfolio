@@ -777,10 +777,10 @@ button:hover > .np-arrow,
 .np-cred-title {
   margin: 17px 2px 0;
   font-family: var(--font-sans);
-  font-size: 1.0625rem;
-  font-weight: 500;
+  font-size: 1.275rem; /* 17px + 20% */
+  font-weight: 700;
   line-height: 1.25;
-  letter-spacing: -0.005em;
+  letter-spacing: -0.012em;
   color: var(--cred-fg);
   /* the reference clips a long name to one line — keep that behaviour */
   overflow: hidden;
@@ -790,8 +790,10 @@ button:hover > .np-arrow,
 .np-cred-brand {
   margin: 5px 2px 0;
   font-family: var(--font-sans);
-  font-size: 0.8125rem;
-  color: rgba(247, 246, 243, 0.58);
+  font-size: 0.975rem; /* 13px + 20% */
+  font-weight: 600;
+  /* a touch more opaque than before: at this weight 0.58 went muddy */
+  color: rgba(247, 246, 243, 0.66);
 }
 
 @media (prefers-reduced-motion: reduce) {
