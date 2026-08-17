@@ -107,6 +107,7 @@
   --shadow-card-var: 0 2px 16px rgba(36, 28, 34, 0.1);
   --shadow-pop-var: 0 12px 40px rgba(36, 28, 34, 0.18);
 
+  --dur-0: 110ms;
   --dur-1: 150ms;
   --dur-2: 300ms;
   --dur-3: 600ms;
@@ -164,8 +165,8 @@
     line-height: 1.55;
     overflow-x: clip;
     transition:
-      background-color var(--dur-2) var(--ease-swift),
-      color var(--dur-2) var(--ease-swift);
+      background-color var(--dur-0) var(--ease-swift),
+      color var(--dur-0) var(--ease-swift);
   }
   h1,
   h2,
@@ -853,3 +854,50 @@ button:hover > .np-arrow,
 .np-footer a { color: var(--np-footer-fg); }
 .np-footer-rule { border-color: var(--np-footer-rule); }
 .np-footer-strip-end { background: var(--np-footer-bg); }
+
+/* ---------- theme switch ---------- */
+.np-theme-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+  width: 56px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--np-line);
+  background: transparent;
+  cursor: pointer;
+}
+.np-theme-switch:hover { border-color: var(--np-ink-3); }
+.np-theme-switch:focus-visible { outline: 2px solid var(--np-rose); outline-offset: 2px; }
+
+.np-theme-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 25px;
+  height: calc(100% - 4px);
+  background: var(--np-rose);
+}
+.np-theme-switch[data-dark] .np-theme-knob { transform: translateX(25px); }
+/* only animate after mount, so the stored theme does not slide in on load */
+.np-theme-switch[data-ready] .np-theme-knob {
+  transition: transform var(--dur-0) var(--ease-swift);
+}
+
+.np-theme-ico {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: grid;
+  place-items: center;
+  color: var(--np-ink-3);
+  transition: color var(--dur-0) var(--ease-swift);
+}
+.np-theme-ico svg { display: block; width: 13px; height: 13px; }
+/* whichever icon the knob is under reads against the accent */
+.np-theme-switch:not([data-dark]) .np-theme-sun { color: var(--color-on-accent-var); }
+.np-theme-switch[data-dark] .np-theme-moon { color: var(--color-on-accent-var); }
+
+@media (prefers-reduced-motion: reduce) {
+  .np-theme-switch[data-ready] .np-theme-knob { transition: none; }
+}
