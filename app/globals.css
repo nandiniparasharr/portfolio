@@ -689,9 +689,14 @@ button:hover > .np-arrow,
   gap: 22px;
 }
 .np-cred {
-  --cred-bg: #17181b;
+  /* Plum, not rose: the system rations rose to a single small accent, and two
+     card slabs is not a ration. Plum is the deep structural colour already
+     doing the links and the footer strip, and it is the dark-mode folder — so
+     the whole section reads as one family. */
+  --cred-bg: linear-gradient(168deg, #6b4162 0%, #5d3754 56%, #492a42 100%);
   --cred-fg: #f7f6f3;
   --cred-panel: #ffffff;
+  --cred-mark: #5d3754;
   flex: 1 1 216px;
   max-width: 288px;
   margin: 0;
@@ -703,8 +708,11 @@ button:hover > .np-arrow,
     transform var(--dur-2) var(--ease-expo),
     box-shadow var(--dur-2) var(--ease-swift);
 }
+/* dark mode keeps near-black cards: the folder behind them is plum there, and
+   plum-on-plum loses the card edges entirely */
 [data-theme='dark'] .np-cred {
-  --cred-bg: #0e0f12;
+  --cred-bg: linear-gradient(168deg, #23252a 0%, #14151a 56%, #0d0e11 100%);
+  --cred-mark: #17181b;
   /* the panel stays light in both themes: what goes in it is a certificate or
      a photograph, and a dark panel would fight the artwork */
   --cred-panel: #f4f3ef;
@@ -765,7 +773,7 @@ button:hover > .np-arrow,
   display: grid;
   place-items: center;
   background: #f0efeb;
-  color: #17181b;
+  color: var(--cred-mark, #17181b);
   box-shadow: 0 1px 3px rgba(23, 24, 27, 0.14);
 }
 .np-cred-badge svg {
