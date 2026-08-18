@@ -87,10 +87,16 @@ export default function AboutPage() {
                 className="group flex items-baseline justify-between gap-6 border-b border-border py-4 no-underline"
               >
                 <span>
-                  <span className="block font-serif text-lg text-foreground transition-colors duration-150 group-hover:text-rose">
+                  {/* Cormorant is a thin, high-contrast serif; at 400 it read
+                      spindly on the near-white ground. Dark mode was already
+                      getting 500 from the body rule, so this only brings light
+                      up to match. */}
+                  <span className="block font-serif text-lg font-medium text-foreground transition-colors duration-150 group-hover:text-rose">
                     {cert.name}
                   </span>
-                  <span className="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.1em] text-faint">
+                  {/* was text-faint, which is 2.6:1 on paper — below the 4.5:1
+                      floor and the actual reason this line was unreadable */}
+                  <span className="mt-0.5 block font-mono text-[10px] font-medium uppercase tracking-[0.1em] text-muted-foreground">
                     {cert.issuer} · {cert.date}
                   </span>
                 </span>
