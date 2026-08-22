@@ -631,6 +631,124 @@ button:hover > .np-arrow,
   height: 34.74%;
 }
 
+/* ---------- what gets printed on the sheet ----------
+   A press stamps the icon into the next slot, filling the page the way type
+   fills a line. Each strike is nudged a couple of degrees off square so a
+   row of the same icon reads as struck rather than pasted. */
+.np-sheet {
+  width: 100%;
+  height: 100%;
+  padding: 7% 6%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: min-content;
+  gap: 2.4cqw 1.6cqw;
+  align-content: start;
+}
+.np-stamp {
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transform: rotate(var(--jitter, 0deg));
+  animation: np-strike 260ms var(--ease-expo) backwards;
+  transition: transform var(--dur-1) var(--ease-expo);
+}
+.np-stamp svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.np-stamp:hover,
+.np-stamp:focus-visible {
+  transform: rotate(var(--jitter, 0deg)) scale(1.12);
+}
+.np-stamp:focus-visible {
+  outline: 2px solid var(--np-rose);
+  outline-offset: 3px;
+}
+/* the typebar hits the page hard and settles */
+@keyframes np-strike {
+  from {
+    opacity: 0;
+    transform: rotate(var(--jitter, 0deg)) scale(1.5);
+  }
+  60% {
+    opacity: 1;
+    transform: rotate(var(--jitter, 0deg)) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(var(--jitter, 0deg)) scale(1);
+  }
+}
+
+/* the empty sheet says what to do, with a caret sitting where type would */
+.np-sheet-hint {
+  margin: 0;
+  padding: 9% 8%;
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  font-family: var(--font-mono);
+  font-size: 2.4cqw;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #a8a49a;
+}
+.np-caret {
+  width: 0.62em;
+  height: 1.15em;
+  background: #a8a49a;
+  animation: np-caret 1.05s steps(1) infinite;
+}
+@keyframes np-caret {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+/* the carriage return lever, sitting over the one drawn in the SVG */
+.np-return {
+  position: absolute;
+  left: 0.95%;
+  top: 34.09%;
+  width: 14.29%;
+  height: 6.82%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.np-return[disabled] {
+  cursor: default;
+}
+.np-return-tip {
+  position: absolute;
+  left: 0;
+  bottom: 112%;
+  padding: 0.3em 0.55em;
+  border-radius: 3px;
+  background: var(--np-ink);
+  color: var(--np-paper);
+  font-family: var(--font-mono);
+  font-size: 2.1cqw;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-1) var(--ease-swift);
+}
+.np-return:not([disabled]):hover .np-return-tip,
+.np-return:focus-visible .np-return-tip {
+  opacity: 1;
+}
+.np-return:focus-visible {
+  outline: 2px solid var(--np-rose);
+  outline-offset: 2px;
+}
+
 /* ---------- the keys ----------
    Laid over the SVG's keyboard well (x86 y350 w248 h144 of 420x616) as real
    buttons: they carry icons, and they have to be clickable and focusable.
@@ -743,6 +861,13 @@ button:hover > .np-arrow,
   }
   .np-key:hover {
     transform: none;
+  }
+  .np-stamp {
+    animation: none;
+    transition: none;
+  }
+  .np-caret {
+    animation: none;
   }
 }
 

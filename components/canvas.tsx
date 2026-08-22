@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { TypewriterScene } from '@/components/typewriter-scene'
 
 /* ------------------------------------------------------------------
@@ -160,8 +160,29 @@ function Icon({ id }: { id: string }) {
 
 /* ---------- page ---------- */
 
+/* How many stamps the sheet holds. Past this the oldest scrolls off rather
+   than the keyboard going dead — a machine that stops responding feels
+   broken, and nobody reads the sixteenth icon anyway. */
+const SHEET_MAX = 16
+
+type Stamp = { uid: number; id: string; label: string }
+
 export function Canvas() {
   const [open, setOpen] = useState<Obj | null>(null)
+  const [typed, setTyped] = useState<Stamp[]>([])
+  const uid = useRef(0)
+
+  /* pressing a key prints its icon onto the sheet. Repeats are allowed and
+     each strike lands at a slightly different angle, so a row of the same
+     icon looks struck rather than pasted. */
+  const strike = (o: Obj) => {
+    uid.current += 1
+    const stamp = { uid: uid.current, id: o.id, label: o.label }
+    setTyped((prev) => {
+      const next = [...prev, stamp]
+      return next.length > SHEET_MAX ? next.slice(next.length - SHEET_MAX) : next
+    })
+  }
 
   useEffect(() => {
     if (!open) return
@@ -177,6 +198,44 @@ export function Canvas() {
         <div className="np-easel-col">
           <div className="np-scene" data-tw="rose">
             <TypewriterScene />
+
+            {/* the sheet — what the keys print onto */}
+            <div className="np-board">
+              {typed.length === 0 ? (
+                <p className="np-sheet-hint">
+                  Press a key
+                  <span className="np-caret" aria-hidden="true" />
+                </p>
+              ) : (
+                <div className="np-sheet">
+                  {typed.map((t) => (
+                    <button
+                      key={t.uid}
+                      type="button"
+                      className="np-stamp"
+                      style={{ ['--jitter' as string]: `${((t.uid * 37) % 7) - 3}deg` }}
+                      onClick={() => setOpen(OBJECTS.find((o) => o.id === t.id) ?? null)}
+                      aria-label={`Open ${t.label}`}
+                    >
+                      <Icon id={t.id} />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* the carriage return lever, over the one drawn in the SVG —
+                pulling it takes the sheet out and puts a fresh one in */}
+            <button
+              type="button"
+              className="np-return"
+              onClick={() => setTyped([])}
+              disabled={typed.length === 0}
+              aria-label="New sheet"
+            >
+              <span className="np-return-tip">New sheet</span>
+            </button>
+
             {/* the keys, laid over the keyboard well in the SVG */}
             <div className="np-keys">
               {Array.from({ length: KEY_COUNT }, (_, i) => {
@@ -194,8 +253,8 @@ export function Canvas() {
                     type="button"
                     className="np-key"
                     style={{ ['--i' as string]: i }}
-                    onClick={() => setOpen(o)}
-                    aria-label={o.label}
+                    onClick={() => strike(o)}
+                    aria-label={`Type ${o.label}`}
                   >
                     <Icon id={o.id} />
                     <span className="np-key-tip">{o.label}</span>
