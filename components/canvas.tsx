@@ -69,6 +69,12 @@ const OBJECTS: Obj[] = [
   },
 ]
 
+/* The keyboard is 15 keys. Six carry an artifact; the rest are empty slots
+   waiting on content, drawn as a faint outline so they read as "not filled in
+   yet" rather than as something broken. Add an Obj here and it takes the next
+   slot — nothing else needs touching. */
+const KEY_COUNT = 15
+
 const LINKS: Obj[] = [
   { id: 'cv', label: 'CV', x: 0, y: 0, blurb: 'the short, formal version', href: '/NandiniParashar_CV.pdf', ready: true },
   { id: 'linkedin', label: 'LinkedIn', x: 0, y: 0, blurb: 'the professional record', href: 'https://www.linkedin.com/in/nandiniparashar/', ready: true },
@@ -171,21 +177,31 @@ export function Canvas() {
         <div className="np-easel-col">
           <div className="np-scene" data-tw="rose">
             <TypewriterScene />
-            {/* artifacts, laid over the sheet in the platen */}
-            <div className="np-board">
-              {OBJECTS.map((o, i) => (
-                <button
-                  key={o.id}
-                  type="button"
-                  className="np-pin"
-                  style={{ left: `${o.x}%`, top: `${o.y}%`, ['--i' as string]: i }}
-                  onClick={() => setOpen(o)}
-                  aria-label={o.label}
-                >
-                  <Icon id={o.id} />
-                  <span className="np-pin-tip">{o.label}</span>
-                </button>
-              ))}
+            {/* the keys, laid over the keyboard well in the SVG */}
+            <div className="np-keys">
+              {Array.from({ length: KEY_COUNT }, (_, i) => {
+                const o = OBJECTS[i]
+                if (!o) {
+                  return (
+                    <span key={`empty-${i}`} className="np-key is-empty" aria-hidden="true">
+                      <span className="np-key-slot" />
+                    </span>
+                  )
+                }
+                return (
+                  <button
+                    key={o.id}
+                    type="button"
+                    className="np-key"
+                    style={{ ['--i' as string]: i }}
+                    onClick={() => setOpen(o)}
+                    aria-label={o.label}
+                  >
+                    <Icon id={o.id} />
+                    <span className="np-key-tip">{o.label}</span>
+                  </button>
+                )
+              })}
             </div>
           </div>
         </div>

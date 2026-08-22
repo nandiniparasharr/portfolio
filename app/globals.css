@@ -619,14 +619,131 @@ button:hover > .np-arrow,
 }
 .np-scene-svg { display: block; width: 100%; height: auto; }
 
-/* the sheet in the platen, mapped onto the SVG's paper rect
-   (viewBox 420x568 · rect x108 y26 w204 h230) */
+/* the sheet in the platen, mapped onto the visible part of the SVG's paper
+   rect (viewBox 420x616 · x108 y26 w204, down to the platen at y240).
+   Nothing sits on it now that the artifacts moved to the keys — it is kept
+   because whatever gets "typed" belongs here. */
 .np-board {
   position: absolute;
-  left: 25.71%;
-  top: 4.58%;
-  width: 48.57%;
-  height: 40.49%;
+  left: 25.714%;
+  top: 4.221%;
+  width: 48.571%;
+  height: 34.74%;
+}
+
+/* ---------- the keys ----------
+   Laid over the SVG's keyboard well (x86 y350 w248 h144 of 420x616) as real
+   buttons: they carry icons, and they have to be clickable and focusable.
+   A 5x3 grid of 40-unit keys with 12-unit gutters lands exactly on the well,
+   so the grid needs no per-key positioning. */
+.np-keys {
+  position: absolute;
+  left: 20.476%;
+  top: 56.818%;
+  width: 59.048%;
+  height: 23.377%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 2.857cqw;
+}
+
+.np-key {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 16%;
+  border: 0;
+  border-radius: 26%;
+  background: linear-gradient(180deg, #f6f5f2 0%, #e6e4df 62%, #cfccc6 100%);
+  box-shadow: 0 0.36cqw 0 rgba(8, 8, 10, 0.55);
+  cursor: pointer;
+  /* the keys arrive one after another, left to right */
+  opacity: 0;
+  animation: np-key-in 420ms var(--ease-expo) forwards;
+  animation-delay: calc(var(--i, 0) * 42ms + 260ms);
+  transition:
+    transform var(--dur-1) var(--ease-swift),
+    box-shadow var(--dur-1) var(--ease-swift);
+}
+.np-key svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+/* pressed: the key travels down onto its own shadow, the way a real one does */
+.np-key:hover {
+  transform: translateY(-0.24cqw);
+  box-shadow: 0 0.6cqw 0 rgba(8, 8, 10, 0.55);
+}
+.np-key:active {
+  transform: translateY(0.36cqw);
+  box-shadow: 0 0 0 rgba(8, 8, 10, 0.55);
+}
+.np-key:focus-visible {
+  outline: 2px solid var(--np-rose);
+  outline-offset: 3px;
+}
+
+/* the empty slots: present, obviously unfilled, not interactive */
+.np-key.is-empty {
+  background: linear-gradient(180deg, #2a2b30 0%, #1d1e22 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  cursor: default;
+  padding: 0;
+}
+.np-key-slot {
+  width: 26%;
+  height: 26%;
+  border-radius: 999px;
+  border: 1.5px dashed rgba(255, 255, 255, 0.22);
+}
+
+/* the label rides above the key rather than below it — below is another key */
+.np-key-tip {
+  position: absolute;
+  bottom: 108%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.3em 0.55em;
+  border-radius: 3px;
+  background: var(--np-ink);
+  color: var(--np-paper);
+  font-family: var(--font-mono);
+  font-size: 2.1cqw;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-1) var(--ease-swift);
+  z-index: 2;
+}
+.np-key:hover .np-key-tip,
+.np-key:focus-visible .np-key-tip {
+  opacity: 1;
+}
+
+@keyframes np-key-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.8cqw);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .np-key {
+    animation: none;
+    opacity: 1;
+    transition: none;
+  }
+  .np-key:hover {
+    transform: none;
+  }
 }
 
 /* ---------- typewriter colourways ----------
@@ -675,65 +792,6 @@ button:hover > .np-arrow,
   --tw-3: #66241b;
   --tw-rim: #eda893;
 }
-
-/* the sheet is a smaller face than the canvas was, so the artifacts on it
-   come down a size to match */
-.np-scene .np-pin {
-  width: 13.5cqw;
-  max-width: 62px;
-  min-width: 38px;
-}
-
-/* ---------- icon artifacts ---------- */
-.np-pin {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  width: 17cqw;
-  max-width: 84px;
-  min-width: 46px;
-  aspect-ratio: 1;
-  display: grid;
-  place-items: center;
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
-  opacity: 0;
-  animation: np-pin-in 620ms var(--ease-expo) forwards;
-  animation-delay: calc(var(--i, 0) * 90ms + 220ms);
-  transition: transform 220ms var(--ease-expo), filter 220ms var(--ease-swift);
-  filter: drop-shadow(0 3px 6px rgba(23, 24, 27, 0.14));
-}
-.np-pin svg { width: 100%; height: 100%; display: block; }
-.np-pin:hover, .np-pin:focus-visible {
-  transform: translate(-50%, -50%) scale(1.14) rotate(2deg);
-  filter: drop-shadow(0 8px 16px rgba(23, 24, 27, 0.22));
-}
-.np-pin:focus-visible { outline: 2px solid var(--np-rose); outline-offset: 6px; }
-
-@keyframes np-pin-in {
-  from { opacity: 0; transform: translate(-50%, -50%) scale(0.72); }
-  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-}
-
-/* the label only appears on hover — the canvas stays clean */
-.np-pin-tip {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-  color: var(--np-ink-2);
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--dur-1) var(--ease-swift);
-}
-.np-pin:hover .np-pin-tip,
-.np-pin:focus-visible .np-pin-tip { opacity: 1; }
 
 /* ---------- credential cards (education) ----------
    Product-card silhouette: dark slab, inset light image panel, circular mark.
@@ -1253,7 +1311,7 @@ button:hover > .np-arrow,
   .np-scene { max-width: 420px; }
 }
 @media (max-width: 620px) {
-  /* the easel does not survive a phone: swap it for a plain index */
+  /* the machine does not survive a phone: swap it for a plain index */
   .np-easel-col { display: none; }
   .np-id-links { display: none; }
   .np-mobile-list { display: block; max-width: 1180px; margin: 0 auto; padding: 0 24px 72px; }
@@ -1271,10 +1329,6 @@ button:hover > .np-arrow,
     display: block; font-family: var(--font-sans); font-size: 0.9063rem;
     color: var(--np-ink-2);
   }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .np-pin { animation: none; opacity: 1; transition: none; }
 }
 
 /* ---------- panel ---------- */
