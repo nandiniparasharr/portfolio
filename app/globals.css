@@ -650,6 +650,25 @@ button:hover > .np-arrow,
   --tw-3: #101115;
   --tw-rim: #9a9ca6;
 }
+/* ROSE — the exact shade "Parashar" is set in, tracking the token so the
+   machine and the name stay the same colour in both themes. Its ribbon goes
+   plum: a rose ribbon on a rose shell is invisible. */
+.np-scene[data-tw='rose'] {
+  --tw-1: #cf6c88;
+  --tw-2: #b8496a;
+  --tw-3: #722a41;
+  --tw-rim: #f3bccb;
+  /* literal deep plum, not var(--np-plum): that token inverts to a light
+     mauve in dark mode, which washes out against the pink shell. The ribbon
+     needs to stay darker than the machine in both themes. */
+  --tw-ribbon: #5d3754;
+}
+[data-theme='dark'] .np-scene[data-tw='rose'] {
+  --tw-1: #e298ac;
+  --tw-2: #d4788f;
+  --tw-3: #8b4a5c;
+  --tw-rim: #f7d3dc;
+}
 .np-scene[data-tw='ember'] {
   --tw-1: #c8604a;
   --tw-2: #a63d2f;

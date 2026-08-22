@@ -164,8 +164,10 @@ export function TypewriterScene() {
         <path d="M236 329 L226 296" />
         <path d="M248 328 L232 296" />
       </g>
-      {/* the ribbon — the one place rose belongs on this machine */}
-      <rect x="163" y="286" width="94" height="4.6" rx="2.3" fill="var(--np-rose)" />
+      {/* the ribbon — rose by default, since that is the one place rose belongs
+          on this machine. A colourway that is itself rose overrides it, or the
+          ribbon would vanish into the shell. */}
+      <rect x="163" y="286" width="94" height="4.6" rx="2.3" fill="var(--tw-ribbon, var(--np-rose))" />
       <rect x="163" y="290.6" width="94" height="3.4" rx="1.7" fill="#26272c" />
 
       {/* ---------- body ---------- */}

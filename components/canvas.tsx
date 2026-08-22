@@ -169,7 +169,7 @@ export function Canvas() {
       <div className="np-hero">
         {/* ---------------- left: the typewriter ---------------- */}
         <div className="np-easel-col">
-          <div className="np-scene" data-tw="plum">
+          <div className="np-scene" data-tw="rose">
             <TypewriterScene />
             {/* artifacts, laid over the sheet in the platen */}
             <div className="np-board">
