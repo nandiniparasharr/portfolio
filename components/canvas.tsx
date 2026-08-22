@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { EaselScene } from '@/components/easel-scene'
+import { TypewriterScene } from '@/components/typewriter-scene'
 
 /* ------------------------------------------------------------------
    HOME
@@ -167,11 +167,11 @@ export function Canvas() {
   return (
     <>
       <div className="np-hero">
-        {/* ---------------- left: the easel ---------------- */}
+        {/* ---------------- left: the typewriter ---------------- */}
         <div className="np-easel-col">
-          <div className="np-scene">
-            <EaselScene />
-            {/* artifacts, laid over the canvas face of the SVG */}
+          <div className="np-scene" data-tw="plum">
+            <TypewriterScene />
+            {/* artifacts, laid over the sheet in the platen */}
             <div className="np-board">
               {OBJECTS.map((o, i) => (
                 <button

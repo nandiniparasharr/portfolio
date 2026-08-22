@@ -610,22 +610,59 @@ button:hover > .np-arrow,
   width: 100%;
   max-width: 436px;
   margin-left: -2%;
-  /* leans, and turns into the page — svg and artifact overlay together,
-     so the pins stay locked to the canvas face */
-  transform: perspective(1700px) rotateY(12deg) rotate(-2.4deg);
-  transform-origin: 38% 50%;
+  /* The easel leaned and turned into the page. A machine does not: the
+     perspective skewed the keyboard and read as the typewriter toppling
+     over, so it now sits square with only a hair of rotation to keep it
+     from looking pasted on. */
+  transform: rotate(-0.8deg);
+  transform-origin: 50% 62%;
 }
 .np-scene-svg { display: block; width: 100%; height: auto; }
 
-/* the canvas face, mapped onto the SVG's white rectangle
-   (viewBox 500x530 · rect x70 y86 w240 h272) */
-/* mapped onto the SVG canvas rect: x74 y88 w236 h282 of 384x530 */
+/* the sheet in the platen, mapped onto the SVG's paper rect
+   (viewBox 420x568 · rect x108 y26 w204 h230) */
 .np-board {
   position: absolute;
-  left: 19.27%;
-  top: 16.6%;
-  width: 61.46%;
-  height: 53.21%;
+  left: 25.71%;
+  top: 4.58%;
+  width: 48.57%;
+  height: 40.49%;
+}
+
+/* ---------- typewriter colourways ----------
+   --tw-1 catches the light, --tw-2 is the body colour, --tw-3 is the shadow
+   side and the feet, --tw-rim is the hairline along the top edges. */
+.np-scene[data-tw='plum'] {
+  --tw-1: #8a5780;
+  --tw-2: #5d3754;
+  --tw-3: #351f2f;
+  --tw-rim: #c79bba;
+}
+.np-scene[data-tw='forest'] {
+  --tw-1: #35624c;
+  --tw-2: #1f3a2d;
+  --tw-3: #11221a;
+  --tw-rim: #8fbba2;
+}
+.np-scene[data-tw='ink'] {
+  --tw-1: #3c3e45;
+  --tw-2: #22242a;
+  --tw-3: #101115;
+  --tw-rim: #9a9ca6;
+}
+.np-scene[data-tw='ember'] {
+  --tw-1: #c8604a;
+  --tw-2: #a63d2f;
+  --tw-3: #66241b;
+  --tw-rim: #eda893;
+}
+
+/* the sheet is a smaller face than the canvas was, so the artifacts on it
+   come down a size to match */
+.np-scene .np-pin {
+  width: 13.5cqw;
+  max-width: 62px;
+  min-width: 38px;
 }
 
 /* ---------- icon artifacts ---------- */
