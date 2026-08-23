@@ -1,19 +1,21 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata } from 'next'
-import { Instrument_Serif, Archivo, IBM_Plex_Mono } from 'next/font/google'
+import { Cormorant_Garamond, Archivo, IBM_Plex_Mono } from 'next/font/google'
 import './globals.css'
 import { Shell } from '@/components/shell'
 
-const instrument = Instrument_Serif({
-  variable: '--font-instrument',
+/* Weight lists are deliberately absent on the two variable families: naming
+   weights makes next/font fetch a static file per weight (six for the serif
+   alone), while the variable axis covers all of them in one. Parisienne is
+   gone entirely — the calligraphy captions it was added for were removed. */
+const cormorant = Cormorant_Garamond({
+  variable: '--font-cormorant',
   subsets: ['latin'],
-  weight: '400',
   style: ['normal', 'italic'],
 })
 const archivo = Archivo({
   variable: '--font-archivo',
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
 })
 const plexMono = IBM_Plex_Mono({
   variable: '--font-plex-mono',
@@ -42,7 +44,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${instrument.variable} ${archivo.variable} ${plexMono.variable} bg-background`}
+      className={`${cormorant.variable} ${archivo.variable} ${plexMono.variable} bg-background`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />

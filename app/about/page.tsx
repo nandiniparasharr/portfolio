@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
+import { EducationFolder } from '@/components/education-folder'
 import { Container, LLink, SectionLabel } from '@/components/ledger'
 import { ProjectImage } from '@/components/project-image'
 import { Reveal } from '@/components/reveal'
-import { Trajectory } from '@/components/trajectory'
 import { OpenTabs } from '@/components/open-tabs'
-import { certifications, education, site } from '@/lib/content'
+import { certifications, site } from '@/lib/content'
 
 export const metadata: Metadata = {
   title: 'About — Nandini Parashar',
@@ -58,49 +58,25 @@ export default function AboutPage() {
         </Reveal>
       </section>
 
-      {/* Trajectory */}
-      <section id="experience" className="mt-24">
-        <Reveal>
-          <SectionLabel index="02" className="mb-6">
-            Trajectory
-          </SectionLabel>
-          <div className="np-rule-draw h-0.5 bg-border-strong" />
-        </Reveal>
-        <Trajectory />
-      </section>
-
       {/* Education & credentials */}
       <section className="mt-24 grid items-start gap-16 lg:grid-cols-2">
         <div>
           <Reveal>
-            <SectionLabel index="03" className="mb-6">
+            <SectionLabel index="02" className="mb-6">
               Education
             </SectionLabel>
-            <div className="np-rule-draw h-0.5 bg-border-strong" />
+            <div className="np-rule-draw h-[1.5px] bg-border-strong" />
           </Reveal>
-          {education.map((item, i) => (
-            <Reveal
-              key={item.title}
-              delay={i * 80}
-              className="border-b border-border py-6"
-            >
-              <p className="m-0 font-mono text-[11px] uppercase tracking-[0.08em] text-faint">
-                {item.date}
-              </p>
-              <h3 className="mt-1 text-h3">{item.title}</h3>
-              <p className="m-0 mt-1 text-sm text-rose">{item.institution}</p>
-              <p className="m-0 mt-3 text-sm text-muted-foreground">
-                {item.note}
-              </p>
-            </Reveal>
-          ))}
+          <Reveal>
+            <EducationFolder />
+          </Reveal>
         </div>
         <div>
           <Reveal>
-            <SectionLabel index="04" className="mb-6">
+            <SectionLabel index="03" className="mb-6">
               Credentials
             </SectionLabel>
-            <div className="np-rule-draw h-0.5 bg-border-strong" />
+            <div className="np-rule-draw h-[1.5px] bg-border-strong" />
           </Reveal>
           {certifications.map((cert, i) => (
             <Reveal key={cert.name} delay={i * 60}>
@@ -111,10 +87,16 @@ export default function AboutPage() {
                 className="group flex items-baseline justify-between gap-6 border-b border-border py-4 no-underline"
               >
                 <span>
-                  <span className="block font-serif text-lg text-foreground transition-colors duration-150 group-hover:text-rose">
+                  {/* Cormorant is a thin, high-contrast serif; at 400 it read
+                      spindly on the near-white ground. Dark mode was already
+                      getting 500 from the body rule, so this only brings light
+                      up to match. */}
+                  <span className="block font-serif text-lg font-medium text-foreground transition-colors duration-150 group-hover:text-rose">
                     {cert.name}
                   </span>
-                  <span className="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.1em] text-faint">
+                  {/* was text-faint, which is 2.6:1 on paper — below the 4.5:1
+                      floor and the actual reason this line was unreadable */}
+                  <span className="mt-0.5 block font-mono text-[10px] font-medium uppercase tracking-[0.1em] text-muted-foreground">
                     {cert.issuer} · {cert.date}
                   </span>
                 </span>

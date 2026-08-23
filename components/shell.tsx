@@ -21,11 +21,11 @@ export function Shell({ children }: { children: ReactNode }) {
   }, [])
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="np-shell flex min-h-screen flex-col">
       <Intro />
       <SiteHeader onOpenPalette={() => setPaletteOpen(true)} />
-      <main className="flex-1">{children}</main>
-      <SiteFooter />
+      <main className="np-content flex-1">{children}</main>
+      <div className="np-content"><SiteFooter /></div>
       <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
     </div>
   )

@@ -5,10 +5,10 @@
 @custom-variant dark (&:is([data-theme='dark'] *));
 
 @theme inline {
-  /* THE LEDGER — Instrument Serif display · Archivo body · IBM Plex Mono labels */
+  /* STUDIO WHITE — Cormorant Garamond display · Archivo body · IBM Plex Mono labels */
   --font-sans: var(--font-archivo), 'Helvetica Neue', Arial, sans-serif;
-  --font-serif: var(--font-instrument), Georgia, serif;
-  --font-heading: var(--font-instrument), Georgia, serif;
+  --font-serif: var(--font-cormorant), Cochin, Baskerville, Georgia, serif;
+  --font-heading: var(--font-cormorant), Cochin, Baskerville, Georgia, serif;
   --font-mono: var(--font-plex-mono), 'SFMono-Regular', Consolas, monospace;
 
   --color-background: var(--color-page);
@@ -50,7 +50,7 @@
   --text-label-xs: 0.625rem;
   --text-label-xs--line-height: 1.4;
 
-  /* The Ledger is square. No rounded corners, anywhere. */
+  /* Square. No rounded corners, anywhere. */
   --radius-sm: 0px;
   --radius-md: 0px;
   --radius-lg: 0px;
@@ -67,27 +67,29 @@
 }
 
 /* ============================================================
-   THE LEDGER — Rose Madder (direction 3a)
-   Warm editorial palette: cream paper, aubergine ink,
-   rose madder primary, plum secondary, forest tertiary.
+   STUDIO WHITE
+   Near-white ground, grey dot grid, Cormorant Garamond display,
+   rose rationed as the single accent. Replaces "The Ledger".
    ============================================================ */
 :root {
-  --np-paper: #f4efe4;
-  --np-paper-raised: #faf6ec;
-  --np-paper-sunken: #ece5d5;
-  --np-ink: #241c22;
-  --np-ink-2: #56455a;
-  --np-ink-3: #8d7f8a;
+  --np-paper: #fafaf8;
+  --np-paper-raised: #ffffff;
+  --np-paper-sunken: #f2f1ed;
+  --np-ink: #17181b;
+  --np-ink-2: #6e7076;
+  --np-ink-3: #9a9ca2;
   --np-rose: #b8496a;
   --np-rose-deep: #9c3a58;
-  --np-rose-tint: #f0dce2;
+  --np-rose-tint: #f7e7ec;
   --np-plum: #5d3754;
-  --np-plum-tint: #e7dce5;
+  --np-plum-tint: #ece5eb;
   --np-forest: #1f3a2d;
-  --np-forest-tint: #dee5dc;
+  --np-forest-tint: #e2e8e3;
   --np-ember: #a63d2f;
-  --np-ember-tint: #f2ddd3;
-  --np-line: #ddd2c4;
+  --np-ember-tint: #f6e3dd;
+  --np-line: #deddd6;
+  /* the canvas dot grid */
+  --np-dot: #deddd6;
 
   --color-page: var(--np-paper);
   --color-on-accent-var: #f4efe4;
@@ -95,36 +97,50 @@
   --color-link: var(--np-plum);
   --color-link-hover: var(--np-rose);
 
+  /* the footer is a dark slab in light mode; in dark it must stay dark
+     rather than flipping to a cream block via --np-ink */
+  --np-footer-bg: #17181b;
+  --np-footer-fg: #f7f6f3;
+  --np-footer-rule: rgba(247, 246, 243, 0.18);
+
   --shadow-card-var: 0 2px 16px rgba(36, 28, 34, 0.1);
   --shadow-pop-var: 0 12px 40px rgba(36, 28, 34, 0.18);
 
+  --dur-0: 110ms;
   --dur-1: 150ms;
   --dur-2: 300ms;
   --dur-3: 600ms;
   --dur-4: 900ms;
 }
 
-/* Aubergine-ink night */
+/* Night — muted rose, neutral dark ground */
 [data-theme='dark'] {
-  --np-paper: #1a141a;
-  --np-paper-raised: #241c23;
-  --np-paper-sunken: #140f14;
-  --np-ink: #ede3e0;
-  --np-ink-2: #b9a8b3;
-  --np-ink-3: #8d7f8a;
-  --np-rose: #e0708d;
-  --np-rose-deep: #eb8ba3;
-  --np-rose-tint: #3a222c;
-  --np-plum: #b18ca7;
-  --np-plum-tint: #342533;
-  --np-forest: #7fa98c;
-  --np-forest-tint: #22302a;
-  --np-ember: #d4756a;
-  --np-ember-tint: #3a2521;
-  --np-line: #3b303a;
+  --np-paper: #16171a;
+  --np-paper-raised: #1e2025;
+  --np-paper-sunken: #101114;
+  --np-ink: #ffffff;
+  --np-ink-2: #d3d4d7;
+  --np-ink-3: #94969c;
+  /* muted, not neon — the old #e0708d went candy-pink on near-black */
+  --np-rose: #d4788f;
+  --np-rose-deep: #e08fa2;
+  --np-rose-tint: #33232a;
+  --np-plum: #b096ab;
+  --np-plum-tint: #2b2531;
+  --np-forest: #86ab92;
+  --np-forest-tint: #1f2a24;
+  --np-ember: #d4826f;
+  --np-ember-tint: #33241f;
+  --np-line: #2d2f35;
+  --np-dot: #2d2f35;
 
   --color-on-accent-var: #1a141a;
   --color-on-inverse-var: #1a141a;
+
+  /* a shade below the page, so it reads as a footer without inverting */
+  --np-footer-bg: #0e0f12;
+  --np-footer-fg: #ffffff;
+  --np-footer-rule: rgba(255, 255, 255, 0.14);
 
   --shadow-card-var: 0 2px 16px rgba(0, 0, 0, 0.35);
   --shadow-pop-var: 0 12px 40px rgba(0, 0, 0, 0.5);
@@ -138,15 +154,33 @@
     @apply font-sans;
     scroll-behavior: smooth;
     scroll-padding-top: 6rem;
+    /* The ground colour lives here, not on the body: the dot grid below is a
+       negative-z-index child of the body, and such a child paints behind its
+       parent's own background. */
+    background-color: var(--color-background);
+    transition: background-color var(--dur-0) var(--ease-swift);
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    background: transparent;
     font-size: 15px;
     line-height: 1.55;
     overflow-x: clip;
-    transition:
-      background-color var(--dur-2) var(--ease-swift),
-      color var(--dur-2) var(--ease-swift);
+    transition: color var(--dur-0) var(--ease-swift);
+  }
+  /* Studio White: near-white ground with a faint dot grid.
+     The grid is a viewport-pinned layer rather than the body's background. As
+     a body background it is a document-height gradient the compositor re-tiles
+     as you scroll; pinned to the viewport it paints once and never again — and
+     since the pattern is uniform, it looks identical either way. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: radial-gradient(circle, var(--np-dot) 1.15px, transparent 1.15px);
+    background-size: 26px 26px;
   }
   h1,
   h2,
@@ -158,6 +192,10 @@
   }
   ::selection {
     background: var(--np-rose-tint);
+  }
+  /* light text on a dark ground reads thin, so dark mode carries more weight */
+  [data-theme='dark'] body {
+    font-weight: 500;
   }
   button {
     border-radius: 0;
@@ -254,7 +292,9 @@ button:hover > .np-arrow,
   justify-content: center;
   background: var(--color-page);
   animation: np-intro-exit var(--dur-3) var(--ease-expo) forwards;
-  animation-delay: 1.5s;
+  /* 2.4s, not 1.5s — must outlast the "new site coming" line, which rises
+     at 900ms over a 900ms animation. Keep in step with Intro's unmount. */
+  animation-delay: 2.4s;
 }
 @keyframes np-intro-exit {
   to {
@@ -409,18 +449,33 @@ button:hover > .np-arrow,
   }
 }
 
+/* Frosted glass. Each backdrop-filter is a separate blur pass the compositor
+   redoes whenever anything behind it moves, and the desk scene has four of
+   them over a drifting wallpaper. The radius is kept small (the backdrop is a
+   smooth gradient, so a wide blur bought almost nothing visually) and the
+   saturate pass is gone. Below sm the filter is dropped altogether in favour
+   of a slightly more opaque fill — phones pay the most for it and show it the
+   least. */
 .mac-glass {
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(16px) saturate(1.4);
-  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  background: rgba(255, 255, 255, 0.72);
   border: 1px solid rgba(255, 255, 255, 0.45);
   box-shadow: 0 10px 30px rgba(20, 10, 20, 0.25);
 }
 .mac-glass-dark {
-  background: rgba(30, 22, 34, 0.5);
-  backdrop-filter: blur(16px) saturate(1.4);
-  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  background: rgba(30, 22, 34, 0.68);
   border: 1px solid rgba(255, 255, 255, 0.18);
+}
+@media (min-width: 640px) {
+  .mac-glass {
+    background: rgba(255, 255, 255, 0.58);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+  }
+  .mac-glass-dark {
+    background: rgba(30, 22, 34, 0.54);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+  }
 }
 
 /* macOS window chrome */
@@ -532,4 +587,1144 @@ button:hover > .np-arrow,
   html {
     scroll-behavior: auto;
   }
+}
+
+/* ==================================================================
+   HOME — the easel scene
+   ================================================================== */
+.np-hero {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 32px 24px 88px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
+  gap: clamp(28px, 4.5vw, 64px);
+  align-items: center;
+}
+
+/* ---------- the scene ---------- */
+.np-easel-col { display: flex; justify-content: flex-start; }
+.np-scene {
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+  max-width: 436px;
+  margin-left: -2%;
+  /* The easel leaned and turned into the page. A machine does not: the
+     perspective skewed the keyboard and read as the typewriter toppling
+     over, so it now sits square with only a hair of rotation to keep it
+     from looking pasted on. */
+  transform: rotate(-0.8deg);
+  transform-origin: 50% 62%;
+}
+.np-scene-svg { display: block; width: 100%; height: auto; }
+
+/* ---------- the sheet ----------
+   The paper is HTML, not part of the machine's SVG: it has to lengthen as the
+   page fills, and a rect in a fixed viewBox cannot. It sits behind the SVG and
+   shows through the gap the drawing leaves, anchored at the bottom so it grows
+   upward out of the platen the way paper actually feeds.
+
+   Geometry matches the machine exactly. Where the SVG's paper rect used to be:
+   x108 w204 of 420 wide -> left 25.714%, width 48.571%; bottom edge at the
+   platen's y270 of 616 -> bottom 56.17%; and 26 units of it stay tucked behind
+   the roller, which is the 6.19cqw constant below.
+
+   One row of stamps is 11.886cqw: a 9.486cqw cell plus a 2.4cqw gutter. */
+.np-scene-svg {
+  position: relative;
+  z-index: 1;
+  /* The machine is pure decoration — every control on it (keys, the return
+     lever, the printed icons) is HTML. An <svg> root in HTML captures pointer
+     events across its whole box, not just its painted shapes, so leaving this
+     on made the drawing swallow every click aimed at the sheet behind it. */
+  pointer-events: none;
+}
+.np-paper {
+  position: absolute;
+  left: 25.714%;
+  width: 48.571%;
+  bottom: 56.17%;
+  height: calc(10.59cqw + var(--rows, 4) * 11.886cqw);
+  /* hard stop: there are only 58px between the paper's top and the sticky
+     header at this layout, which is 13cqw on top of the 58.1cqw base. If the
+     hero's padding ever changes, this is what keeps the sheet from sliding
+     under the header rather than the row count. */
+  max-height: 71cqw;
+  z-index: 0;
+  background: linear-gradient(155deg, #ffffff 0%, #fdfcfa 72%, #f3f1ea 100%);
+  border: 1px solid #e6e3db;
+  transition: height var(--dur-3) var(--ease-expo);
+}
+/* the edge that catches the light, and the roller's shadow at the base */
+.np-paper::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 2%;
+  background: #eeebe3;
+}
+.np-paper::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 9cqw;
+  background: linear-gradient(180deg, rgba(141, 136, 120, 0) 0%, rgba(141, 136, 120, 0.3) 100%);
+  pointer-events: none;
+}
+
+/* the printable area, inset from the paper's edges */
+.np-board {
+  position: absolute;
+  inset: 0 0 6.19cqw 0;
+}
+
+/* ---------- the part that has rolled over ----------
+   Hangs off the paper's top-left corner: a quarter turn, so the sheet's width
+   becomes this strip's height and each row becomes a column marching left.
+   Capped at two columns because that is the room the scene has before the
+   strip would leave the page. */
+.np-roll {
+  position: absolute;
+  right: 100%;
+  top: -1px;
+  height: 48.571cqw;
+  width: calc(var(--cols, 0) * 11.886cqw);
+  max-width: 23.8cqw;
+  background: linear-gradient(120deg, #f1efe8 0%, #f9f8f4 62%, #fdfcfa 100%);
+  border: 1px solid #e6e3db;
+  border-right: 0;
+  overflow: hidden;
+  transition: width var(--dur-3) var(--ease-expo);
+}
+/* the fold: paper darkens as it turns away from the light */
+.np-roll::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 22%;
+  background: linear-gradient(90deg, rgba(120, 114, 98, 0) 0%, rgba(120, 114, 98, 0.22) 100%);
+  pointer-events: none;
+}
+.np-roll-sheet {
+  height: 100%;
+  padding: 6% 5%;
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  grid-auto-flow: column;
+  grid-auto-columns: 9.486cqw;
+  gap: 1.6cqw 2.4cqw;
+  direction: rtl;
+}
+
+/* ---------- what gets printed on the sheet ----------
+   A press stamps the icon into the next slot, filling the page the way type
+   fills a line. Each strike is nudged a couple of degrees off square so a
+   row of the same icon reads as struck rather than pasted. */
+.np-sheet {
+  width: 100%;
+  height: 100%;
+  padding: 7% 6%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: min-content;
+  gap: 2.4cqw 1.6cqw;
+  align-content: start;
+}
+.np-stamp {
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transform: rotate(var(--jitter, 0deg));
+  animation: np-strike 260ms var(--ease-expo) backwards;
+  transition: transform var(--dur-1) var(--ease-expo);
+}
+.np-stamp svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.np-stamp:hover,
+.np-stamp:focus-visible {
+  transform: rotate(var(--jitter, 0deg)) scale(1.12);
+}
+/* out on the fold the page is turned, so its contents are too */
+.np-stamp.is-rolled {
+  --jitter: -90deg;
+  animation: none;
+  opacity: 0.88;
+}
+.np-stamp:focus-visible {
+  outline: 2px solid var(--np-rose);
+  outline-offset: 3px;
+}
+/* the typebar hits the page hard and settles */
+@keyframes np-strike {
+  from {
+    opacity: 0;
+    transform: rotate(var(--jitter, 0deg)) scale(1.5);
+  }
+  60% {
+    opacity: 1;
+    transform: rotate(var(--jitter, 0deg)) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(var(--jitter, 0deg)) scale(1);
+  }
+}
+
+/* the empty sheet says what to do, with a caret sitting where type would */
+.np-sheet-hint {
+  margin: 0;
+  padding: 9% 8%;
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  font-family: var(--font-mono);
+  font-size: 2.4cqw;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #a8a49a;
+}
+.np-caret {
+  width: 0.62em;
+  height: 1.15em;
+  background: #a8a49a;
+  animation: np-caret 1.05s steps(1) infinite;
+}
+@keyframes np-caret {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+/* the carriage return lever, sitting over the one drawn in the SVG */
+.np-return {
+  position: absolute;
+  z-index: 2;
+  left: 0.95%;
+  top: 34.09%;
+  width: 14.29%;
+  height: 6.82%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.np-return[disabled] {
+  cursor: default;
+}
+.np-return-tip {
+  position: absolute;
+  left: 0;
+  bottom: 112%;
+  padding: 0.3em 0.55em;
+  border-radius: 3px;
+  background: var(--np-ink);
+  color: var(--np-paper);
+  font-family: var(--font-mono);
+  font-size: 2.1cqw;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-1) var(--ease-swift);
+}
+.np-return:not([disabled]):hover .np-return-tip,
+.np-return:focus-visible .np-return-tip {
+  opacity: 1;
+}
+.np-return:focus-visible {
+  outline: 2px solid var(--np-rose);
+  outline-offset: 2px;
+}
+
+/* ---------- the keys ----------
+   Laid over the SVG's keyboard well (x86 y350 w248 h144 of 420x616) as real
+   buttons: they carry icons, and they have to be clickable and focusable.
+   A 5x3 grid of 40-unit keys with 12-unit gutters lands exactly on the well,
+   so the grid needs no per-key positioning. */
+.np-keys {
+  position: absolute;
+  /* above the SVG: the machine is painted at z-index 1 now that the paper
+     sits behind it, and a painted SVG shape swallows clicks — the keyboard
+     recess was eating every keypress */
+  z-index: 2;
+  left: 20.476%;
+  top: 56.818%;
+  width: 59.048%;
+  height: 23.377%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 2.857cqw;
+}
+
+.np-key {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 16%;
+  border: 0;
+  border-radius: 26%;
+  background: linear-gradient(180deg, #f6f5f2 0%, #e6e4df 62%, #cfccc6 100%);
+  box-shadow: 0 0.36cqw 0 rgba(8, 8, 10, 0.55);
+  cursor: pointer;
+  /* the keys arrive one after another, left to right */
+  opacity: 0;
+  animation: np-key-in 420ms var(--ease-expo) forwards;
+  animation-delay: calc(var(--i, 0) * 42ms + 260ms);
+  transition:
+    transform var(--dur-1) var(--ease-swift),
+    box-shadow var(--dur-1) var(--ease-swift);
+}
+.np-key svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+/* pressed: the key travels down onto its own shadow, the way a real one does */
+.np-key:hover {
+  transform: translateY(-0.24cqw);
+  box-shadow: 0 0.6cqw 0 rgba(8, 8, 10, 0.55);
+}
+.np-key:active {
+  transform: translateY(0.36cqw);
+  box-shadow: 0 0 0 rgba(8, 8, 10, 0.55);
+}
+.np-key:focus-visible {
+  outline: 2px solid var(--np-rose);
+  outline-offset: 3px;
+}
+
+/* the empty slots: present, obviously unfilled, not interactive */
+.np-key.is-empty {
+  background: linear-gradient(180deg, #2a2b30 0%, #1d1e22 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  cursor: default;
+  padding: 0;
+}
+.np-key-slot {
+  width: 26%;
+  height: 26%;
+  border-radius: 999px;
+  border: 1.5px dashed rgba(255, 255, 255, 0.22);
+}
+
+/* the label rides above the key rather than below it — below is another key */
+.np-key-tip {
+  position: absolute;
+  bottom: 108%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.3em 0.55em;
+  border-radius: 3px;
+  background: var(--np-ink);
+  color: var(--np-paper);
+  font-family: var(--font-mono);
+  font-size: 2.1cqw;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-1) var(--ease-swift);
+  z-index: 2;
+}
+.np-key:hover .np-key-tip,
+.np-key:focus-visible .np-key-tip {
+  opacity: 1;
+}
+
+@keyframes np-key-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.8cqw);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .np-key {
+    animation: none;
+    opacity: 1;
+    transition: none;
+  }
+  .np-key:hover {
+    transform: none;
+  }
+  .np-stamp {
+    animation: none;
+    transition: none;
+  }
+  .np-caret {
+    animation: none;
+  }
+  .np-paper,
+  .np-roll {
+    transition: none;
+  }
+}
+
+/* ---------- typewriter colourways ----------
+   --tw-1 catches the light, --tw-2 is the body colour, --tw-3 is the shadow
+   side and the feet, --tw-rim is the hairline along the top edges. */
+.np-scene[data-tw='plum'] {
+  --tw-1: #8a5780;
+  --tw-2: #5d3754;
+  --tw-3: #351f2f;
+  --tw-rim: #c79bba;
+}
+.np-scene[data-tw='forest'] {
+  --tw-1: #35624c;
+  --tw-2: #1f3a2d;
+  --tw-3: #11221a;
+  --tw-rim: #8fbba2;
+}
+.np-scene[data-tw='ink'] {
+  --tw-1: #3c3e45;
+  --tw-2: #22242a;
+  --tw-3: #101115;
+  --tw-rim: #9a9ca6;
+}
+/* ROSE — the exact shade "Parashar" is set in, tracking the token so the
+   machine and the name stay the same colour in both themes. Its ribbon goes
+   plum: a rose ribbon on a rose shell is invisible. */
+.np-scene[data-tw='rose'] {
+  --tw-1: #cf6c88;
+  --tw-2: #b8496a;
+  --tw-3: #722a41;
+  --tw-rim: #f3bccb;
+  /* literal deep plum, not var(--np-plum): that token inverts to a light
+     mauve in dark mode, which washes out against the pink shell. The ribbon
+     needs to stay darker than the machine in both themes. */
+  --tw-ribbon: #5d3754;
+}
+[data-theme='dark'] .np-scene[data-tw='rose'] {
+  --tw-1: #e298ac;
+  --tw-2: #d4788f;
+  --tw-3: #8b4a5c;
+  --tw-rim: #f7d3dc;
+}
+.np-scene[data-tw='ember'] {
+  --tw-1: #c8604a;
+  --tw-2: #a63d2f;
+  --tw-3: #66241b;
+  --tw-rim: #eda893;
+}
+
+/* ---------- credential cards (education) ----------
+   Product-card silhouette: dark slab, inset light image panel, circular mark.
+   These are the one deliberately rounded surface in the system — the shape is
+   the whole point of the reference, and squaring them loses it. */
+.np-cred-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+}
+.np-cred {
+  /* Plum, not rose: the system rations rose to a single small accent, and two
+     card slabs is not a ration. Plum is the deep structural colour already
+     doing the links and the footer strip, and it is the dark-mode folder — so
+     the whole section reads as one family. */
+  --cred-bg: linear-gradient(168deg, #6b4162 0%, #5d3754 56%, #492a42 100%);
+  --cred-fg: #f7f6f3;
+  --cred-panel: #ffffff;
+  --cred-mark: #5d3754;
+  flex: 1 1 216px;
+  max-width: 288px;
+  margin: 0;
+  padding: 12px 12px 20px;
+  border-radius: 26px;
+  background: var(--cred-bg);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform var(--dur-2) var(--ease-expo),
+    box-shadow var(--dur-2) var(--ease-swift);
+}
+/* dark mode keeps near-black cards: the folder behind them is plum there, and
+   plum-on-plum loses the card edges entirely */
+[data-theme='dark'] .np-cred {
+  --cred-bg: linear-gradient(168deg, #23252a 0%, #14151a 56%, #0d0e11 100%);
+  --cred-mark: #17181b;
+  /* the panel stays light in both themes: what goes in it is a certificate or
+     a photograph, and a dark panel would fight the artwork */
+  --cred-panel: #f4f3ef;
+  /* the slab sits a shade below the page in dark mode, so a hairline ring
+     (inset, to avoid shifting the padding) keeps the rounded shape readable */
+  box-shadow:
+    0 2px 16px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+[data-theme='dark'] .np-cred:hover {
+  box-shadow:
+    var(--shadow-pop),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+.np-cred:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-pop);
+}
+
+.np-cred-frame {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 17px;
+  overflow: hidden;
+  background: var(--cred-panel);
+  display: grid;
+  place-items: center;
+}
+.np-cred-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 9%;
+  transition: transform var(--dur-3) var(--ease-expo);
+}
+.np-cred:hover .np-cred-img {
+  transform: scale(1.06);
+}
+.np-cred-drop {
+  padding: 0 12px;
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  line-height: 1.7;
+  letter-spacing: 0.1em;
+  text-align: center;
+  color: #a8a6a0;
+  word-break: break-all;
+}
+/* light circle with a dark glyph, as in the reference — the fill is a shade
+   off the panel so the edge reads without a border */
+.np-cred-badge {
+  position: absolute;
+  top: 11px;
+  right: 11px;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: #f0efeb;
+  color: var(--cred-mark, #17181b);
+  box-shadow: 0 1px 3px rgba(23, 24, 27, 0.14);
+}
+.np-cred-badge svg {
+  width: 17px;
+  height: 17px;
+  display: block;
+}
+
+.np-cred-title {
+  margin: 17px 2px 0;
+  font-family: var(--font-sans);
+  font-size: 1.275rem; /* 17px + 20% */
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.012em;
+  color: var(--cred-fg);
+  /* the reference clips a long name to one line — keep that behaviour */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.np-cred-brand {
+  margin: 5px 2px 0;
+  font-family: var(--font-sans);
+  font-size: 0.975rem; /* 13px + 20% */
+  font-weight: 600;
+  /* a touch more opaque than before: at this weight 0.58 went muddy */
+  color: rgba(247, 246, 243, 0.66);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .np-cred,
+  .np-cred-img {
+    transition: none;
+  }
+  .np-cred:hover {
+    transform: none;
+  }
+  .np-cred:hover .np-cred-img {
+    transform: none;
+  }
+}
+
+/* ---------- the folder the cards live in ----------
+   Closed: cards peek above a translucent lip that frosts what's behind it.
+   Open: they come forward and fan apart. Only transforms and opacity animate,
+   and the card layer is absolutely positioned, so nothing here reflows. */
+.np-folder-wrap {
+  margin-top: 26px;
+}
+.np-folder-stage {
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  aspect-ratio: 11 / 8.6;
+  /* the lift lives here so the whole folder moves as one object */
+  transition: transform var(--dur-2) var(--ease-expo);
+}
+.np-folder-stage:hover {
+  transform: translateY(-7px);
+}
+
+/* --- the slab behind everything --- */
+.np-folder-back {
+  position: absolute;
+  left: 2%;
+  right: 2%;
+  top: 14%;
+  bottom: 4%;
+  border-radius: 7cqw;
+  background: var(--fold-back);
+  box-shadow: var(--fold-shadow);
+  transition: box-shadow var(--dur-2) var(--ease-swift);
+}
+.np-folder-stage:hover .np-folder-back {
+  box-shadow: var(--fold-shadow-hover);
+}
+
+/* --- the translucent front lip ---
+   Translucent, not transparent: a tinted fill over a real backdrop blur, so
+   the card bottoms behind it go soft the way paper does inside a folder. The
+   fill is opaque enough that the text behind reads as a shape rather than as
+   words — any lighter and it looks like a rendering fault instead of glass.
+   (An earlier pass cut a stepped notch into the top edge, folder-tab style. It
+   sliced a hard diagonal across a card and read as damage, so the edge is
+   straight; the folder identity comes from the front face sitting lower than
+   the back, which it does.) */
+.np-folder-lip {
+  position: absolute;
+  left: 2%;
+  right: 2%;
+  top: 48%;
+  bottom: 4%;
+  z-index: 3;
+  pointer-events: none;
+  border-radius: 2.2cqw 2.2cqw 7cqw 7cqw;
+  background: var(--fold-lip);
+  box-shadow: var(--fold-lip-edge);
+  transition:
+    transform var(--dur-3) var(--ease-expo),
+    background var(--dur-2) var(--ease-swift);
+}
+/* unprefixed only — writing the -webkit- alias alongside it made the build's
+   CSS minifier collapse the pair down to the alias, which Chrome then ignored,
+   and the blur silently never applied */
+@media (min-width: 640px) {
+  .np-folder-lip {
+    backdrop-filter: blur(5px);
+  }
+}
+/* opening tips the lip forward and down, like a folder relaxing open */
+.np-folder-stage[data-open] .np-folder-lip {
+  transform: translateY(3.5%) scaleY(0.965);
+}
+
+/* --- the card layer ---
+   Click-through: nothing in a card is interactive, and while open the layer
+   covers the middle of the folder. Without this the only way to close it was
+   to find a strip of folder the cards did not overlap. */
+.np-folder-cards {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+/* Every offset is in cqw — the container's width — so the whole arrangement
+   scales as one drawing instead of drifting as the card's own height changes. */
+.np-folder-card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 38cqw;
+  transform-origin: 50% 100%;
+  /* fanned and tucked down inside the folder, behind the lip */
+  transform: translate(calc(-50% + var(--dx-shut)), var(--y-shut))
+    rotate(var(--rot));
+  transition: transform var(--dur-3) var(--ease-expo);
+  transition-delay: calc(var(--i) * 55ms);
+  --y-shut: 17cqw;
+  --y-hover: 14.5cqw;
+  --y-open: 3cqw;
+}
+.np-folder-card:nth-child(1) {
+  --dx-shut: -9cqw;
+  --dx-open: -20cqw;
+  --rot: -5deg;
+}
+.np-folder-card:nth-child(2) {
+  --dx-shut: 9cqw;
+  --dx-open: 20cqw;
+  --rot: 5deg;
+}
+/* squared up, spread apart, and in front of the lip */
+.np-folder-stage[data-open] .np-folder-cards {
+  z-index: 4;
+}
+.np-folder-stage[data-open] .np-folder-card {
+  transform: translate(calc(-50% + var(--dx-open)), var(--y-open)) rotate(0deg);
+}
+/* the stack rises a little before it is opened */
+.np-folder-stage:hover .np-folder-card {
+  transform: translate(calc(-50% + var(--dx-shut)), var(--y-hover))
+    rotate(var(--rot));
+}
+.np-folder-stage[data-open]:hover .np-folder-card {
+  transform: translate(calc(-50% + var(--dx-open)), var(--y-open)) rotate(0deg);
+}
+
+/* --- click target --- */
+.np-folder-hit {
+  position: absolute;
+  left: 2%;
+  right: 2%;
+  top: 14%;
+  bottom: 4%;
+  z-index: 5;
+  padding: 0;
+  border: 0;
+  border-radius: 7cqw;
+  background: none;
+  cursor: pointer;
+}
+.np-folder-hit:focus-visible {
+  outline: 2px solid var(--np-rose);
+  outline-offset: 5px;
+}
+
+.np-folder-hint {
+  margin: 14px 0 0;
+  max-width: 440px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--np-ink-3);
+}
+
+/* --- the cards, scaled to the folder ---
+   Same proportions as the standalone card, expressed against the folder's
+   width so the whole thing scales as one drawing. */
+.np-folder-cards .np-cred {
+  flex: none;
+  width: 100%;
+  max-width: none;
+  padding: 1.76cqw 1.76cqw 2.93cqw;
+  border-radius: 3.8cqw;
+}
+/* the folder owns the hover, not the individual card */
+.np-folder-cards .np-cred:hover {
+  transform: none;
+}
+/* inside the folder a card casts nothing; once it comes forward it needs a
+   shadow or it reads as pasted onto the folder rather than sitting above it */
+.np-folder-cards .np-cred {
+  box-shadow: none;
+  transition: box-shadow var(--dur-3) var(--ease-swift);
+}
+.np-folder-stage[data-open] .np-cred {
+  box-shadow: var(--fold-card-shadow, 0 16px 36px rgba(0, 0, 0, 0.42));
+}
+.np-folder-cards .np-cred-frame {
+  border-radius: 2.5cqw;
+}
+.np-folder-cards .np-cred-badge {
+  width: 4.7cqw;
+  height: 4.7cqw;
+  top: 1.6cqw;
+  right: 1.6cqw;
+}
+.np-folder-cards .np-cred-badge svg {
+  width: 2.5cqw;
+  height: 2.5cqw;
+}
+.np-folder-cards .np-cred-title {
+  margin: 2.5cqw 0.35cqw 0;
+  font-size: 3cqw;
+}
+.np-folder-cards .np-cred-brand {
+  margin: 0.72cqw 0.35cqw 0;
+  font-size: 2.29cqw;
+}
+.np-folder-cards .np-cred-drop {
+  font-size: 1.25cqw;
+  padding: 0 6%;
+}
+
+/* ---------- folder colourways ----------
+   AUTO is the one in use: PAPER in light, PLUM in dark. The values are spelled
+   out rather than borrowed from the two named blocks below, because CSS custom
+   properties cannot be inherited selectively — if you retune paper or plum,
+   retune the matching half of auto too. The named variants stay as overrides. */
+
+/* AUTO, light — the manila folder */
+.np-folder-stage[data-variant='auto'] {
+  --fold-back: linear-gradient(168deg, #f3f1ea 0%, #e6e3d9 55%, #d7d3c6 100%);
+  --fold-lip: linear-gradient(
+    172deg,
+    rgba(241, 238, 229, 0.42) 0%,
+    rgba(222, 217, 203, 0.56) 100%
+  );
+  --fold-lip-edge:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 0 0 1px rgba(23, 24, 27, 0.05);
+  --fold-shadow: 0 18px 44px rgba(23, 24, 27, 0.16);
+  --fold-shadow-hover: 0 30px 64px rgba(23, 24, 27, 0.22);
+  /* the open cards are near-black slabs on a pale folder, so their shadow
+     wants to be lighter here than it does on a dark ground */
+  --fold-card-shadow: 0 16px 34px rgba(23, 24, 27, 0.28);
+}
+/* AUTO, dark — the plum folder */
+[data-theme='dark'] .np-folder-stage[data-variant='auto'] {
+  --fold-back: linear-gradient(168deg, #5b3853 0%, #472a41 54%, #2c1a28 100%);
+  --fold-lip: linear-gradient(
+    172deg,
+    rgba(48, 28, 43, 0.4) 0%,
+    rgba(32, 18, 29, 0.56) 100%
+  );
+  --fold-lip-edge: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  --fold-shadow: 0 18px 44px rgba(0, 0, 0, 0.5);
+  --fold-shadow-hover: 0 30px 64px rgba(0, 0, 0, 0.62);
+  --fold-card-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+}
+
+/* INK — the reference's graphite, pulled onto the site's near-black */
+.np-folder-stage[data-variant='ink'] {
+  --fold-back: linear-gradient(168deg, #2a2c31 0%, #17181b 52%, #0f1013 100%);
+  --fold-lip: linear-gradient(
+    172deg,
+    rgba(31, 32, 37, 0.42) 0%,
+    rgba(17, 18, 21, 0.56) 100%
+  );
+  --fold-lip-edge: inset 0 1px 0 rgba(255, 255, 255, 0.17);
+  --fold-shadow: 0 18px 44px rgba(23, 24, 27, 0.26);
+  --fold-shadow-hover: 0 30px 64px rgba(23, 24, 27, 0.34);
+}
+[data-theme='dark'] .np-folder-stage[data-variant='ink'] {
+  --fold-back: linear-gradient(168deg, #23252a 0%, #14151a 52%, #0b0c0f 100%);
+  --fold-shadow: 0 18px 44px rgba(0, 0, 0, 0.5);
+  --fold-shadow-hover: 0 30px 64px rgba(0, 0, 0, 0.62);
+}
+
+/* PLUM — the site's deepest accent, warmer and less severe */
+.np-folder-stage[data-variant='plum'] {
+  --fold-back: linear-gradient(168deg, #6f4565 0%, #5d3754 54%, #3d2436 100%);
+  --fold-lip: linear-gradient(
+    172deg,
+    rgba(48, 28, 43, 0.4) 0%,
+    rgba(32, 18, 29, 0.56) 100%
+  );
+  --fold-lip-edge: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  --fold-shadow: 0 18px 44px rgba(61, 36, 54, 0.3);
+  --fold-shadow-hover: 0 30px 64px rgba(61, 36, 54, 0.4);
+}
+[data-theme='dark'] .np-folder-stage[data-variant='plum'] {
+  --fold-back: linear-gradient(168deg, #5b3853 0%, #472a41 54%, #2c1a28 100%);
+  --fold-shadow: 0 18px 44px rgba(0, 0, 0, 0.5);
+  --fold-shadow-hover: 0 30px 64px rgba(0, 0, 0, 0.62);
+}
+
+/* PAPER — a manila folder in Studio White; the dark cards pop out of it */
+.np-folder-stage[data-variant='paper'] {
+  --fold-back: linear-gradient(168deg, #f3f1ea 0%, #e6e3d9 55%, #d7d3c6 100%);
+  --fold-lip: linear-gradient(
+    172deg,
+    rgba(241, 238, 229, 0.42) 0%,
+    rgba(222, 217, 203, 0.56) 100%
+  );
+  --fold-lip-edge:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 0 0 1px rgba(23, 24, 27, 0.05);
+  --fold-shadow: 0 18px 44px rgba(23, 24, 27, 0.16);
+  --fold-shadow-hover: 0 30px 64px rgba(23, 24, 27, 0.22);
+}
+[data-theme='dark'] .np-folder-stage[data-variant='paper'] {
+  --fold-back: linear-gradient(168deg, #3a3b41 0%, #2b2c32 55%, #1e1f24 100%);
+  --fold-lip: linear-gradient(
+    172deg,
+    rgba(46, 47, 53, 0.42) 0%,
+    rgba(30, 31, 36, 0.56) 100%
+  );
+  --fold-lip-edge: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  --fold-shadow: 0 18px 44px rgba(0, 0, 0, 0.5);
+  --fold-shadow-hover: 0 30px 64px rgba(0, 0, 0, 0.62);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .np-folder-stage,
+  .np-folder-back,
+  .np-folder-lip,
+  .np-folder-card {
+    transition: none;
+  }
+  .np-folder-stage:hover {
+    transform: none;
+  }
+  .np-folder-stage:hover .np-folder-card {
+    transform: translate(calc(-50% + var(--dx-shut)), var(--y-shut))
+      rotate(var(--rot));
+  }
+}
+
+/* ---------- the name ---------- */
+.np-idcol { max-width: 30rem; }
+.np-id-role {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--np-rose);
+  margin: 0 0 18px;
+}
+.np-id-name {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(3rem, 6.4vw, 4.9rem);
+  line-height: 1;
+  letter-spacing: -0.014em;
+  margin: 0 0 22px;
+  color: var(--np-ink);
+}
+.np-id-link {
+  font-style: italic;
+  color: var(--np-rose);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur-1) var(--ease-swift);
+}
+.np-id-link:hover, .np-id-link:focus-visible { border-bottom-color: var(--np-rose); }
+.np-id-line {
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--np-ink-2);
+  margin: 0;
+  max-width: 34ch;
+}
+.np-id-bar { display: block; width: 76px; height: 2px; background: var(--np-rose); margin: 26px 0 0; }
+.np-id-links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; }
+.np-id-links button {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--np-ink-2);
+  background: none;
+  border: 1px solid var(--np-line);
+  padding: 9px 14px;
+  cursor: pointer;
+  transition: color var(--dur-1), border-color var(--dur-1);
+}
+.np-id-links button:hover { color: var(--np-ink); border-color: var(--np-ink-3); }
+
+/* ---------- mobile ---------- */
+.np-mobile-list { display: none; }
+
+@media (max-width: 900px) {
+  .np-hero { grid-template-columns: 1fr; padding-bottom: 40px; }
+  .np-idcol { order: -1; max-width: none; }
+  .np-scene { max-width: 420px; }
+}
+@media (max-width: 620px) {
+  /* the machine does not survive a phone: swap it for a plain index */
+  .np-easel-col { display: none; }
+  .np-id-links { display: none; }
+  .np-mobile-list { display: block; max-width: 1180px; margin: 0 auto; padding: 0 24px 72px; }
+  .np-mobile-list ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--np-line); }
+  .np-mobile-list li { border-bottom: 1px solid var(--np-line); }
+  .np-mobile-list button {
+    display: block; width: 100%; text-align: left; cursor: pointer;
+    background: none; border: 0; padding: 17px 2px;
+  }
+  .np-list-label {
+    display: block; font-family: var(--font-serif); font-size: 1.375rem;
+    color: var(--np-ink); margin-bottom: 3px;
+  }
+  .np-list-blurb {
+    display: block; font-family: var(--font-sans); font-size: 0.9063rem;
+    color: var(--np-ink-2);
+  }
+}
+
+/* ---------- panel ---------- */
+.np-panel-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(23, 24, 27, 0.34);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: np-fade var(--dur-2) var(--ease-swift) forwards;
+}
+.np-panel {
+  position: relative;
+  background: var(--np-paper-raised);
+  border: 1px solid var(--np-line);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+  width: min(560px, 100%);
+  padding: 40px 40px 36px;
+}
+.np-panel-close {
+  position: absolute;
+  right: 14px;
+  top: 12px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 15px;
+  color: var(--np-ink-3);
+  line-height: 1;
+  padding: 6px;
+}
+.np-panel-close:hover { color: var(--np-ink); }
+.np-panel-kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--np-rose);
+  margin: 0 0 12px;
+}
+.np-panel-title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 2.25rem;
+  line-height: 1.1;
+  margin: 0 0 14px;
+  color: var(--np-ink);
+}
+.np-panel-body {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--np-ink-2);
+  margin: 0;
+  max-width: 46ch;
+}
+.np-panel-stub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--np-ink-3);
+  margin: 20px 0 0;
+  border-top: 1px solid var(--np-line);
+  padding-top: 16px;
+}
+.np-panel-cta {
+  display: inline-block;
+  margin-top: 24px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--np-rose);
+  color: #fff;
+  padding: 11px 18px;
+  text-decoration: none;
+}
+.np-panel-cta:hover { background: var(--np-rose-deep); }
+
+@media (prefers-reduced-motion: reduce) {
+  .np-obj, .np-tile { transition: none; }
+  .np-panel-scrim { animation: none; }
+}
+
+/* ---------- quick links: plum and bold ---------- */
+.np-id-links {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+.np-quick { display: inline-flex; }
+.np-quick-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--np-plum);
+  text-decoration: none;
+  border: 1px solid var(--np-line);
+  padding: 10px 16px;
+  transition: color var(--dur-1) var(--ease-swift),
+              border-color var(--dur-1) var(--ease-swift),
+              background var(--dur-1) var(--ease-swift);
+}
+.np-quick-btn:hover,
+.np-quick-btn:focus-visible {
+  color: var(--np-rose);
+  border-color: var(--np-plum);
+  background: var(--np-plum-tint);
+}
+
+/* ---------- footer: a dark slab in both themes ---------- */
+.np-footer { background: var(--np-footer-bg); color: var(--np-footer-fg); }
+.np-footer a { color: var(--np-footer-fg); }
+.np-footer-rule { border-color: var(--np-footer-rule); }
+.np-footer-strip-end { background: var(--np-footer-bg); }
+
+/* ---------- theme switch ---------- */
+.np-theme-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+  width: 56px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--np-line);
+  background: transparent;
+  cursor: pointer;
+}
+.np-theme-switch:hover { border-color: var(--np-ink-3); }
+.np-theme-switch:focus-visible { outline: 2px solid var(--np-rose); outline-offset: 2px; }
+
+.np-theme-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 25px;
+  height: calc(100% - 4px);
+  background: var(--np-rose);
+}
+.np-theme-switch[data-dark] .np-theme-knob { transform: translateX(25px); }
+/* only animate after mount, so the stored theme does not slide in on load */
+.np-theme-switch[data-ready] .np-theme-knob {
+  transition: transform var(--dur-0) var(--ease-swift);
+}
+
+.np-theme-ico {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: grid;
+  place-items: center;
+  color: var(--np-ink-3);
+  transition: color var(--dur-0) var(--ease-swift);
+}
+.np-theme-ico svg { display: block; width: 13px; height: 13px; }
+/* whichever icon the knob is under reads against the accent */
+.np-theme-switch:not([data-dark]) .np-theme-sun { color: var(--color-on-accent-var); }
+.np-theme-switch[data-dark] .np-theme-moon { color: var(--color-on-accent-var); }
+
+@media (prefers-reduced-motion: reduce) {
+  .np-theme-switch[data-ready] .np-theme-knob { transition: none; }
 }

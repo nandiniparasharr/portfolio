@@ -9,18 +9,34 @@ import { ThemeToggle } from '@/components/theme-toggle'
 
 function ScrollProgress() {
   useEffect(() => {
-    const onScroll = () => {
-      const doc = document.documentElement
-      const max = doc.scrollHeight - window.innerHeight
+    const doc = document.documentElement
+    // scrollHeight was read on every scroll event, which forces a synchronous
+    // layout each time. Measure only on resize, and paint inside rAF.
+    let max = 0
+    let raf = 0
+    const measure = () => {
+      max = doc.scrollHeight - window.innerHeight
+    }
+    const paint = () => {
+      raf = 0
       const p = max > 0 ? Math.min(window.scrollY / max, 1) : 0
       doc.style.setProperty('--scroll-progress', String(p))
     }
-    onScroll()
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(paint)
+    }
+    const onResize = () => {
+      measure()
+      onScroll()
+    }
+    measure()
+    paint()
     window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll)
+    window.addEventListener('resize', onResize)
     return () => {
       window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
+      window.removeEventListener('resize', onResize)
+      if (raf) cancelAnimationFrame(raf)
     }
   }, [])
   return (

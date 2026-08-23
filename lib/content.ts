@@ -215,18 +215,26 @@ export const currently = [
   { label: 'Reading', value: 'Ask me — it changes weekly' },
 ]
 
+/* Rendered as cards. `brand` is the short line under the title, `image` is the
+   file to drop into public/ — until it exists the card shows a placeholder. */
 export const education = [
   {
-    title: 'CFA Program',
-    institution: 'CFA Institute',
-    date: 'Level I · Mar 2026',
-    note: 'Passed Level I (March 2026). Practical Skill Module — Financial Modelling.',
-  },
-  {
     title: 'BSc Finance',
+    brand: 'NMIMS',
+    icon: 'cap' as const,
+    image: '/about/education/bsc-finance.jpg',
     institution: 'NMIMS Bangalore',
     date: '2021 — 2024',
     note: 'Strategic Management, Corporate Finance, Financial Reporting, Derivatives & Risk Management, Financial Modelling and Valuations.',
+  },
+  {
+    title: 'CFA Level I',
+    brand: 'CFA Institute',
+    icon: 'seal' as const,
+    image: '/about/education/cfa-level-1.jpg',
+    institution: 'CFA Institute',
+    date: 'Mar 2026',
+    note: 'Passed Level I (March 2026). Practical Skill Module — Financial Modelling.',
   },
 ]
 

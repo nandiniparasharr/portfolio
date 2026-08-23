@@ -374,37 +374,102 @@ function SafariBody({ tab, setTab }: { tab: SafariTab; setTab: (t: SafariTab) =>
 
 /* ---------- clock ---------- */
 
-function Clock({ big = false }: { big?: boolean }) {
-  const [now, setNow] = useState<Date | null>(null)
+/* Both clock faces write text straight into their nodes. Going through
+   state re-rendered the entire desk scene — every window, every SVG — once
+   a second while the About page was open. Nothing here is displayed below
+   minute resolution, so it also only writes when the string actually
+   changes, and stops entirely while the tab is hidden. */
+function useTickingText(
+  format: () => string,
+  ref: React.RefObject<HTMLElement | null>,
+) {
   useEffect(() => {
-    const tick = () => setNow(new Date())
-    tick()
-    const id = setInterval(tick, 1000)
-    return () => clearInterval(id)
+    let id = 0
+    let prev = ''
+    const tick = () => {
+      const next = format()
+      if (next !== prev && ref.current) {
+        ref.current.textContent = next
+        prev = next
+      }
+    }
+    const start = () => {
+      tick()
+      id = window.setInterval(tick, 1000)
+    }
+    const stop = () => {
+      window.clearInterval(id)
+      id = 0
+    }
+    const onVisibility = () => {
+      stop()
+      if (!document.hidden) start()
+    }
+    start()
+    document.addEventListener('visibilitychange', onVisibility)
+    return () => {
+      stop()
+      document.removeEventListener('visibilitychange', onVisibility)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  const time = now
-    ? now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
-    : '--:--'
-  if (!big) {
-    const label = now
-      ? `${now.toLocaleDateString('en-US', { weekday: 'short' })} ${now.getDate()} ` +
-        `${now.toLocaleDateString('en-US', { month: 'short' })} ` +
-        `${now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}`
-      : ''
-    return <span suppressHydrationWarning>{label}</span>
-  }
+}
+
+function MenuBarClock() {
+  const ref = useRef<HTMLSpanElement>(null)
+  useTickingText(() => {
+    const now = new Date()
+    return (
+      `${now.toLocaleDateString('en-US', { weekday: 'short' })} ${now.getDate()} ` +
+      `${now.toLocaleDateString('en-US', { month: 'short' })} ` +
+      `${now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}`
+    )
+  }, ref)
+  return <span ref={ref} suppressHydrationWarning />
+}
+
+function LockScreenClock() {
+  const timeRef = useRef<HTMLParagraphElement>(null)
+  const dateRef = useRef<HTMLParagraphElement>(null)
+
+  useTickingText(
+    () =>
+      new Date().toLocaleTimeString('en-GB', {
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+    timeRef,
+  )
+  useTickingText(
+    () =>
+      new Date().toLocaleDateString('en-GB', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+      }),
+    dateRef,
+  )
+
   return (
     <div className="pointer-events-none select-none text-center text-white/95 drop-shadow-[0_2px_14px_rgba(0,0,0,0.4)]">
-      <p suppressHydrationWarning className="mac-font m-0 text-[2.25rem] font-semibold tracking-tight sm:text-7xl">
-        {time}
+      <p
+        ref={timeRef}
+        suppressHydrationWarning
+        className="mac-font m-0 text-[2.25rem] font-semibold tracking-tight sm:text-7xl"
+      >
+        --:--
       </p>
-      <p suppressHydrationWarning className="mac-font m-0 mt-0.5 text-[11px] font-medium sm:mt-1 sm:text-sm">
-        {now
-          ? now.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })
-          : ''}
-      </p>
+      <p
+        ref={dateRef}
+        suppressHydrationWarning
+        className="mac-font m-0 mt-0.5 text-[11px] font-medium sm:mt-1 sm:text-sm"
+      />
     </div>
   )
+}
+
+function Clock({ big = false }: { big?: boolean }) {
+  return big ? <LockScreenClock /> : <MenuBarClock />
 }
 
 /* ---------- menu-bar glyphs ---------- */
@@ -527,11 +592,19 @@ function AppIcon({
 }) {
   return (
     <span className={cn('flex h-full w-full items-center justify-center', bg)}>
+      {/* Each icon renders at roughly 28px, so the sources are 128px webp
+          rather than the 400–980px originals. Fetched at low priority so they
+          don't compete with the fonts, but not lazily — a dock that pops in
+          halfway through a scroll looks broken. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}
         alt=""
         aria-hidden="true"
+        decoding="async"
+        fetchPriority="low"
+        width={128}
+        height={128}
         className={fit === 'cover' ? 'h-full w-full object-cover' : 'h-[74%] w-[74%] object-contain'}
       />
     </span>
@@ -560,7 +633,11 @@ function TrashIcon() {
 export function OpenTabs({ className }: { className?: string }) {
   const sectionRef = useRef<HTMLDivElement>(null)
   const screenRef = useRef<HTMLDivElement>(null)
-  const [progress, setProgress] = useState(0)
+  // Scroll drives three discrete stages, not a continuous value: 0 = locked,
+  // 1 = notifications in, 2 = unlocked. Storing the stage instead of the raw
+  // progress means scrolling past the desk re-renders this (large) scene twice
+  // instead of once per animation frame.
+  const [stage, setStage] = useState(0)
   const [manual, setManual] = useState(false)
   const [active, setActive] = useState<WinId>('word')
   const [safariTab, setSafariTab] = useState<SafariTab>('nifty')
@@ -570,7 +647,7 @@ export function OpenTabs({ className }: { className?: string }) {
   const dragStart = useRef({ x: 0, y: 0, dx: 0, dy: 0 })
   const [reduced, setReduced] = useState(false)
   const [isNarrow, setIsNarrow] = useState(false)
-  const lastP = useRef(0)
+  const lastStage = useRef(0)
 
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 639px)')
@@ -592,11 +669,10 @@ export function OpenTabs({ className }: { className?: string }) {
         const rect = el.getBoundingClientRect()
         const total = rect.height - window.innerHeight
         const p = total > 0 ? Math.min(Math.max(-rect.top / total, 0), 1) : 1
-        // Nothing visual changes once past the unlock point — skip re-renders
-        // while both the old and new values sit in that settled band.
-        if (p >= 0.5 && lastP.current >= 0.5) return
-        lastP.current = p
-        setProgress(p)
+        const next = p > 0.5 ? 2 : p > 0.15 ? 1 : 0
+        if (next === lastStage.current) return
+        lastStage.current = next
+        setStage(next)
       })
     }
     onScroll()
@@ -639,12 +715,12 @@ export function OpenTabs({ className }: { className?: string }) {
     }
   }, [])
 
-  const p = reduced || manual ? 1 : progress
   // Screen is always on: the lock screen shows the moment the monitor is
   // visible (no blank/black power-on). Scrolling brings in notifications,
   // then unlocks to the desktop (where the menu bar appears).
-  const notiIn = p > 0.15
-  const unlocked = manual || p > 0.5
+  const s = reduced || manual ? 2 : stage
+  const notiIn = s >= 1
+  const unlocked = manual || s >= 2
   const lockOpacity = unlocked ? 0 : 1
 
   const visibleWins = WINDOWS.filter((w) => !wins[w.id].closed && !wins[w.id].min)
@@ -673,31 +749,42 @@ export function OpenTabs({ className }: { className?: string }) {
     dragStart.current = { x: e.clientX, y: e.clientY, dx: wins[id].dx, dy: wins[id].dy }
   }
 
-  // Is a screen point over the Trash dock icon?
-  const pointOverTrash = (x: number, y: number) => {
-    const el = document.querySelector('button[aria-label="Trash"]')
-    if (!el) return false
-    const r = el.getBoundingClientRect()
-    return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom
-  }
-
   // Window drag via document-level listeners (robust inside the 3D context).
-  // Dropping a window onto the Trash closes the app.
+  // Dropping a window onto the Trash closes the app. Pointer events fire far
+  // faster than the display refreshes, so the state update is coalesced into
+  // one rAF per frame and the Trash hit box is measured once per drag.
   useEffect(() => {
     if (!dragId) return
-    const move = (e: PointerEvent) => {
-      setOverTrash(pointOverTrash(e.clientX, e.clientY))
+    let raf = 0
+    let last = { x: 0, y: 0 }
+    const trashEl = document.querySelector('button[aria-label="Trash"]')
+    // Read at the top of the frame, before any state write, so this never
+    // forces a synchronous layout mid-drag.
+    const overTrashAt = (x: number, y: number) => {
+      if (!trashEl) return false
+      const r = trashEl.getBoundingClientRect()
+      return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom
+    }
+
+    const apply = () => {
+      raf = 0
+      setOverTrash(overTrashAt(last.x, last.y))
       setWins((prev) => ({
         ...prev,
         [dragId]: {
           ...prev[dragId],
-          dx: dragStart.current.dx + e.clientX - dragStart.current.x,
-          dy: dragStart.current.dy + e.clientY - dragStart.current.y,
+          dx: dragStart.current.dx + last.x - dragStart.current.x,
+          dy: dragStart.current.dy + last.y - dragStart.current.y,
         },
       }))
     }
+    const move = (e: PointerEvent) => {
+      last = { x: e.clientX, y: e.clientY }
+      if (!raf) raf = requestAnimationFrame(apply)
+    }
     const up = (e: PointerEvent) => {
-      if (pointOverTrash(e.clientX, e.clientY)) {
+      if (raf) cancelAnimationFrame(raf)
+      if (overTrashAt(e.clientX, e.clientY)) {
         patch(dragId, { closed: true, dx: 0, dy: 0 })
         if (active === dragId) focusNext(dragId)
       }
@@ -709,6 +796,7 @@ export function OpenTabs({ className }: { className?: string }) {
     return () => {
       window.removeEventListener('pointermove', move)
       window.removeEventListener('pointerup', up)
+      if (raf) cancelAnimationFrame(raf)
     }
   }, [dragId, active])
 
@@ -835,7 +923,7 @@ export function OpenTabs({ className }: { className?: string }) {
                         >
                           <span className="relative block h-7 w-7 flex-none sm:h-8 sm:w-8">
                             <span className="absolute inset-0 overflow-hidden rounded-[22%]">
-                              <AppIcon src={n.app === 'Mail' ? '/mac-icons/mail.webp' : '/mac-icons/reminders.png'} />
+                              <AppIcon src={n.app === 'Mail' ? '/mac-icons/mail.webp' : '/mac-icons/reminders.webp'} />
                             </span>
                             {n.badge && (
                               <span className="mac-font absolute -right-1 -top-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#ff3b30] text-[8px] font-bold text-white ring-[1.5px] ring-white/80 sm:h-4 sm:w-4 sm:text-[9px]">
@@ -972,19 +1060,19 @@ export function OpenTabs({ className }: { className?: string }) {
                     {/* Dock */}
                     <div className="absolute bottom-1.5 left-1/2 z-40 w-full max-w-[96%] -translate-x-1/2 sm:bottom-2 sm:w-auto sm:max-w-none">
                       <div className="mac-glass flex items-end justify-center gap-1 rounded-2xl px-1.5 py-1 sm:gap-2 sm:px-2.5 sm:py-1.5">
-                        <DockTile label="Finder"><AppIcon src="/mac-icons/finder.png" /></DockTile>
+                        <DockTile label="Finder"><AppIcon src="/mac-icons/finder.webp" /></DockTile>
                         <DockTile label="Safari" onClick={() => launch('safari')} indicator={!wins.safari.closed}>
-                          <AppIcon src="/mac-icons/safari.jpg" />
+                          <AppIcon src="/mac-icons/safari.webp" />
                         </DockTile>
                         <DockTile label="Microsoft Word" onClick={() => launch('word')} indicator={!wins.word.closed}>
                           <AppIcon src="/mac-icons/word.webp" fit="contain" bg="bg-white" />
                         </DockTile>
                         <DockTile label="Notes" onClick={() => launch('notes')} indicator={!wins.notes.closed}>
-                          <AppIcon src="/mac-icons/notes.png" />
+                          <AppIcon src="/mac-icons/notes.webp" />
                         </DockTile>
                         <DockTile label="Spotify"><AppIcon src="/mac-icons/spotify.webp" /></DockTile>
                         <DockTile label="Photos"><AppIcon src="/mac-icons/photos.webp" /></DockTile>
-                        <DockTile label="Reminders"><AppIcon src="/mac-icons/reminders.png" /></DockTile>
+                        <DockTile label="Reminders"><AppIcon src="/mac-icons/reminders.webp" /></DockTile>
                         <DockTile label="Mail" badge="1"><AppIcon src="/mac-icons/mail.webp" /></DockTile>
                         <span className="mx-0.5 mb-1.5 h-6 w-px bg-white/30 sm:h-8" aria-hidden="true" />
                         <span
