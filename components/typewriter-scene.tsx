@@ -64,18 +64,10 @@ export function TypewriterScene() {
       {/* ---------- ground ---------- */}
       <ellipse cx="210" cy="556" rx="172" ry="22" fill="url(#tw-halo)" />
 
-      {/* ---------- the sheet in the platen ----------
-           It runs past the platen line so its bottom edge is hidden behind the
-           roller — a sheet with a visible bottom edge reads as a card lying on
-           the machine rather than as paper fed through it. */}
-      <g>
-        <rect x="108" y="26" width="204" height="244" rx="1.5" fill="url(#tw-paper)" />
-        <rect x="108" y="26" width="204" height="244" rx="1.5" fill="none" stroke="#e6e3db" strokeWidth="1.2" />
-        {/* the edge that catches the light */}
-        <rect x="108" y="26" width="4" height="244" fill="#eeebe3" opacity="0.9" />
-        {/* and the roller's shadow falling up the sheet */}
-        <rect x="108" y="222" width="204" height="30" fill="url(#tw-paper-shadow)" />
-      </g>
+      {/* The sheet is NOT drawn here. It has to grow as the page fills, and a
+          rect inside a fixed viewBox cannot — so Canvas renders it as an HTML
+          element behind this SVG, showing through the gap the machine leaves.
+          Everything below is drawn over it. */}
 
       {/* ---------- carriage ----------
            Wider than the body, with the knobs standing proud of it at both

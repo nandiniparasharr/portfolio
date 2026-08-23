@@ -160,10 +160,18 @@ function Icon({ id }: { id: string }) {
 
 /* ---------- page ---------- */
 
-/* How many stamps the sheet holds. Past this the oldest scrolls off rather
-   than the keyboard going dead — a machine that stops responding feels
-   broken, and nobody reads the sixteenth icon anyway. */
-const SHEET_MAX = 16
+/* The sheet feeds up out of the platen as it fills, then runs out of screen
+   and rolls over to the left, the way a long sheet does.
+
+   The numbers are the room the layout actually has, measured rather than
+   guessed: 58px above the paper before the sticky header, and ~114px to the
+   left of it inside the scene. At this scale that is one extra row of growth
+   and two columns of roll. Past that the oldest row falls off the end. */
+const COLS = 4
+const BASE_ROWS = 4
+const MAX_ROWS = 5
+const ROLL_COLS = 2
+const SHEET_MAX = (MAX_ROWS + ROLL_COLS) * COLS
 
 type Stamp = { uid: number; id: string; label: string }
 
@@ -184,6 +192,15 @@ export function Canvas() {
     })
   }
 
+  /* split into rows, then decide which are still upright on the sheet and
+     which have gone over the bend */
+  const allRows: Stamp[][] = []
+  for (let i = 0; i < typed.length; i += COLS) allRows.push(typed.slice(i, i + COLS))
+  const rolledCount = Math.max(0, allRows.length - MAX_ROWS)
+  const rolled = allRows.slice(0, rolledCount)
+  const upright = allRows.slice(rolledCount)
+  const paperRows = Math.max(BASE_ROWS, upright.length)
+
   useEffect(() => {
     if (!open) return
     const esc = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(null)
@@ -199,29 +216,55 @@ export function Canvas() {
           <div className="np-scene" data-tw="rose">
             <TypewriterScene />
 
-            {/* the sheet — what the keys print onto */}
-            <div className="np-board">
-              {typed.length === 0 ? (
-                <p className="np-sheet-hint">
-                  Press a key
-                  <span className="np-caret" aria-hidden="true" />
-                </p>
-              ) : (
-                <div className="np-sheet">
-                  {typed.map((t) => (
-                    <button
-                      key={t.uid}
-                      type="button"
-                      className="np-stamp"
-                      style={{ ['--jitter' as string]: `${((t.uid * 37) % 7) - 3}deg` }}
-                      onClick={() => setOpen(OBJECTS.find((o) => o.id === t.id) ?? null)}
-                      aria-label={`Open ${t.label}`}
-                    >
-                      <Icon id={t.id} />
-                    </button>
-                  ))}
+            {/* the sheet — what the keys print onto. It sits behind the SVG
+                and shows through the gap the machine leaves, so it can grow
+                past the top of the drawing. */}
+            <div className="np-paper" style={{ ['--rows' as string]: paperRows }}>
+              {/* the part that has rolled over the top and lies to the left.
+                  Oldest rows travel furthest, so they are the ones out here —
+                  and they are turned a quarter turn, as paper that has folded
+                  over would be. */}
+              {rolled.length > 0 && (
+                <div className="np-roll" style={{ ['--cols' as string]: rolled.length }}>
+                  <div className="np-roll-sheet">
+                    {[...rolled].reverse().flat().map((t) => (
+                      <button
+                        key={t.uid}
+                        type="button"
+                        className="np-stamp is-rolled"
+                        onClick={() => setOpen(OBJECTS.find((o) => o.id === t.id) ?? null)}
+                        aria-label={`Open ${t.label}`}
+                      >
+                        <Icon id={t.id} />
+                      </button>
+                    ))}
+                  </div>
                 </div>
               )}
+
+              <div className="np-board">
+                {typed.length === 0 ? (
+                  <p className="np-sheet-hint">
+                    Press a key
+                    <span className="np-caret" aria-hidden="true" />
+                  </p>
+                ) : (
+                  <div className="np-sheet">
+                    {upright.flat().map((t) => (
+                      <button
+                        key={t.uid}
+                        type="button"
+                        className="np-stamp"
+                        style={{ ['--jitter' as string]: `${((t.uid * 37) % 7) - 3}deg` }}
+                        onClick={() => setOpen(OBJECTS.find((o) => o.id === t.id) ?? null)}
+                        aria-label={`Open ${t.label}`}
+                      >
+                        <Icon id={t.id} />
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* the carriage return lever, over the one drawn in the SVG —
