@@ -45,7 +45,6 @@ export function CommandPalette({
       },
       { group: 'Actions', label: 'Download CV', hint: '↗', run: () => window.open(site.resume, '_blank') },
       { group: 'Actions', label: 'Open LinkedIn', hint: '↗', run: () => window.open(site.linkedin, '_blank') },
-      { group: 'Actions', label: 'Read the Substack', hint: '↗', run: () => window.open(site.substack, '_blank') },
     ],
     [router, copied],
   )

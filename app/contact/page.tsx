@@ -38,13 +38,7 @@ export default function ContactPage() {
                 </span>
               }
             />
-            <LedgerRow label="LinkedIn" value="in/nandiniparashar ↗" href={site.linkedin} />
-            <LedgerRow
-              label="Substack"
-              value={`${site.substackName} ↗`}
-              href={site.substack}
-              last
-            />
+            <LedgerRow label="LinkedIn" value="in/nandiniparashar ↗" href={site.linkedin} last />
           </div>
         </div>
         <ContactForm />
