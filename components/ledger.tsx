@@ -65,9 +65,19 @@ export function LLink({
   external?: boolean
 }) {
   const cls = btnClass(variant, size, cn('no-underline', className))
-  if (external || href.startsWith('http') || href.startsWith('mailto:')) {
+  // A static file (the CV) is not a route: next/link would prefetch it as an
+  // RSC payload, pulling the whole PDF down on page load.
+  const isFile = /\.[a-z0-9]{2,4}$/i.test(href.split(/[?#]/)[0])
+  if (external || isFile || href.startsWith('http') || href.startsWith('mailto:')) {
+    const newTab = href.startsWith('http') || isFile
     return (
-      <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noreferrer" className={cls} {...props} />
+      <a
+        href={href}
+        target={newTab ? '_blank' : undefined}
+        rel="noreferrer"
+        className={cls}
+        {...props}
+      />
     )
   }
   return <Link href={href} className={cls} {...props} />
