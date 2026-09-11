@@ -50,7 +50,6 @@ const OBJECTS: Obj[] = [
     label: 'Essays',
     x: 68, y: 45,
     blurb: 'Essays on markets, machines and the things I cannot stop analysing.',
-    href: 'https://substack.com/@archivesbynan',
     ready: false,
   },
   {

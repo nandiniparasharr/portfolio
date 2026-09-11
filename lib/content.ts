@@ -5,8 +5,6 @@ export const site = {
   shortMark: 'N—P',
   email: 'nandiniparashar207@gmail.com',
   linkedin: 'https://www.linkedin.com/in/nandiniparashar/',
-  substack: 'https://substack.com/@archivesbynan',
-  substackName: 'Archives by Nan',
   resume: '/NandiniParashar_CV.pdf',
   location: 'Delhi-NCR, India',
   tagline: 'Numbers by day. Everything else by curiosity.',
@@ -200,7 +198,7 @@ export const pursuits = [
   {
     num: '03',
     title: 'Margins',
-    note: 'Essays on Substack; a reading habit that funds them.',
+    note: 'Essays on markets and machines; a reading habit that funds them.',
   },
   {
     num: '04',

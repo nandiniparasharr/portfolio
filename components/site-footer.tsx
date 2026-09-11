@@ -95,14 +95,6 @@ export function SiteFooter() {
                   Elsewhere
                 </div>
                 <a
-                  href={site.substack}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="font-mono text-xs tracking-[0.06em] no-underline hover:underline"
-                >
-                  Substack ↗
-                </a>
-                <a
                   href={site.linkedin}
                   target="_blank"
                   rel="noreferrer"
