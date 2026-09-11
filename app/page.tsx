@@ -54,9 +54,6 @@ export default function Page() {
               <LLink href="/work" variant="primary">
                 See the work <span className="np-arrow">→</span>
               </LLink>
-              <LLink href={site.substack} variant="ghost">
-                Read the Substack ↗
-              </LLink>
             </Stage>
           </div>
           <Stage
