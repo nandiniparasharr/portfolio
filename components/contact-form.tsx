@@ -5,8 +5,6 @@ import { cn } from '@/lib/utils'
 import { site } from '@/lib/content'
 import { LButton } from '@/components/ledger'
 
-const KINDS = ['An opportunity', 'A collaboration', 'Just hello'] as const
-
 const fieldLabel =
   'font-mono text-[11px] uppercase tracking-[0.1em] text-muted-foreground'
 const fieldInput =
@@ -51,7 +49,6 @@ function emailProblem(raw: string): string | null {
 
 /** Delivers via FormSubmit's AJAX relay — no backend, straight to the inbox. */
 export function ContactForm() {
-  const [kind, setKind] = useState<(typeof KINDS)[number]>('An opportunity')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
@@ -80,7 +77,7 @@ export function ContactForm() {
             name,
             email,
             message,
-            _subject: `${kind} — from ${name || 'the website'}`,
+            _subject: `Portfolio — message from ${name || 'the website'}`,
             _template: 'box',
           }),
         },
@@ -102,34 +99,6 @@ export function ContactForm() {
         onSubmit={submit}
         className="flex flex-col gap-5 border border-border bg-card p-8 shadow-card"
       >
-        <div className="flex flex-wrap gap-x-6 gap-y-2">
-          {KINDS.map((k) => (
-            <label
-              key={k}
-              className="flex cursor-pointer items-center gap-2 font-mono text-[11px] uppercase tracking-[0.08em] text-muted-foreground"
-            >
-              <input
-                type="radio"
-                name="kind"
-                checked={kind === k}
-                onChange={() => setKind(k)}
-                className="sr-only"
-              />
-              <span
-                aria-hidden="true"
-                className={cn(
-                  'flex h-3.5 w-3.5 items-center justify-center rounded-full border transition-colors duration-150',
-                  kind === k ? 'border-rose' : 'border-faint',
-                )}
-              >
-                {kind === k && (
-                  <span className="h-1.5 w-1.5 rounded-full bg-rose" />
-                )}
-              </span>
-              {k}
-            </label>
-          ))}
-        </div>
         <div className="grid gap-5 sm:grid-cols-2">
           <label className="flex flex-col gap-1.5">
             <span className={fieldLabel}>Your name</span>
@@ -137,7 +106,7 @@ export function ContactForm() {
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Jane Doe"
+              placeholder="Rachel Green"
               className={fieldInput}
             />
           </label>
@@ -153,7 +122,7 @@ export function ContactForm() {
               }}
               onBlur={() => email && setEmailError(emailProblem(email))}
               aria-invalid={!!emailError}
-              placeholder="jane@example.com"
+              placeholder="rachel@example.com"
               className={cn(fieldInput, emailError && 'border-rose')}
             />
             {emailError && (
