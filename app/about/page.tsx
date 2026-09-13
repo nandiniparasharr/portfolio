@@ -3,7 +3,7 @@ import { EducationFolder } from '@/components/education-folder'
 import { Container, LLink, SectionLabel } from '@/components/ledger'
 import { ProjectImage } from '@/components/project-image'
 import { Reveal } from '@/components/reveal'
-import { OpenTabs } from '@/components/open-tabs'
+import { Brain } from '@/components/brain'
 import { certifications, site } from '@/lib/content'
 
 export const metadata: Metadata = {
@@ -46,15 +46,15 @@ export default function AboutPage() {
         </div>
       </div>
 
-      {/* Inside my head — the desktop */}
+      {/* Inside my head */}
       <section className="mt-24">
         <Reveal>
           <SectionLabel tone="muted" className="mb-8 justify-center">
-            On my desk
+            Inside my head
           </SectionLabel>
         </Reveal>
         <Reveal delay={80}>
-          <OpenTabs />
+          <Brain className="mx-auto block h-auto w-full max-w-2xl text-foreground" />
         </Reveal>
       </section>
 
