@@ -713,9 +713,15 @@ button:hover > .np-arrow,
 [data-theme='dark'] .np-cred {
   --cred-bg: linear-gradient(168deg, #23252a 0%, #14151a 56%, #0d0e11 100%);
   --cred-mark: #17181b;
-  /* the panel stays light in both themes: what goes in it is a certificate or
-     a photograph, and a dark panel would fight the artwork */
-  --cred-panel: #f4f3ef;
+  /* The panel used to stay light in both themes, on the theory that a
+     certificate or photograph needs a light ground. In practice a white
+     rectangle on a near-black card read as a sticker stuck to the slab, so
+     in dark mode the panel goes dark with the card and the artwork sits on
+     it directly. (Which is why the badge's own baked-in grey background had
+     to be knocked out to transparency — otherwise it brings the white
+     rectangle back with it.) */
+  --cred-panel: #1b1d22;
+  --cred-drop: #6a6c73;
   /* the slab sits a shade below the page in dark mode, so a hairline ring
      (inset, to avoid shifting the padding) keeps the rounded shape readable */
   box-shadow:
@@ -758,7 +764,8 @@ button:hover > .np-arrow,
   line-height: 1.7;
   letter-spacing: 0.1em;
   text-align: center;
-  color: #a8a6a0;
+  /* follows the panel, so the placeholder stays legible on either ground */
+  color: var(--cred-drop, #a8a6a0);
   word-break: break-all;
 }
 /* light circle with a dark glyph, as in the reference — the fill is a shade
