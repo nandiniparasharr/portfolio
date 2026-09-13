@@ -53,8 +53,13 @@ export function SiteHeader({ onOpenPalette }: { onOpenPalette: () => void }) {
 
   useEffect(() => setOpen(false), [pathname])
 
+  /* Home is an exact match. Every other route also claims its children, so
+     /work/skippi-ice-pops still lights up Work. Without the special case the
+     generic test would compare against '//' and only work by accident. */
   const isActive = (href: string) =>
-    pathname === href || pathname.startsWith(`${href}/`)
+    href === '/'
+      ? pathname === '/'
+      : pathname === href || pathname.startsWith(`${href}/`)
 
   return (
     <header className="sticky top-0 z-50 border-b-2 border-border-strong bg-background">

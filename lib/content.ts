@@ -438,6 +438,9 @@ export const certifications = [
 ]
 
 export const navLinks = [
+  /* The wordmark already goes home, but only people who have used a site like
+     this one know that. Home says it out loud. */
+  { href: '/', label: 'Home' },
   { href: '/work', label: 'Work' },
   { href: '/about', label: 'About' },
 ]
