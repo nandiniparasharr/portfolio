@@ -67,7 +67,7 @@ export const projects: Project[] = [
     blurb:
       'An AI-driven portfolio analysis app that reads a set of holdings the way an advisor would.',
     brief:
-      'Most retail portfolios never get a second pair of eyes. The idea: a robo-advisor model that takes a user’s holdings and returns an honest read — risk, asset allocation, correlation exposure, and diversification — without the wealth-management minimum.',
+      'Most retail portfolios never get a second pair of eyes. The idea: a robo-advisor model that takes a user’s holdings and returns an honest read: risk, asset allocation, correlation exposure, and diversification — without the wealth-management minimum.',
     role: 'Research & build',
     status: 'Live',
     href: 'https://portfolio-prism.vercel.app',
@@ -88,9 +88,9 @@ export const projects: Project[] = [
     badges: [{ tone: 'forest', label: 'Finance' }],
     stack: 'Company profile · equity research',
     blurb:
-      'A one-page company profile of DMart — five years of financials, ratios, and price history.',
+      'A one-page company profile of DMart: 5Y financials, ratios, and price history.',
     brief:
-      'Avenue Supermarts runs DMart on a simple premise: everyday low cost, everyday low price. The exercise: compress the company into one honest page — what it does, how the strategy shows up in the numbers, and what the market pays for it.',
+      'Avenue Supermarts runs DMart on a simple premise: everyday low cost, everyday low price. The exercise: compress the company into one honest page: what it does, how the strategy shows up in the numbers, and what the market pays for it.',
     role: 'Equity research',
     status: 'Shipped',
     href: 'https://drive.google.com/file/d/1csVyFxaZZWlwcMgR4yM1XdoT6RySykMq/view?usp=sharing',
@@ -111,7 +111,7 @@ export const projects: Project[] = [
     badges: [{ tone: 'forest', label: 'Finance' }],
     stack: 'Unit economics · scenario analysis',
     blurb:
-      'Unit economics of a ₹20 ice pop — the Shark Tank India case, taken seriously.',
+      'Unit economics of a ₹20 ice pop: A Shark Tank India case, taken seriously.',
     brief:
       'Skippi sells an FMCG product for ₹20. The question worth answering: does a popsicle that cheap actually make money once COGS, CAC, and two very different channels (retail vs. wholesale) have their say?',
     role: 'Analysis & modelling',
@@ -136,14 +136,14 @@ export const projects: Project[] = [
     badges: [{ tone: 'plum', label: 'AI & Code' }],
     stack: 'Study timer · CFA prep',
     blurb:
-      'A desktop app I built to track my CFA study hours — a timer, and a dashboard that shows where the week actually went.',
+      'A desktop app I built to track my CFA study hours. A timer, and a dashboard that shows where the week actually went.',
     brief: [
-      'I was studying for CFA Level I and had no real idea where my hours were going. I knew I’d done a lot of Derivatives and not much Ethics — but that’s a feeling, and a feeling is a bad way to allocate time across a syllabus.',
+      'I was studying for CFA Level I and had no real idea where my hours were going. I knew I’d done a lot of Derivatives and not much Ethics, but that’s a feeling, and a feeling is a bad way to allocate time across a syllabus.',
       'Every tracker I looked at wanted an account and a subscription to tell me something that should live on my own laptop. So I made one that doesn’t.',
     ],
     foundLabel: 'How I use it',
     found: [
-      'I start it when I sit down and stop it when I get up — a stopwatch when I’m just working, a countdown when I’m doing a fixed block. Tagging the subject is optional, so there’s never an excuse not to start.',
+      'I start it when I sit down and stop it when I get up. It's a stopwatch when I’m just working, and a countdown when I’m doing a fixed block. Tagging the subject is optional, so there’s never an excuse not to start.',
       'At the end of the week it shows me the daily bars, the streak, and a breakdown of where the hours actually went. That last part is the whole point: it’s how I find out I’ve been quietly avoiding Quant for nine days.',
     ],
     role: 'Design & build',
@@ -158,8 +158,8 @@ export const projects: Project[] = [
       },
       { label: 'The call' },
       { label: 'How it works', value: 'Start a timer, tag the subject, see the week' },
-      { label: 'Built with', value: 'Python — runs on my laptop, no account, no cloud' },
-      { label: 'When', value: 'Aug — Sep 2026' },
+      { label: 'Built with', value: 'Python, Claude Code' },
+      { label: 'When', value: '2026' },
     ],
   },
   {
