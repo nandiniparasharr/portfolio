@@ -3,6 +3,8 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { EaselScene } from '@/components/easel-scene'
+import { LongShort } from '@/components/long-short'
+import { AllocationDonut } from '@/components/allocation-donut'
 import { categories, projectsIn, type CategoryId } from '@/lib/content'
 
 /* ------------------------------------------------------------------
@@ -212,6 +214,14 @@ export function Canvas() {
           </nav>
         </div>
       </div>
+
+      {/* ---------------- positions ----------------
+           Under the name: the notebook of what she is long and short on,
+           and where the hours actually go. */}
+      <section className="np-positions" aria-label="Positions">
+        <LongShort className="np-positions-notes" />
+        <AllocationDonut />
+      </section>
 
       {/* ---------------- mobile index ---------------- */}
       <div className="np-mobile-list">

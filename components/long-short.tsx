@@ -79,13 +79,13 @@ export function LongShort({ className }: { className?: string }) {
     <div className={cn('relative h-[420px] w-[320px] sm:w-[360px]', className)}>
       <h2 className="sr-only">What I&apos;m long on</h2>
       <Page
-        heading="Long:"
+        heading="Long on"
         headingClass="text-forest"
         items={LONGS}
         className="left-0 top-0 rotate-[-3deg]"
       />
       <Page
-        heading="Short:"
+        heading="Short on"
         headingClass="text-rose"
         items={SHORTS}
         className="left-12 top-44 rotate-[2.5deg] sm:left-20"
