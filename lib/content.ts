@@ -143,7 +143,7 @@ export const projects: Project[] = [
     ],
     foundLabel: 'How I use it',
     found: [
-      'I start it when I sit down and stop it when I get up. It's a stopwatch when I’m just working, and a countdown when I’m doing a fixed block. Tagging the subject is optional, so there’s never an excuse not to start.',
+      'I start it when I sit down and stop it when I get up. It’s a stopwatch when I’m just working, and a countdown when I’m doing a fixed block. Tagging the subject is optional, so there’s never an excuse not to start.',
       'At the end of the week it shows me the daily bars, the streak, and a breakdown of where the hours actually went. That last part is the whole point: it’s how I find out I’ve been quietly avoiding Quant for nine days.',
     ],
     role: 'Design & build',
