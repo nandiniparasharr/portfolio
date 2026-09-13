@@ -1,8 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
-import { TypewriterScene } from '@/components/typewriter-scene'
+import { useEffect, useState } from 'react'
+import { EaselScene } from '@/components/easel-scene'
 
 /* ------------------------------------------------------------------
    HOME
@@ -67,12 +67,6 @@ const OBJECTS: Obj[] = [
     ready: false,
   },
 ]
-
-/* The keyboard is 15 keys. Six carry an artifact; the rest are empty slots
-   waiting on content, drawn as a faint outline so they read as "not filled in
-   yet" rather than as something broken. Add an Obj here and it takes the next
-   slot — nothing else needs touching. */
-const KEY_COUNT = 15
 
 const LINKS: Obj[] = [
   { id: 'cv', label: 'CV', x: 0, y: 0, blurb: 'the short, formal version', href: '/NandiniParashar_CV.pdf', ready: true },
@@ -159,46 +153,8 @@ function Icon({ id }: { id: string }) {
 
 /* ---------- page ---------- */
 
-/* The sheet feeds up out of the platen as it fills, then runs out of screen
-   and rolls over to the left, the way a long sheet does.
-
-   The numbers are the room the layout actually has, measured rather than
-   guessed: 58px above the paper before the sticky header, and ~114px to the
-   left of it inside the scene. At this scale that is one extra row of growth
-   and two columns of roll. Past that the oldest row falls off the end. */
-const COLS = 4
-const BASE_ROWS = 4
-const MAX_ROWS = 5
-const ROLL_COLS = 2
-const SHEET_MAX = (MAX_ROWS + ROLL_COLS) * COLS
-
-type Stamp = { uid: number; id: string; label: string }
-
 export function Canvas() {
   const [open, setOpen] = useState<Obj | null>(null)
-  const [typed, setTyped] = useState<Stamp[]>([])
-  const uid = useRef(0)
-
-  /* pressing a key prints its icon onto the sheet. Repeats are allowed and
-     each strike lands at a slightly different angle, so a row of the same
-     icon looks struck rather than pasted. */
-  const strike = (o: Obj) => {
-    uid.current += 1
-    const stamp = { uid: uid.current, id: o.id, label: o.label }
-    setTyped((prev) => {
-      const next = [...prev, stamp]
-      return next.length > SHEET_MAX ? next.slice(next.length - SHEET_MAX) : next
-    })
-  }
-
-  /* split into rows, then decide which are still upright on the sheet and
-     which have gone over the bend */
-  const allRows: Stamp[][] = []
-  for (let i = 0; i < typed.length; i += COLS) allRows.push(typed.slice(i, i + COLS))
-  const rolledCount = Math.max(0, allRows.length - MAX_ROWS)
-  const rolled = allRows.slice(0, rolledCount)
-  const upright = allRows.slice(rolledCount)
-  const paperRows = Math.max(BASE_ROWS, upright.length)
 
   useEffect(() => {
     if (!open) return
@@ -210,99 +166,25 @@ export function Canvas() {
   return (
     <>
       <div className="np-hero">
-        {/* ---------------- left: the typewriter ---------------- */}
+        {/* ---------------- left: the easel ---------------- */}
         <div className="np-easel-col">
-          <div className="np-scene" data-tw="rose">
-            <TypewriterScene />
-
-            {/* the sheet — what the keys print onto. It sits behind the SVG
-                and shows through the gap the machine leaves, so it can grow
-                past the top of the drawing. */}
-            <div className="np-paper" style={{ ['--rows' as string]: paperRows }}>
-              {/* the part that has rolled over the top and lies to the left.
-                  Oldest rows travel furthest, so they are the ones out here —
-                  and they are turned a quarter turn, as paper that has folded
-                  over would be. */}
-              {rolled.length > 0 && (
-                <div className="np-roll" style={{ ['--cols' as string]: rolled.length }}>
-                  <div className="np-roll-sheet">
-                    {[...rolled].reverse().flat().map((t) => (
-                      <button
-                        key={t.uid}
-                        type="button"
-                        className="np-stamp is-rolled"
-                        onClick={() => setOpen(OBJECTS.find((o) => o.id === t.id) ?? null)}
-                        aria-label={`Open ${t.label}`}
-                      >
-                        <Icon id={t.id} />
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <div className="np-board">
-                {typed.length === 0 ? (
-                  <p className="np-sheet-hint">
-                    Press a key
-                    <span className="np-caret" aria-hidden="true" />
-                  </p>
-                ) : (
-                  <div className="np-sheet">
-                    {upright.flat().map((t) => (
-                      <button
-                        key={t.uid}
-                        type="button"
-                        className="np-stamp"
-                        style={{ ['--jitter' as string]: `${((t.uid * 37) % 7) - 3}deg` }}
-                        onClick={() => setOpen(OBJECTS.find((o) => o.id === t.id) ?? null)}
-                        aria-label={`Open ${t.label}`}
-                      >
-                        <Icon id={t.id} />
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* the carriage return lever, over the one drawn in the SVG —
-                pulling it takes the sheet out and puts a fresh one in */}
-            <button
-              type="button"
-              className="np-return"
-              onClick={() => setTyped([])}
-              disabled={typed.length === 0}
-              aria-label="New sheet"
-            >
-              <span className="np-return-tip">New sheet</span>
-            </button>
-
-            {/* the keys, laid over the keyboard well in the SVG */}
-            <div className="np-keys">
-              {Array.from({ length: KEY_COUNT }, (_, i) => {
-                const o = OBJECTS[i]
-                if (!o) {
-                  return (
-                    <span key={`empty-${i}`} className="np-key is-empty" aria-hidden="true">
-                      <span className="np-key-slot" />
-                    </span>
-                  )
-                }
-                return (
-                  <button
-                    key={o.id}
-                    type="button"
-                    className="np-key"
-                    style={{ ['--i' as string]: i }}
-                    onClick={() => strike(o)}
-                    aria-label={`Type ${o.label}`}
-                  >
-                    <Icon id={o.id} />
-                    <span className="np-key-tip">{o.label}</span>
-                  </button>
-                )
-              })}
+          <div className="np-scene">
+            <EaselScene />
+            {/* artifacts, laid over the canvas face of the SVG */}
+            <div className="np-board">
+              {OBJECTS.map((o, i) => (
+                <button
+                  key={o.id}
+                  type="button"
+                  className="np-pin"
+                  style={{ left: `${o.x}%`, top: `${o.y}%`, ['--i' as string]: i }}
+                  onClick={() => setOpen(o)}
+                  aria-label={o.label}
+                >
+                  <Icon id={o.id} />
+                  <span className="np-pin-tip">{o.label}</span>
+                </button>
+              ))}
             </div>
           </div>
         </div>
