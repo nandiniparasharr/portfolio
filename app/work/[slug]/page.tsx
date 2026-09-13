@@ -70,13 +70,34 @@ export default async function CaseStudyPage({
           </div>
 
           <Reveal className="mt-10">
-            <ProjectImage
-              src={project.image}
-              alt={`${project.title} screenshot`}
-              ratio="16/9"
-              fit="contain"
-              label="HERO IMAGE — SCREENSHOT OR CHART OF THE REAL THING"
-            />
+            {(() => {
+              const shot = (
+                <ProjectImage
+                  src={project.image}
+                  alt={`${project.title} screenshot`}
+                  ratio="16/9"
+                  fit="contain"
+                  label="HERO IMAGE — SCREENSHOT OR CHART OF THE REAL THING"
+                />
+              )
+              /* Only link once there is a real URL — a placeholder string
+                 would render a dead anchor that still looks clickable. */
+              if (!project.imageHref?.startsWith('http')) return shot
+              return (
+                <a
+                  href={project.imageHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="np-shot"
+                  aria-label={`${project.imageHrefLabel ?? 'Read more'} — opens in a new tab`}
+                >
+                  {shot}
+                  <span className="np-shot-tag" aria-hidden="true">
+                    {project.imageHrefLabel ?? 'Read more ↗'}
+                  </span>
+                </a>
+              )
+            })()}
           </Reveal>
 
           {/* Two paragraphs, no more. The Record box already carries the

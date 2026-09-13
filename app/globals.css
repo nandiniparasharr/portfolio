@@ -679,6 +679,50 @@ button:hover > .np-arrow,
 .np-pin:hover .np-pin-tip,
 .np-pin:focus-visible .np-pin-tip { opacity: 1; }
 
+/* ---------- a screenshot that is also a link ----------
+   The tag is always visible, not hover-only: an image that links with no
+   affordance is an invisible link, and nobody hovers to find out. */
+.np-shot {
+  position: relative;
+  display: block;
+  text-decoration: none;
+  transition: transform var(--dur-2) var(--ease-expo);
+}
+.np-shot:hover {
+  transform: translateY(-3px);
+}
+.np-shot-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 6px 10px;
+  background: var(--np-ink);
+  color: var(--np-paper);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: background var(--dur-1) var(--ease-swift);
+}
+.np-shot:hover .np-shot-tag,
+.np-shot:focus-visible .np-shot-tag {
+  background: var(--np-rose);
+  color: var(--color-on-accent-var);
+}
+.np-shot:focus-visible {
+  outline: 2px solid var(--np-rose);
+  outline-offset: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .np-shot,
+  .np-shot-tag {
+    transition: none;
+  }
+  .np-shot:hover {
+    transform: none;
+  }
+}
+
 /* ---------- credential cards (education) ----------
    Product-card silhouette: dark slab, inset light image panel, circular mark.
    These are the one deliberately rounded surface in the system — the shape is

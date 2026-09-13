@@ -39,6 +39,11 @@ export type Project = {
   hrefLabel?: string
   /** Screenshot under /public/projects; falls back to the placeholder block. */
   image?: string
+  /** Makes the screenshot itself a link. An image that links with no
+      affordance is an invisible link, so the template pins a visible tag to
+      it — imageHrefLabel is what that tag says. */
+  imageHref?: string
+  imageHrefLabel?: string
 }
 
 export const projects: Project[] = [
@@ -106,17 +111,14 @@ export const projects: Project[] = [
     href: 'https://docs.google.com/spreadsheets/d/1QwZtbIA13qkOlhkFZbImC76xpiuAyIsD/edit?usp=sharing&ouid=108525365897885632984&rtpof=true&sd=true',
     hrefLabel: 'View the sheet ↗',
     image: '/projects/skippi-ice-pops.png',
+    imageHref: 'TODO — paste the LinkedIn post URL',
+    imageHrefLabel: 'Read the write-up ↗',
     record: [
       { label: 'The question', value: 'Does a ₹20 ice pop actually make money?' },
       { label: 'The call' },
       { label: 'Method', value: 'Dual-channel unit economics · scenario analysis' },
       { label: 'Built with', value: 'Excel' },
       { label: 'When', value: '2024' },
-      {
-        label: 'Wrote it up',
-        value: 'LinkedIn ↗',
-        href: 'TODO — paste the post URL',
-      },
     ],
   },
   {
