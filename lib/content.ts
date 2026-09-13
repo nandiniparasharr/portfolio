@@ -148,9 +148,9 @@ export const projects: Project[] = [
     ],
     role: 'Design & build',
     status: 'Live',
-    href: 'https://github.com/nandiniparasharr/studytracker',
-    hrefLabel: 'View the repo ↗',
     image: '/projects/study-tracker.png',
+    imageHref: 'https://github.com/nandiniparasharr/studytracker',
+    imageHrefLabel: 'View the repo ↗',
     record: [
       {
         label: 'The question',
