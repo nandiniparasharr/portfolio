@@ -1,0 +1,11 @@
+Education card images go in this folder.
+
+  bsc-finance.jpg   -> the BSc Finance card
+  cfa-level-1.jpg   -> the CFA Level I card
+
+The filenames must match exactly; the cards probe for these paths and fall
+back to the "drop image" placeholder until the file loads. Square-ish images
+work best. Nothing is cropped — the card scales the image to fit inside its
+panel — so a portrait certificate scan is safe, it will just sit letterboxed.
+
+To change a filename or add a card, edit `image:` in lib/content.ts.
