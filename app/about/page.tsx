@@ -34,7 +34,7 @@ export default function AboutPage() {
             <span className="mt-2 block italic text-rose">on purpose.</span>
           </h1>
           <p className="mt-8 max-w-md text-lead text-muted-foreground">
-            I work in finance and love it — and I refuse to stop there. This
+            I work in finance and love it,  and I refuse to stop there. This
             site is the archive of everything else: code, writing, design, and
             the reading that feeds all of it.
           </p>
