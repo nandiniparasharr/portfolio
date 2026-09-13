@@ -30,6 +30,11 @@ export type Project = {
   /** Paragraph two: what you found, with the numbers. Absent renders a
       visible prompt rather than nothing, same as an empty record row. */
   found?: string
+  /** Heading for paragraph two. An analysis reports a finding; a build
+      reports how it works. Defaults to "What I found". */
+  foundLabel?: string
+  /** One line worth pulling out, set between the two paragraphs. */
+  pullQuote?: string
   role: string
   status: string
   /** The Record box. THE CALL is the one that earns its place — what you
@@ -122,8 +127,43 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: 'the-rebrand',
+    slug: 'study-tracker',
     num: '04',
+    title: 'Study Tracker',
+    badges: [{ tone: 'plum', label: 'AI & Code' }],
+    stack: 'Python desktop app · local-only',
+    blurb:
+      'A desktop app for logging study hours — stopwatch, timer, and a dashboard that shows the week at a glance. No server, no account, nothing leaves the laptop.',
+    brief:
+      'Knowing roughly how much you studied this week is not the same as knowing. Existing trackers wanted an account, a subscription, and a cloud round-trip to record that you sat down with a textbook. This does it locally, in a window that opens off the Desktop — built for CFA prep, where the subject split matters as much as the total.',
+    foundLabel: 'How it is built',
+    found:
+      'Tkinter is Python’s built-in UI toolkit, and it was chosen for exactly one reason: it ships with Python, so the whole app installs by double-clicking a .bat file with nothing to download. That constraint set the rest of the work. Tk has no CSS and no anti-aliasing, so every card, chart, calendar and dropdown is drawn by hand on a canvas — and the curves come out jagged unless you do something about it. The app rasterises its circles and rounded corners at 4× through Pillow and downsamples them, with a tested fallback for anyone who does not have Pillow installed.',
+    pullQuote:
+      'Ten colours chosen by maximising the smallest perceptual distance between any two — not by eye.',
+    role: 'Design & build',
+    status: 'Live',
+    href: 'https://github.com/nandiniparasharr/studytracker',
+    hrefLabel: 'View the repo ↗',
+    image: '/projects/study-tracker.png',
+    record: [
+      {
+        label: 'The question',
+        value: 'Is my study time spread across the syllabus, or piled into what I already like?',
+      },
+      { label: 'The call' },
+      {
+        label: 'Method',
+        value: 'Stopwatch or countdown · per-subject colour coding · local JSON',
+      },
+      { label: 'Built with', value: 'Python 3 · Tkinter · Pillow — no database, no network' },
+      { label: 'Size', value: '~3,850 lines across 10 modules' },
+      { label: 'When', value: 'Aug — Sep 2026' },
+    ],
+  },
+  {
+    slug: 'the-rebrand',
+    num: '05',
     title: 'The rebrand — this site',
     badges: [{ tone: 'ink', label: 'Design' }],
     stack: 'Design system · Next.js',

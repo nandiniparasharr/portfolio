@@ -109,15 +109,23 @@ export default async function CaseStudyPage({
               {project.brief}
             </p>
           </Reveal>
+          {project.pullQuote && (
+            <Reveal>
+              <blockquote className="np-pull">{project.pullQuote}</blockquote>
+            </Reveal>
+          )}
           <Reveal>
-            <h3 className="mb-3 mt-10 text-h3">What I found</h3>
+            {/* an analysis reports a finding; a build reports how it works */}
+            <h3 className="mb-3 mt-10 text-h3">
+              {project.foundLabel ?? 'What I found'}
+            </h3>
             {project.found ? (
               <p className="m-0 max-w-xl text-muted-foreground">
                 {project.found}
               </p>
             ) : (
               <p className="m-0 max-w-xl border border-dashed border-border p-4 font-mono text-[11px] uppercase tracking-[0.1em] text-faint">
-                TODO — the finding, with the numbers. lib/content.ts → found
+                TODO — lib/content.ts → found
               </p>
             )}
           </Reveal>

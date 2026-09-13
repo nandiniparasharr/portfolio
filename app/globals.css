@@ -679,6 +679,19 @@ button:hover > .np-arrow,
 .np-pin:hover .np-pin-tip,
 .np-pin:focus-visible .np-pin-tip { opacity: 1; }
 
+/* one line lifted out of a case study — set in the display serif, with the
+   rule doing the work a quotation mark would */
+.np-pull {
+  margin: 40px 0 0;
+  padding: 0 0 0 22px;
+  border-left: 2px solid var(--np-rose);
+  max-width: 34rem;
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  line-height: 1.35;
+  color: var(--np-ink);
+}
+
 /* ---------- a screenshot that is also a link ----------
    The tag is always visible, not hover-only: an image that links with no
    affordance is an invisible link, and nobody hovers to find out. */
