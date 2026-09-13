@@ -131,16 +131,15 @@ export const projects: Project[] = [
     num: '04',
     title: 'Study Tracker',
     badges: [{ tone: 'plum', label: 'AI & Code' }],
-    stack: 'Python desktop app · local-only',
+    stack: 'Study timer · CFA prep',
     blurb:
-      'A desktop app for logging study hours — stopwatch, timer, and a dashboard that shows the week at a glance. No server, no account, nothing leaves the laptop.',
+      'A desktop app I built to track my CFA study hours — a timer, and a dashboard that shows where the week actually went.',
     brief:
-      'Knowing roughly how much you studied this week is not the same as knowing. Existing trackers wanted an account, a subscription, and a cloud round-trip to record that you sat down with a textbook. This does it locally, in a window that opens off the Desktop — built for CFA prep, where the subject split matters as much as the total.',
-    foundLabel: 'How it is built',
+      'I was studying for CFA Level I and had no real idea where my hours were going. I knew I had done a lot of Derivatives and not much Ethics, but that is a feeling, and a feeling is a bad way to allocate time across a syllabus. Every tracker I looked at wanted an account and a subscription to tell me something that should live on my own laptop. So I made one that does not.',
+    pullQuote: 'A feeling about how much you studied is not a number.',
+    foundLabel: 'How I use it',
     found:
-      'Tkinter is Python’s built-in UI toolkit, and it was chosen for exactly one reason: it ships with Python, so the whole app installs by double-clicking a .bat file with nothing to download. That constraint set the rest of the work. Tk has no CSS and no anti-aliasing, so every card, chart, calendar and dropdown is drawn by hand on a canvas — and the curves come out jagged unless you do something about it. The app rasterises its circles and rounded corners at 4× through Pillow and downsamples them, with a tested fallback for anyone who does not have Pillow installed.',
-    pullQuote:
-      'Ten colours chosen by maximising the smallest perceptual distance between any two — not by eye.',
+      'I start it when I sit down and stop it when I get up — a stopwatch when I am just working, a countdown when I am doing a fixed block. Tagging the subject is optional, so there is never an excuse not to start. At the end of the week it shows me the daily bars, the streak, and a breakdown of where the hours actually went. That last part is the whole point: it is how I find out I have been quietly avoiding Quant for nine days.',
     role: 'Design & build',
     status: 'Live',
     href: 'https://github.com/nandiniparasharr/studytracker',
@@ -152,12 +151,8 @@ export const projects: Project[] = [
         value: 'Is my study time spread across the syllabus, or piled into what I already like?',
       },
       { label: 'The call' },
-      {
-        label: 'Method',
-        value: 'Stopwatch or countdown · per-subject colour coding · local JSON',
-      },
-      { label: 'Built with', value: 'Python 3 · Tkinter · Pillow — no database, no network' },
-      { label: 'Size', value: '~3,850 lines across 10 modules' },
+      { label: 'How it works', value: 'Start a timer, tag the subject, see the week' },
+      { label: 'Built with', value: 'Python — runs on my laptop, no account, no cloud' },
       { label: 'When', value: 'Aug — Sep 2026' },
     ],
   },
