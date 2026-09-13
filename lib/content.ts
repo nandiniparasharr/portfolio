@@ -11,6 +11,13 @@ export const site = {
 
 export type BadgeTone = 'rose' | 'plum' | 'forest' | 'ink'
 
+/* One line of the case study's Record box. Rows are per-project on purpose:
+   an equity research note and a web app do not have the same facts worth
+   stating, and forcing both through Role/Stack/Status made every entry sound
+   like a CV bullet. Leave `value` out and the row renders as a visible TODO
+   rather than silently disappearing. */
+export type RecordRow = { label: string; value?: string }
+
 export type Project = {
   slug: string
   num: string
@@ -22,6 +29,9 @@ export type Project = {
   shipped: string
   role: string
   status: string
+  /** The Record box. THE CALL is the one that earns its place — what you
+      concluded, in one line. */
+  record: RecordRow[]
   href?: string
   hrefLabel?: string
   /** Screenshot under /public/projects; falls back to the placeholder block. */
@@ -49,6 +59,13 @@ export const projects: Project[] = [
     href: 'https://portfolio-prism.vercel.app',
     hrefLabel: 'Open the app ↗',
     image: '/projects/portfolio-prism.png',
+    record: [
+      { label: 'The question', value: 'Can a retail investor get an advisor’s read without an advisor?' },
+      { label: 'The call' },
+      { label: 'Method', value: 'Risk, allocation, correlation and diversification scoring' },
+      { label: 'Built with', value: 'Python · Streamlit' },
+      { label: 'When', value: '2025' },
+    ],
   },
   {
     slug: 'avenue-supermarts',
@@ -67,6 +84,13 @@ export const projects: Project[] = [
     href: 'https://drive.google.com/file/d/1csVyFxaZZWlwcMgR4yM1XdoT6RySykMq/view?usp=sharing',
     hrefLabel: 'View the profile ↗',
     image: '/projects/avenue-supermarts.png',
+    record: [
+      { label: 'The question', value: 'Does everyday-low-price actually show up in DMart’s numbers?' },
+      { label: 'The call' },
+      { label: 'Method', value: 'Five-year ratio and price analysis' },
+      { label: 'Data', value: 'Company filings · FY19—FY24' },
+      { label: 'When', value: '2024' },
+    ],
   },
   {
     slug: 'skippi-ice-pops',
@@ -85,6 +109,13 @@ export const projects: Project[] = [
     href: 'https://docs.google.com/spreadsheets/d/1QwZtbIA13qkOlhkFZbImC76xpiuAyIsD/edit?usp=sharing&ouid=108525365897885632984&rtpof=true&sd=true',
     hrefLabel: 'View the sheet ↗',
     image: '/projects/skippi-ice-pops.png',
+    record: [
+      { label: 'The question', value: 'Does a ₹20 ice pop actually make money?' },
+      { label: 'The call' },
+      { label: 'Method', value: 'Dual-channel unit economics · scenario analysis' },
+      { label: 'Built with', value: 'Excel' },
+      { label: 'When', value: '2024' },
+    ],
   },
   {
     slug: 'the-rebrand',
@@ -100,6 +131,13 @@ export const projects: Project[] = [
       'A complete token system (colour, type, spacing, motion) and this six-page site: theme toggle, page transitions, a command palette, and no icons — typographic glyphs do the expressive work.',
     role: 'Design & build',
     status: 'Live',
+    record: [
+      { label: 'The question', value: 'What does a personal brand look like when you build it yourself?' },
+      { label: 'The call' },
+      { label: 'Method', value: 'Token system · light and dark themes' },
+      { label: 'Built with', value: 'Next.js · TypeScript' },
+      { label: 'When', value: '2026' },
+    ],
   },
 ]
 

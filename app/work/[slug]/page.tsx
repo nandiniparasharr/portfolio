@@ -98,9 +98,22 @@ export default async function CaseStudyPage({
             <SectionLabel tone="muted" className="mb-3">
               The record
             </SectionLabel>
-            <LedgerRow label="Role" value={project.role} />
-            <LedgerRow label="Stack" value={project.stack} />
-            <LedgerRow label="Status" value={project.status} last={!project.href} />
+            {project.record.map((row, i) => (
+              <LedgerRow
+                key={row.label}
+                label={row.label}
+                value={
+                  row.value ?? (
+                    /* an empty row is a prompt, not a gap — it should be
+                       impossible to ship a case study with no conclusion */
+                    <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-faint">
+                      TODO — lib/content.ts
+                    </span>
+                  )
+                }
+                last={i === project.record.length - 1 && !project.href}
+              />
+            ))}
             {project.href && (
               <div className="mt-5">
                 <LLink
