@@ -228,7 +228,7 @@ export const education = [
     title: 'CFA Level I',
     brand: 'CFA Institute',
     icon: 'seal' as const,
-    image: '/about/education/cfa-level-1.jpg',
+    image: '/about/education/cfa-level-1.png',
     institution: 'CFA Institute',
     date: 'Mar 2026',
     note: 'Passed Level I (March 2026). Practical Skill Module — Financial Modelling.',

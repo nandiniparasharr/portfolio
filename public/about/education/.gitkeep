@@ -1,9 +1,11 @@
 Education card images go in this folder.
 
-  bsc-finance.jpg   -> the BSc Finance card
-  cfa-level-1.jpg   -> the CFA Level I card
+  bsc-finance.jpg   -> the BSc Finance card   (not uploaded yet)
+  cfa-level-1.png   -> the CFA Level I card
 
-The filenames must match exactly; the cards probe for these paths and fall
+The filename AND the extension must match what lib/content.ts points at —
+GitHub's rename box will happily strip an extension, and a file without one
+cannot be served. The cards probe for these paths and fall
 back to the "drop image" placeholder until the file loads. Square-ish images
 work best. Nothing is cropped — the card scales the image to fit inside its
 panel — so a portrait certificate scan is safe, it will just sit letterboxed.
