@@ -111,7 +111,7 @@ export const projects: Project[] = [
     href: 'https://docs.google.com/spreadsheets/d/1QwZtbIA13qkOlhkFZbImC76xpiuAyIsD/edit?usp=sharing&ouid=108525365897885632984&rtpof=true&sd=true',
     hrefLabel: 'View the sheet ↗',
     image: '/projects/skippi-ice-pops.png',
-    imageHref: 'TODO — paste the LinkedIn post URL',
+    imageHref: 'https://www.linkedin.com/posts/nandiniparashar_i-came-across-this-shark-tank-india-clip-activity-7356610367705268225-bZJp?utm_source=share&utm_medium=member_desktop&rcm=ACoAADdQHd8BUfsVmYttbUyqV4Vb1ti5m3ABNe4',
     imageHrefLabel: 'Read the write-up ↗',
     record: [
       { label: 'The question', value: 'Does a ₹20 ice pop actually make money?' },
