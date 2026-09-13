@@ -11,6 +11,82 @@ export const site = {
 
 export type BadgeTone = 'rose' | 'plum' | 'forest' | 'ink'
 
+/* ---------- categories ----------
+   One vocabulary, shared by the canvas and the work index. The six objects
+   painted on the canvas ARE the categories: clicking one on the home page
+   lands on exactly the set the work filter shows under the same name, so a
+   visitor never has to learn a second set of words halfway through.
+
+   Tone groups them into families rather than giving each its own colour:
+   forest is analysis, plum is built, ink is written, rose is consumer. */
+export type CategoryId =
+  | 'research'
+  | 'models'
+  | 'builds'
+  | 'essays'
+  | 'beauty'
+  | 'luxury'
+
+export type Category = {
+  id: CategoryId
+  label: string
+  tone: BadgeTone
+  /** What the category covers. Carries the canvas panel, and stands in as
+      the work index's empty state before anything is published into it. */
+  blurb: string
+}
+
+export const categories: Category[] = [
+  {
+    id: 'research',
+    label: 'Research',
+    tone: 'forest',
+    blurb:
+      'Company profiles and research notes — the write-ups behind the models.',
+  },
+  {
+    id: 'models',
+    label: 'Models',
+    tone: 'forest',
+    blurb:
+      'DCFs, unit economics and scenario work, with what each one concluded.',
+  },
+  {
+    id: 'builds',
+    label: 'Builds',
+    tone: 'plum',
+    blurb: 'Things I designed and shipped — apps, dashboards, tools.',
+  },
+  {
+    id: 'essays',
+    label: 'Essays',
+    tone: 'ink',
+    blurb:
+      'Essays on markets, machines and the things I cannot stop analysing.',
+  },
+  {
+    id: 'beauty',
+    label: 'Beauty',
+    tone: 'rose',
+    blurb:
+      'Consumer sector coverage — unit economics and brand equity, in lipstick.',
+  },
+  {
+    id: 'luxury',
+    label: 'Luxury',
+    tone: 'rose',
+    blurb: 'What a handbag costs to make, and what it costs to want.',
+  },
+]
+
+export function categoryById(id: CategoryId): Category {
+  const found = categories.find((c) => c.id === id)
+  /* A typo'd id would otherwise render an unlabelled badge and a filter that
+     silently matches nothing — fail where it can be seen instead. */
+  if (!found) throw new Error(`Unknown category: ${id}`)
+  return found
+}
+
 /* One line of the case study's Record box. Rows are per-project on purpose:
    an equity research note and a web app do not have the same facts worth
    stating, and forcing both through Role/Stack/Status made every entry sound
@@ -22,7 +98,10 @@ export type Project = {
   slug: string
   num: string
   title: string
-  badges: { tone: BadgeTone; label: string }[]
+  /** Which canvas categories this entry belongs to. Drives its badges and
+      every filter it appears under — there is no separate badge list to
+      drift out of step with the taxonomy. */
+  categories: CategoryId[]
   stack: string
   blurb: string
   /** The setup — why the question was worth settling. A single string is one
@@ -59,10 +138,7 @@ export const projects: Project[] = [
     slug: 'portfolio-prism',
     num: '01',
     title: 'Portfolio Prism',
-    badges: [
-      { tone: 'forest', label: 'Finance' },
-      { tone: 'plum', label: 'AI & Code' },
-    ],
+    categories: ['builds'],
     stack: 'Robo-advisor model · risk analytics',
     blurb:
       'An AI-driven portfolio analysis app that reads a set of holdings the way an advisor would.',
@@ -85,7 +161,7 @@ export const projects: Project[] = [
     slug: 'avenue-supermarts',
     num: '02',
     title: 'Avenue Supermarts, profiled',
-    badges: [{ tone: 'forest', label: 'Finance' }],
+    categories: ['research'],
     stack: 'Company profile · equity research',
     blurb:
       'A one-page company profile of DMart: 5Y financials, ratios, and price history.',
@@ -108,7 +184,7 @@ export const projects: Project[] = [
     slug: 'skippi-ice-pops',
     num: '03',
     title: 'Skippi, by the unit',
-    badges: [{ tone: 'forest', label: 'Finance' }],
+    categories: ['models'],
     stack: 'Unit economics · scenario analysis',
     blurb:
       'Unit economics of a ₹20 ice pop: A Shark Tank India case, taken seriously.',
@@ -133,7 +209,7 @@ export const projects: Project[] = [
     slug: 'study-tracker',
     num: '04',
     title: 'Study Tracker',
-    badges: [{ tone: 'plum', label: 'AI & Code' }],
+    categories: ['builds'],
     stack: 'Study timer · CFA prep',
     blurb:
       'A desktop app I built to track my CFA study hours. A timer, and a dashboard that shows where the week actually went.',
@@ -164,9 +240,16 @@ export const projects: Project[] = [
   },
 ]
 
-/* Only the tones actually worn by an entry belong here — a filter that
-   returns an empty grid reads as a broken page, not an empty category. */
-export const workFilters = ['All', 'Finance', 'AI & Code']
+/** Every entry filed under a category, in the order the index lists them. */
+export function projectsIn(id: CategoryId) {
+  return projects.filter((p) => p.categories.includes(id))
+}
+
+/* Derived, never hand-written: only categories that actually hold an entry
+   become filters, so a chip can never return an empty grid — which reads as
+   a broken page rather than an empty category. Publish into Essays and the
+   Essays chip appears on its own. */
+export const workFilters = categories.filter((c) => projectsIn(c.id).length > 0)
 
 export type Role = {
   company: string

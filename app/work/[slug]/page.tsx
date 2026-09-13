@@ -11,7 +11,7 @@ import {
 } from '@/components/ledger'
 import { ProjectImage } from '@/components/project-image'
 import { Reveal } from '@/components/reveal'
-import { projects } from '@/lib/content'
+import { categoryById, projects } from '@/lib/content'
 
 /* Copy comes through as one string or several. Several renders as separate
    paragraphs, so a long section can breathe rather than arriving as a block. */
@@ -75,12 +75,28 @@ export default async function CaseStudyPage({
             <p className="mt-5 max-w-md text-lead text-muted-foreground">
               {project.blurb}
             </p>
+            {/* Clickable here, unlike on the index card — there the badge sits
+                inside the card's own anchor, and a link inside a link is
+                invalid. Closes the loop: canvas → category → entry → category. */}
             <div className="mt-5 flex gap-1.5">
-              {project.badges.map((b) => (
-                <Badge key={b.label} tone={b.tone}>
-                  {b.label}
-                </Badge>
-              ))}
+              {project.categories.map((id) => {
+                const c = categoryById(id)
+                return (
+                  <Link
+                    key={c.id}
+                    href={`/work?c=${c.id}`}
+                    className="no-underline"
+                    aria-label={`See everything in ${c.label}`}
+                  >
+                    <Badge
+                      tone={c.tone}
+                      className="transition-opacity duration-150 hover:opacity-80"
+                    >
+                      {c.label}
+                    </Badge>
+                  </Link>
+                )
+              })}
             </div>
           </div>
 

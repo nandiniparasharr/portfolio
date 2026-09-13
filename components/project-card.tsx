@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Badge } from '@/components/ledger'
 import { ProjectImage } from '@/components/project-image'
-import type { Project } from '@/lib/content'
+import { categoryById, type Project } from '@/lib/content'
 
 export function ProjectCard({
   project,
@@ -34,11 +34,14 @@ export function ProjectCard({
         <p className="m-0 text-sm text-muted-foreground">{project.blurb}</p>
       )}
       <div className="flex gap-1.5">
-        {project.badges.map((b) => (
-          <Badge key={b.label} tone={b.tone}>
-            {b.label}
-          </Badge>
-        ))}
+        {project.categories.map((id) => {
+          const c = categoryById(id)
+          return (
+            <Badge key={c.id} tone={c.tone}>
+              {c.label}
+            </Badge>
+          )
+        })}
       </div>
       <div className="mt-auto flex justify-between gap-3 border-t border-border pt-2.5 font-mono text-[11px] uppercase tracking-[0.08em] text-muted-foreground">
         <span>{project.stack}</span>

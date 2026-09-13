@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import { Container, SectionLabel } from '@/components/ledger'
 import { WorkIndex } from './work-index'
 
@@ -15,7 +16,11 @@ export default function WorkPage() {
       <h1 className="mb-10 text-display">
         Every project is an <em className="text-rose">entry</em>.
       </h1>
-      <WorkIndex />
+      {/* WorkIndex reads ?c= to seed its filter. Without a boundary that
+          would opt the whole page out of static rendering. */}
+      <Suspense fallback={null}>
+        <WorkIndex />
+      </Suspense>
     </Container>
   )
 }

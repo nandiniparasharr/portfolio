@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { EaselScene } from '@/components/easel-scene'
+import { categories, projectsIn, type CategoryId } from '@/lib/content'
 
 /* ------------------------------------------------------------------
    HOME
@@ -20,53 +21,41 @@ type Obj = {
   blurb: string
   href?: string
   ready: boolean
+  /** The work category this object opens. Absent on the quick links. */
+  category?: CategoryId
+  /** How many entries are filed under it. */
+  count?: number
 }
 
-const OBJECTS: Obj[] = [
-  {
-    id: 'research',
-    label: 'Research',
-    x: 20, y: 15,
-    blurb: 'Company profiles and research notes — the write-ups behind the models.',
-    ready: false,
-  },
-  {
-    id: 'model',
-    label: 'Models',
-    x: 62, y: 12,
-    blurb: 'DCFs, unit economics and scenario work, with what each one concluded.',
-    ready: false,
-  },
-  {
-    id: 'prism',
-    label: 'Portfolio Prism',
-    x: 30, y: 42,
-    blurb: 'A robo-advisor model and risk analytics dashboard, built and shipped.',
-    href: 'https://portfolio-prism.vercel.app',
-    ready: false,
-  },
-  {
-    id: 'essays',
-    label: 'Essays',
-    x: 68, y: 45,
-    blurb: 'Essays on markets, machines and the things I cannot stop analysing.',
-    ready: false,
-  },
-  {
-    id: 'beauty',
-    label: 'Beauty',
-    x: 22, y: 72,
-    blurb: 'Consumer sector coverage — unit economics and brand equity, in lipstick.',
-    ready: false,
-  },
-  {
-    id: 'luxury',
-    label: 'Luxury',
-    x: 60, y: 74,
-    blurb: 'What a handbag costs to make, and what it costs to want.',
-    ready: false,
-  },
-]
+/* Where each category's object sits on the canvas face, in %. The objects are
+   derived from the category list rather than restated here, so the canvas and
+   the work filters can never fall out of step: this map holds only what the
+   taxonomy itself does not know — a position. */
+const PLACEMENT: Record<CategoryId, { x: number; y: number }> = {
+  research: { x: 20, y: 15 },
+  models: { x: 62, y: 12 },
+  builds: { x: 30, y: 42 },
+  essays: { x: 68, y: 45 },
+  beauty: { x: 22, y: 72 },
+  luxury: { x: 60, y: 74 },
+}
+
+/* `ready` is no longer a flag to remember to flip. An object is ready when its
+   category actually holds published work — so writing the first essay lights
+   the book up on the canvas and adds the Essays chip to /work, with nothing
+   here to edit. */
+const OBJECTS: Obj[] = categories.map((c) => {
+  const entries = projectsIn(c.id)
+  return {
+    id: c.id,
+    label: c.label,
+    ...PLACEMENT[c.id],
+    blurb: c.blurb,
+    category: c.id,
+    count: entries.length,
+    ready: entries.length > 0,
+  }
+})
 
 const LINKS: Obj[] = [
   { id: 'cv', label: 'CV', x: 0, y: 0, blurb: 'the short, formal version', href: '/NandiniParashar_CV.pdf', ready: true },
@@ -92,7 +81,7 @@ function Icon({ id }: { id: string }) {
           <rect x="25" y="33" width="4" height="6" rx="1" fill="#2a9d8f" />
         </svg>
       )
-    case 'model': // a spreadsheet
+    case 'models': // a spreadsheet
       return (
         <svg viewBox="0 0 48 48" aria-hidden="true">
           <rect x="5" y="9" width="38" height="30" rx="2.5" fill="#fff" stroke="#d9d5cb" strokeWidth="1.3" />
@@ -104,7 +93,7 @@ function Icon({ id }: { id: string }) {
           <rect x="6" y="33" width="10" height="5" fill="#cdeadb" />
         </svg>
       )
-    case 'prism': // performance chart
+    case 'builds': // performance chart
       return (
         <svg viewBox="0 0 48 48" aria-hidden="true">
           <rect x="5" y="7" width="38" height="34" rx="2.5" fill="#fff" stroke="#d9d5cb" strokeWidth="1.3" />
@@ -256,7 +245,13 @@ export function Canvas() {
             >
               ✕
             </button>
-            <p className="np-panel-kicker">{open.ready ? 'Link' : 'In progress'}</p>
+            <p className="np-panel-kicker">
+              {open.category
+                ? open.ready
+                  ? `${open.count} ${open.count === 1 ? 'entry' : 'entries'}`
+                  : 'In progress'
+                : 'Link'}
+            </p>
             <h2 className="np-panel-title">{open.label}</h2>
             <p className="np-panel-body">{open.blurb}</p>
 
@@ -264,6 +259,16 @@ export function Canvas() {
               <p className="np-panel-stub">
                 Content for this one is being written. It will land here shortly.
               </p>
+            )}
+
+            {/* A category with entries goes straight to that filter on /work.
+                One with none keeps the stub rather than a link to an empty
+                grid — the promise the object makes has to be one the page can
+                keep. */}
+            {open.category && open.ready && (
+              <Link className="np-panel-cta" href={`/work?c=${open.category}`}>
+                See the work →
+              </Link>
             )}
 
             {open.href &&
