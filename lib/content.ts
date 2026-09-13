@@ -173,8 +173,15 @@ export const projects: Project[] = [
     stack: 'Company profile · equity research',
     blurb:
       'A one-page company profile of DMart: 5Y financials, ratios, and price history.',
-    brief:
-      'Avenue Supermarts runs DMart on a simple premise: everyday low cost, everyday low price. The exercise: compress the company into one honest page: what it does, how the strategy shows up in the numbers, and what the market pays for it.',
+    brief: [
+      'Avenue Supermarts runs DMart on a simple premise: everyday low cost, everyday low price. The premise is easy enough to state. Whether it actually holds up in the numbers, and whether the market is paying a fair price for it, is a different question.',
+      'So I built a valuation model rather than a summary. Financials projected out to FY29, with reinvestment rates, growth trajectory and capital efficiency feeding the cash flows, and intrinsic value estimated two ways: a DCF, and a relative valuation against comparable multiples.',
+    ],
+    foundLabel: 'What I looked at',
+    found: [
+      'Alongside the model I ran a financial analysis summary across five fiscal years, covering more than ten metrics: revenue growth, EBITDA margins, return ratios and the rest. The point was to see whether a strategy like that leaves a trace you can actually measure, year after year, rather than only in the way the company describes itself.',
+      'Then the valuation multiples and the analytical ratios, read as trends rather than snapshots. A single year of P/E says very little about a retailer that reinvests as heavily as this one does. What the market is paying, and what it is paying for, only shows up once you line the years up next to each other.',
+    ],
     role: 'Equity research',
     status: 'Shipped',
     href: 'https://drive.google.com/file/d/1csVyFxaZZWlwcMgR4yM1XdoT6RySykMq/view?usp=sharing',
@@ -183,8 +190,9 @@ export const projects: Project[] = [
     record: [
       { label: 'The question', value: 'Does everyday-low-price actually show up in DMart’s numbers?' },
       { label: 'The call' },
-      { label: 'Method', value: 'Five-year ratio and price analysis' },
-      { label: 'Data', value: 'Company filings · FY19—FY24' },
+      { label: 'Method', value: 'DCF and relative valuation · 5Y ratio analysis' },
+      { label: 'Projected to', value: 'FY29' },
+      { label: 'Data', value: 'Company filings · FY19 to FY24' },
       { label: 'When', value: '2024' },
     ],
   },
@@ -196,8 +204,15 @@ export const projects: Project[] = [
     stack: 'Unit economics · scenario analysis',
     blurb:
       'Unit economics of a ₹20 ice pop: A Shark Tank India case, taken seriously.',
-    brief:
-      'Skippi sells an FMCG product for ₹20. The question worth answering: does a popsicle that cheap actually make money once COGS, CAC, and two very different channels (retail vs. wholesale) have their say?',
+    brief: [
+      'I came across a Shark Tank India clip about Skippi, a brand selling ice pops, which had just raised ₹1 crore. The product sells for ₹20. That is a small enough number that it seemed worth asking whether it makes any money at all once everything has been taken out of it.',
+      'So I took the pitch and built a rough model around it: cost per pop, margins across retail and wholesale, and what payback could look like on a ₹20 frozen snack. Nothing elaborate, just the question a founder would have to answer before scaling.',
+    ],
+    foundLabel: 'What it taught me',
+    found: [
+      'The interesting part was breaking a single ₹20 unit into COGS, CAC, distributor and retailer margins, and overheads, then asking how a low ticket FMCG product gets to be properly profitable at scale. Retail and wholesale behave very differently once you do that, and the gap between them is not small.',
+      'Two things caught me out. Overheads carry more weight than they look like they should at this price point, and CAC can eat a real share of a ticket this tiny. It turned into a useful way into channel strategy and price positioning, and honestly it felt like wearing a founder’s hat for a few hours.',
+    ],
     role: 'Analysis & modelling',
     status: 'Shipped',
     href: 'https://docs.google.com/spreadsheets/d/1QwZtbIA13qkOlhkFZbImC76xpiuAyIsD/edit?usp=sharing&ouid=108525365897885632984&rtpof=true&sd=true',
