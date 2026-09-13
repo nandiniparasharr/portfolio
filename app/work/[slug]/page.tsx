@@ -79,17 +79,26 @@ export default async function CaseStudyPage({
             />
           </Reveal>
 
+          {/* Two paragraphs, no more. The Record box already carries the
+              question, the method and the call, so the body's only job is the
+              part a box cannot hold: the setup, and the finding. */}
           <Reveal>
-            <h3 className="mb-3 mt-12 text-h3">The brief</h3>
+            <h3 className="mb-3 mt-12 text-h3">The setup</h3>
             <p className="m-0 max-w-xl text-muted-foreground">
               {project.brief}
             </p>
           </Reveal>
           <Reveal>
-            <h3 className="mb-3 mt-10 text-h3">What shipped</h3>
-            <p className="m-0 max-w-xl text-muted-foreground">
-              {project.shipped}
-            </p>
+            <h3 className="mb-3 mt-10 text-h3">What I found</h3>
+            {project.found ? (
+              <p className="m-0 max-w-xl text-muted-foreground">
+                {project.found}
+              </p>
+            ) : (
+              <p className="m-0 max-w-xl border border-dashed border-border p-4 font-mono text-[11px] uppercase tracking-[0.1em] text-faint">
+                TODO — the finding, with the numbers. lib/content.ts → found
+              </p>
+            )}
           </Reveal>
         </div>
 
@@ -102,10 +111,14 @@ export default async function CaseStudyPage({
               <LedgerRow
                 key={row.label}
                 label={row.label}
+                href={row.href?.startsWith('http') ? row.href : undefined}
                 value={
-                  row.value ?? (
-                    /* an empty row is a prompt, not a gap — it should be
-                       impossible to ship a case study with no conclusion */
+                  /* an empty row — or one whose link is still a placeholder —
+                     is a prompt, not a gap. It should be impossible to ship a
+                     case study with no conclusion, or a dead link. */
+                  row.value && (!row.href || row.href.startsWith('http')) ? (
+                    row.value
+                  ) : (
                     <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-faint">
                       TODO — lib/content.ts
                     </span>

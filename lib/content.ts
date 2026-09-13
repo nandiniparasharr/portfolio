@@ -16,7 +16,7 @@ export type BadgeTone = 'rose' | 'plum' | 'forest' | 'ink'
    stating, and forcing both through Role/Stack/Status made every entry sound
    like a CV bullet. Leave `value` out and the row renders as a visible TODO
    rather than silently disappearing. */
-export type RecordRow = { label: string; value?: string }
+export type RecordRow = { label: string; value?: string; href?: string }
 
 export type Project = {
   slug: string
@@ -25,8 +25,11 @@ export type Project = {
   badges: { tone: BadgeTone; label: string }[]
   stack: string
   blurb: string
+  /** Paragraph one: the setup — why the question was worth settling. */
   brief: string
-  shipped: string
+  /** Paragraph two: what you found, with the numbers. Absent renders a
+      visible prompt rather than nothing, same as an empty record row. */
+  found?: string
   role: string
   status: string
   /** The Record box. THE CALL is the one that earns its place — what you
@@ -52,8 +55,6 @@ export const projects: Project[] = [
       'An AI-driven portfolio analysis app that reads a set of holdings the way an advisor would.',
     brief:
       'Most retail portfolios never get a second pair of eyes. The idea: a robo-advisor model that takes a user’s holdings and returns an honest read — risk, asset allocation, correlation exposure, and diversification — without the wealth-management minimum.',
-    shipped:
-      'A live web app that evaluates holdings across risk, allocation, correlation, and diversification metrics, then distils the diagnosis into three actionable insights per portfolio.',
     role: 'Research & build',
     status: 'Live',
     href: 'https://portfolio-prism.vercel.app',
@@ -77,8 +78,6 @@ export const projects: Project[] = [
       'A one-page company profile of DMart — five years of financials, ratios, and price history.',
     brief:
       'Avenue Supermarts runs DMart on a simple premise: everyday low cost, everyday low price. The exercise: compress the company into one honest page — what it does, how the strategy shows up in the numbers, and what the market pays for it.',
-    shipped:
-      'A company profile covering five years of key metrics — revenue growth, margins, EPS — alongside the ratios that matter (P/E, EV/EBITDA, ROE, ROCE) and the five-year share-price and volume picture.',
     role: 'Equity research',
     status: 'Shipped',
     href: 'https://drive.google.com/file/d/1csVyFxaZZWlwcMgR4yM1XdoT6RySykMq/view?usp=sharing',
@@ -102,8 +101,6 @@ export const projects: Project[] = [
       'Unit economics of a ₹20 ice pop — the Shark Tank India case, taken seriously.',
     brief:
       'Skippi sells an FMCG product for ₹20. The question worth answering: does a popsicle that cheap actually make money once COGS, CAC, and two very different channels (retail vs. wholesale) have their say?',
-    shipped:
-      'A unit-economics breakdown with dual-channel margin analysis and payback dynamics, plus scenario analysis on distribution and profitability — the spreadsheet answers the question either way.',
     role: 'Analysis & modelling',
     status: 'Shipped',
     href: 'https://docs.google.com/spreadsheets/d/1QwZtbIA13qkOlhkFZbImC76xpiuAyIsD/edit?usp=sharing&ouid=108525365897885632984&rtpof=true&sd=true',
@@ -115,6 +112,11 @@ export const projects: Project[] = [
       { label: 'Method', value: 'Dual-channel unit economics · scenario analysis' },
       { label: 'Built with', value: 'Excel' },
       { label: 'When', value: '2024' },
+      {
+        label: 'Wrote it up',
+        value: 'LinkedIn ↗',
+        href: 'TODO — paste the post URL',
+      },
     ],
   },
   {
@@ -127,8 +129,6 @@ export const projects: Project[] = [
       'This site. A full design system in rose madder, plum, and forest ink.',
     brief:
       'A portfolio should read like its owner thinks. The brief: design a personal brand system from scratch — editorial, square-cornered, serif-led — and implement it as a real site with light and dark themes.',
-    shipped:
-      'A complete token system (colour, type, spacing, motion) and this six-page site: theme toggle, page transitions, a command palette, and no icons — typographic glyphs do the expressive work.',
     role: 'Design & build',
     status: 'Live',
     record: [
