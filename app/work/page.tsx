@@ -5,7 +5,7 @@ import { WorkIndex } from './work-index'
 export const metadata: Metadata = {
   title: 'Work — Nandini Parashar',
   description:
-    'Selected projects: portfolio analytics, equity valuation, unit economics, and a design system.',
+    'Selected projects: portfolio analytics, equity valuation, unit economics, and a study tracker.',
 }
 
 export default function WorkPage() {

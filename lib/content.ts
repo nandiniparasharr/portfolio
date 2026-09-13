@@ -162,29 +162,11 @@ export const projects: Project[] = [
       { label: 'When', value: '2026' },
     ],
   },
-  {
-    slug: 'the-rebrand',
-    num: '05',
-    title: 'The rebrand — this site',
-    badges: [{ tone: 'ink', label: 'Design' }],
-    stack: 'Design system · Next.js',
-    blurb:
-      'This site. A full design system in rose madder, plum, and forest ink.',
-    brief:
-      'A portfolio should read like its owner thinks. The brief: design a personal brand system from scratch — editorial, square-cornered, serif-led — and implement it as a real site with light and dark themes.',
-    role: 'Design & build',
-    status: 'Live',
-    record: [
-      { label: 'The question', value: 'What does a personal brand look like when you build it yourself?' },
-      { label: 'The call' },
-      { label: 'Method', value: 'Token system · light and dark themes' },
-      { label: 'Built with', value: 'Next.js · TypeScript' },
-      { label: 'When', value: '2026' },
-    ],
-  },
 ]
 
-export const workFilters = ['All', 'Finance', 'AI & Code', 'Design']
+/* Only the tones actually worn by an entry belong here — a filter that
+   returns an empty grid reads as a broken page, not an empty category. */
+export const workFilters = ['All', 'Finance', 'AI & Code']
 
 export type Role = {
   company: string
