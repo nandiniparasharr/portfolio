@@ -122,7 +122,7 @@ export function ContactForm() {
               }}
               onBlur={() => email && setEmailError(emailProblem(email))}
               aria-invalid={!!emailError}
-              placeholder="rachel@example.com"
+              placeholder="rachel@centralperk.com"
               className={cn(fieldInput, emailError && 'border-rose')}
             />
             {emailError && (
