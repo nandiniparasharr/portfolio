@@ -139,11 +139,18 @@ export const projects: Project[] = [
     num: '01',
     title: 'Portfolio Prism',
     categories: ['builds'],
-    stack: 'Robo-advisor model · risk analytics',
+    stack: 'Portfolio analytics · risk metrics',
     blurb:
-      'An AI-driven portfolio analysis app that reads a set of holdings the way an advisor would.',
-    brief:
-      'Most retail portfolios never get a second pair of eyes. The idea: a robo-advisor model that takes a user’s holdings and returns an honest read: risk, asset allocation, correlation exposure, and diversification — without the wealth-management minimum.',
+      'You upload your portfolio and it breaks it down the way an analyst would, then explains all of it in plain English.',
+    brief: [
+      'Most investing apps stop at your holdings and a profit and loss number. That tells you what happened, not whether you took a sensible amount of risk to get it. The numbers that would answer that, how concentrated you are in a few positions, how volatile the whole thing is, what the returns look like once risk is accounted for, are the ones nobody bothers to put in front of a retail investor.',
+      'So I built the thing I wanted to use. You drop in a CSV or an Excel file from your broker, or type the holdings in by hand, and it runs the analysis a professional would run. The name is the idea: one thing goes in, your portfolio, and it comes back refracted into all the parts worth looking at.',
+    ],
+    foundLabel: 'What it does',
+    found: [
+      'It works out how concentrated you are, how volatile the portfolio is, your Sharpe ratio, your Value at Risk on a bad day, how much your holdings move together, and how the split between equity and mutual funds actually sits. Every figure comes from a documented formula, the same ones in the CFA curriculum, so none of it is guesswork.',
+      'On top of the numbers it writes a short investment brief that reads them back to you in plain language. It is only allowed to interpret figures that have already been calculated, so it cannot invent one. There is no login and nothing is stored: it runs in your browser for that session and then it is gone. Visitors can also leave a small artifact behind that scatters into the background of the site, which is the one part that exists purely because I thought it would be fun.',
+    ],
     role: 'Research & build',
     status: 'Live',
     href: 'https://portfolio-prism.vercel.app',
@@ -152,8 +159,9 @@ export const projects: Project[] = [
     record: [
       { label: 'The question', value: 'Can a retail investor get an advisor’s read without an advisor?' },
       { label: 'The call' },
-      { label: 'Method', value: 'Risk, allocation, correlation and diversification scoring' },
-      { label: 'Built with', value: 'Python · Streamlit' },
+      { label: 'Method', value: 'Allocation, risk, correlation and risk-adjusted return' },
+      { label: 'Data', value: 'Yahoo Finance for equities · AMFI for mutual fund NAVs' },
+      { label: 'Built with', value: 'Next.js · TypeScript · Vercel' },
       { label: 'When', value: '2025' },
     ],
   },
