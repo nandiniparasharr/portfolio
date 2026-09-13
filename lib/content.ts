@@ -25,11 +25,14 @@ export type Project = {
   badges: { tone: BadgeTone; label: string }[]
   stack: string
   blurb: string
-  /** Paragraph one: the setup — why the question was worth settling. */
-  brief: string
-  /** Paragraph two: what you found, with the numbers. Absent renders a
-      visible prompt rather than nothing, same as an empty record row. */
-  found?: string
+  /** The setup — why the question was worth settling. A single string is one
+      paragraph; an array is several, so a long section can breathe instead of
+      arriving as one block. */
+  brief: string | string[]
+  /** What you found, with the numbers. One string or several paragraphs, as
+      above. Absent renders a visible prompt rather than nothing, same as an
+      empty record row. */
+  found?: string | string[]
   /** Heading for paragraph two. An analysis reports a finding; a build
       reports how it works. Defaults to "What I found". */
   foundLabel?: string
@@ -134,12 +137,16 @@ export const projects: Project[] = [
     stack: 'Study timer · CFA prep',
     blurb:
       'A desktop app I built to track my CFA study hours — a timer, and a dashboard that shows where the week actually went.',
-    brief:
-      'I was studying for CFA Level I and had no real idea where my hours were going. I knew I had done a lot of Derivatives and not much Ethics, but that is a feeling, and a feeling is a bad way to allocate time across a syllabus. Every tracker I looked at wanted an account and a subscription to tell me something that should live on my own laptop. So I made one that does not.',
+    brief: [
+      'I was studying for CFA Level I and had no real idea where my hours were going. I knew I’d done a lot of Derivatives and not much Ethics — but that’s a feeling, and a feeling is a bad way to allocate time across a syllabus.',
+      'Every tracker I looked at wanted an account and a subscription to tell me something that should live on my own laptop. So I made one that doesn’t.',
+    ],
     pullQuote: 'A feeling about how much you studied is not a number.',
     foundLabel: 'How I use it',
-    found:
-      'I start it when I sit down and stop it when I get up — a stopwatch when I am just working, a countdown when I am doing a fixed block. Tagging the subject is optional, so there is never an excuse not to start. At the end of the week it shows me the daily bars, the streak, and a breakdown of where the hours actually went. That last part is the whole point: it is how I find out I have been quietly avoiding Quant for nine days.',
+    found: [
+      'I start it when I sit down and stop it when I get up — a stopwatch when I’m just working, a countdown when I’m doing a fixed block. Tagging the subject is optional, so there’s never an excuse not to start.',
+      'At the end of the week it shows me the daily bars, the streak, and a breakdown of where the hours actually went. That last part is the whole point: it’s how I find out I’ve been quietly avoiding Quant for nine days.',
+    ],
     role: 'Design & build',
     status: 'Live',
     href: 'https://github.com/nandiniparasharr/studytracker',

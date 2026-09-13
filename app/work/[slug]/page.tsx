@@ -13,6 +13,21 @@ import { ProjectImage } from '@/components/project-image'
 import { Reveal } from '@/components/reveal'
 import { projects } from '@/lib/content'
 
+/* Copy comes through as one string or several. Several renders as separate
+   paragraphs, so a long section can breathe rather than arriving as a block. */
+function Prose({ copy }: { copy: string | string[] }) {
+  const paras = Array.isArray(copy) ? copy : [copy]
+  return (
+    <div className="max-w-xl">
+      {paras.map((para, i) => (
+        <p key={i} className={i === 0 ? 'm-0 text-muted-foreground' : 'm-0 mt-4 text-muted-foreground'}>
+          {para}
+        </p>
+      ))}
+    </div>
+  )
+}
+
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }))
 }
@@ -105,9 +120,7 @@ export default async function CaseStudyPage({
               part a box cannot hold: the setup, and the finding. */}
           <Reveal>
             <h3 className="mb-3 mt-12 text-h3">The setup</h3>
-            <p className="m-0 max-w-xl text-muted-foreground">
-              {project.brief}
-            </p>
+            <Prose copy={project.brief} />
           </Reveal>
           {project.pullQuote && (
             <Reveal>
@@ -120,9 +133,7 @@ export default async function CaseStudyPage({
               {project.foundLabel ?? 'What I found'}
             </h3>
             {project.found ? (
-              <p className="m-0 max-w-xl text-muted-foreground">
-                {project.found}
-              </p>
+              <Prose copy={project.found} />
             ) : (
               <p className="m-0 max-w-xl border border-dashed border-border p-4 font-mono text-[11px] uppercase tracking-[0.1em] text-faint">
                 TODO — lib/content.ts → found
