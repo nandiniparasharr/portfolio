@@ -2,7 +2,6 @@
 
 export const site = {
   name: 'Nandini Parashar',
-  shortMark: 'N—P',
   email: 'nandiniparashar207@gmail.com',
   linkedin: 'https://www.linkedin.com/in/nandiniparashar/',
   resume: '/NandiniParashar_CV.pdf',

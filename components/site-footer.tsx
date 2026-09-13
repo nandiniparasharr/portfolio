@@ -113,9 +113,8 @@ export function SiteFooter() {
           </div>
           <div className="mt-8 flex flex-wrap justify-between gap-4 np-footer-rule border-t pt-4 font-mono text-[10px] uppercase tracking-[0.1em] opacity-50">
             <span>
-              © {new Date().getFullYear()} {site.shortMark} · <DelhiClock />
+              <DelhiClock />
             </span>
-            <span>Set in Instrument Serif &amp; IBM Plex Mono</span>
           </div>
         </div>
       </div>
