@@ -239,13 +239,6 @@
   animation: np-rise var(--dur-3) var(--ease-expo) both;
 }
 
-/* Hero staging — staggered rises, 80ms apart */
-.np-stage {
-  opacity: 0;
-  animation: np-rise var(--dur-4) var(--ease-expo) forwards;
-  animation-delay: var(--stage-delay, 0ms);
-}
-
 /* Scroll reveal */
 .np-reveal {
   opacity: 0;
@@ -280,32 +273,6 @@ button:hover > .np-arrow,
 .scroll-progress {
   transform-origin: left;
   transform: scaleX(var(--scroll-progress, 0));
-}
-
-/* Masthead intro (first visit per session) */
-.np-intro {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-page);
-  animation: np-intro-exit var(--dur-3) var(--ease-expo) forwards;
-  /* 2.4s, not 1.5s — must outlast the "new site coming" line, which rises
-     at 900ms over a 900ms animation. Keep in step with Intro's unmount. */
-  animation-delay: 2.4s;
-}
-@keyframes np-intro-exit {
-  to {
-    transform: translateY(-100%);
-    visibility: hidden;
-  }
-}
-.np-intro-line {
-  transform: scaleX(0);
-  transform-origin: left;
-  animation: np-rule var(--dur-4) var(--ease-expo) 0.3s forwards;
 }
 
 /* Trajectory timeline */
@@ -564,7 +531,6 @@ button:hover > .np-arrow,
 
 @media (prefers-reduced-motion: reduce) {
   .np-page,
-  .np-stage,
   .np-reveal,
   .np-reveal.is-visible,
   .np-rule-draw,
@@ -573,9 +539,6 @@ button:hover > .np-arrow,
     animation: none;
     opacity: 1;
     transform: none;
-  }
-  .np-intro {
-    display: none;
   }
   .np-rail-fill {
     transform: scaleY(1);
