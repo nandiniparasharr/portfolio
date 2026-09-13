@@ -141,7 +141,6 @@ export const projects: Project[] = [
       'I was studying for CFA Level I and had no real idea where my hours were going. I knew I’d done a lot of Derivatives and not much Ethics — but that’s a feeling, and a feeling is a bad way to allocate time across a syllabus.',
       'Every tracker I looked at wanted an account and a subscription to tell me something that should live on my own laptop. So I made one that doesn’t.',
     ],
-    pullQuote: 'A feeling about how much you studied is not a number.',
     foundLabel: 'How I use it',
     found: [
       'I start it when I sit down and stop it when I get up — a stopwatch when I’m just working, a countdown when I’m doing a fixed block. Tagging the subject is optional, so there’s never an excuse not to start.',
