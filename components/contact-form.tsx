@@ -106,7 +106,7 @@ export function ContactForm() {
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Rachel Green"
+              placeholder="Gunther"
               className={fieldInput}
             />
           </label>
@@ -122,7 +122,7 @@ export function ContactForm() {
               }}
               onBlur={() => email && setEmailError(emailProblem(email))}
               aria-invalid={!!emailError}
-              placeholder="rachel@centralperk.com"
+              placeholder="gunther@centralperk.com"
               className={cn(fieldInput, emailError && 'border-rose')}
             />
             {emailError && (
