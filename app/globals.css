@@ -448,6 +448,30 @@ button:hover > .np-arrow,
 }
 .np-pin:focus-visible { outline: 2px solid var(--np-rose); outline-offset: 6px; }
 
+/* --- picking an artifact up ---
+   No transform here on purpose. The pins finish their entrance with
+   animation-fill-mode: forwards, and a running animation's value beats a
+   normal declaration in the cascade, so a transform set from this class
+   would simply be ignored. Depth and cursor carry the state instead. */
+.np-pin { cursor: grab; touch-action: none; }
+.np-pin.is-dragging {
+  cursor: grabbing;
+  z-index: 4;
+  filter: drop-shadow(0 14px 24px rgba(23, 24, 27, 0.3));
+}
+/* the label follows the cursor around and is only noise while dragging */
+.np-pin.is-dragging .np-pin-tip { opacity: 0; }
+
+/* Zero-size markers at the corners of the canvas face. The scene is tilted
+   in 3D, so the face reaches the screen as a trapezium; these four points
+   are what lib/perspective.ts solves the mapping from. */
+.np-board-probe {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
 @keyframes np-pin-in {
   from { opacity: 0; transform: translate(-50%, -50%) scale(0.72); }
   to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }

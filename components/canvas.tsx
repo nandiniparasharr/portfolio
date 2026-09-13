@@ -1,7 +1,14 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import {
+  clamp,
+  invert,
+  project,
+  squareToQuad,
+  type Mat3,
+} from '@/lib/perspective'
 import { EaselScene } from '@/components/easel-scene'
 import { LongShort } from '@/components/long-short'
 import { AllocationDonut } from '@/components/allocation-donut'
@@ -144,8 +151,39 @@ function Icon({ id }: { id: string }) {
 
 /* ---------- page ---------- */
 
+/* How close to the edge an artifact may be dropped, in % of the canvas face.
+   Pins are centred on their coordinate, so 0 would hang half of one off. */
+const EDGE = 7
+/* Pointer travel before a press counts as a drag rather than a click. Without
+   it, the shake in an ordinary click would swallow the panel. */
+const SLOP = 4
+
+type Drag = {
+  el: HTMLButtonElement
+  /** screen -> canvas face, fixed at grab time */
+  inv: Mat3
+  /** where on the artifact it was picked up, so it does not jump to centre */
+  du: number
+  dv: number
+  fromX: number
+  fromY: number
+  x: number
+  y: number
+}
+
 export function Canvas() {
   const [open, setOpen] = useState<Obj | null>(null)
+  const [pos, setPos] = useState(() =>
+    Object.fromEntries(OBJECTS.map((o) => [o.id, { x: o.x, y: o.y }])),
+  )
+
+  /* Four zero-size markers at the corners of the canvas face. Measured at
+     grab time, which means a resize or a scroll needs no listener of its
+     own — the next grab simply measures again. */
+  const corners = useRef<(HTMLSpanElement | null)[]>([])
+  const drag = useRef<Drag | null>(null)
+  /* A drag ends in a click event. This is how the click knows to stay quiet. */
+  const moved = useRef(false)
 
   useEffect(() => {
     if (!open) return
@@ -153,6 +191,24 @@ export function Canvas() {
     window.addEventListener('keydown', esc)
     return () => window.removeEventListener('keydown', esc)
   }, [open])
+
+  const screenToFace = (): Mat3 | null => {
+    const quad = corners.current.map((el) => {
+      const r = el?.getBoundingClientRect()
+      return { x: r?.left ?? 0, y: r?.top ?? 0 }
+    })
+    if (quad.length !== 4) return null
+    return invert(squareToQuad(quad))
+  }
+
+  const nudge = (id: string, dx: number, dy: number) =>
+    setPos((s) => ({
+      ...s,
+      [id]: {
+        x: clamp(s[id].x + dx, EDGE, 100 - EDGE),
+        y: clamp(s[id].y + dy, EDGE, 100 - EDGE),
+      },
+    }))
 
   return (
     <>
@@ -163,14 +219,111 @@ export function Canvas() {
             <EaselScene />
             {/* artifacts, laid over the canvas face of the SVG */}
             <div className="np-board">
+              {[
+                [0, 0],
+                [100, 0],
+                [100, 100],
+                [0, 100],
+              ].map(([x, y], i) => (
+                <span
+                  key={i}
+                  ref={(el) => {
+                    corners.current[i] = el
+                  }}
+                  className="np-board-probe"
+                  style={{ left: `${x}%`, top: `${y}%` }}
+                  aria-hidden="true"
+                />
+              ))}
+
               {OBJECTS.map((o, i) => (
                 <button
                   key={o.id}
                   type="button"
                   className="np-pin"
-                  style={{ left: `${o.x}%`, top: `${o.y}%`, ['--i' as string]: i }}
-                  onClick={() => setOpen(o)}
-                  aria-label={o.label}
+                  style={{
+                    left: `${pos[o.id].x}%`,
+                    top: `${pos[o.id].y}%`,
+                    ['--i' as string]: i,
+                  }}
+                  aria-label={`${o.label}. Drag to move it, or use the arrow keys.`}
+                  onPointerDown={(e) => {
+                    if (e.pointerType === 'mouse' && e.button !== 0) return
+                    const inv = screenToFace()
+                    if (!inv) return
+                    const p = project(inv, e.clientX, e.clientY)
+                    const at = pos[o.id]
+                    drag.current = {
+                      el: e.currentTarget,
+                      inv,
+                      du: at.x / 100 - p.x,
+                      dv: at.y / 100 - p.y,
+                      fromX: e.clientX,
+                      fromY: e.clientY,
+                      x: at.x,
+                      y: at.y,
+                    }
+                    moved.current = false
+                    e.currentTarget.setPointerCapture(e.pointerId)
+                  }}
+                  onPointerMove={(e) => {
+                    const d = drag.current
+                    if (!d) return
+                    if (!moved.current) {
+                      const far =
+                        Math.hypot(e.clientX - d.fromX, e.clientY - d.fromY) >
+                        SLOP
+                      if (!far) return
+                      moved.current = true
+                      d.el.classList.add('is-dragging')
+                    }
+                    const p = project(d.inv, e.clientX, e.clientY)
+                    d.x = clamp((p.x + d.du) * 100, EDGE, 100 - EDGE)
+                    d.y = clamp((p.y + d.dv) * 100, EDGE, 100 - EDGE)
+                    /* Written straight to the node. Re-rendering six pins on
+                       every pointermove is work the drag does not need. */
+                    d.el.style.left = `${d.x}%`
+                    d.el.style.top = `${d.y}%`
+                  }}
+                  onPointerUp={() => {
+                    const d = drag.current
+                    if (!d) return
+                    drag.current = null
+                    d.el.classList.remove('is-dragging')
+                    /* Commit, so React's idea of the position matches the
+                       node's and the next render does not snap it back. */
+                    if (moved.current) {
+                      setPos((s) => ({ ...s, [o.id]: { x: d.x, y: d.y } }))
+                    }
+                  }}
+                  onPointerCancel={() => {
+                    const d = drag.current
+                    if (!d) return
+                    drag.current = null
+                    d.el.classList.remove('is-dragging')
+                    d.el.style.left = `${pos[o.id].x}%`
+                    d.el.style.top = `${pos[o.id].y}%`
+                  }}
+                  onKeyDown={(e) => {
+                    const step = e.shiftKey ? 6 : 2
+                    const by: Record<string, [number, number]> = {
+                      ArrowLeft: [-step, 0],
+                      ArrowRight: [step, 0],
+                      ArrowUp: [0, -step],
+                      ArrowDown: [0, step],
+                    }
+                    const d = by[e.key]
+                    if (!d) return
+                    e.preventDefault()
+                    nudge(o.id, d[0], d[1])
+                  }}
+                  onClick={() => {
+                    /* A drag is not a click. Cleared on the next press, so a
+                       pointerup that lands off the artifact cannot leave this
+                       stuck and swallow the following real click. */
+                    if (moved.current) return
+                    setOpen(o)
+                  }}
                 >
                   <Icon id={o.id} />
                   <span className="np-pin-tip">{o.label}</span>
