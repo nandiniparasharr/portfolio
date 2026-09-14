@@ -100,7 +100,7 @@ const ICONS: IconSpec[] = [
   /* A cover, not a cut-out: its own ground is white, so there was nothing to
      knock out without eating into the page. The icon's drop shadow gives the
      rectangle its edge against the pink. */
-  { id: 'psychology', side: 'left', src: '/brain/left/psychology-of-money.png', label: 'The Psychology of Money', x: 72, y: 150, scale: 1.08 },
+  { id: 'psychology', side: 'left', src: '/brain/left/psychology-of-money.png', label: 'The Psychology of Money', x: 72, y: 150, scale: 1.4 },
   /* The three app tiles are square marks with no padding of their own, so at
      the shared box size they read a size larger than the logos beside them. */
   { id: 'instagram', side: 'right', src: '/brain/right/instagram.png', label: 'Instagram', x: 220, y: 53, scale: 0.85 },
