@@ -10,7 +10,7 @@ import {
   type Mat3,
 } from '@/lib/perspective'
 import { EaselScene } from '@/components/easel-scene'
-import { Thesis } from '@/components/thesis'
+import { HomeIntro } from '@/components/home-intro'
 import { AllocationDonut } from '@/components/allocation-donut'
 import { categories, projectsIn, type CategoryId } from '@/lib/content'
 
@@ -372,7 +372,7 @@ export function Canvas() {
            Under the name: the notebook of what she is long and short on,
            and where the hours actually go. */}
       <section className="np-positions" aria-label="Positions">
-        <Thesis />
+        <HomeIntro />
         <AllocationDonut />
       </section>
 
