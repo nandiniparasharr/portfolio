@@ -370,9 +370,9 @@ button:hover > .np-arrow,
 }
 
 /* ---------- positions ----------
-   The band under the hero: the long/short notebook on the left, the
-   allocation donut on the right. The donut column is narrower because the
-   notebook's two pages are splayed and need the room. */
+   The band under the hero: the thesis on the left, the allocation donut on
+   the right. The donut column is the narrower of the two — the chart and its
+   legend are a fixed width, while prose takes whatever is left. */
 .np-positions {
   max-width: 1180px;
   margin: 0 auto;
@@ -381,11 +381,6 @@ button:hover > .np-arrow,
   grid-template-columns: minmax(0, 1fr) minmax(0, 0.6fr);
   gap: clamp(32px, 5vw, 72px);
   align-items: start;
-}
-/* the notebook is absolutely positioned inside a fixed box, so it cannot
-   centre itself — push it in from the column edge instead */
-.np-positions-notes {
-  margin-inline: auto;
 }
 @media (max-width: 940px) {
   .np-positions {
