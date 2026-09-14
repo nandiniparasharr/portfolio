@@ -26,11 +26,16 @@ export function HomeIntro({ className }: { className?: string }) {
       <p className="m-0 mt-7 max-w-md text-muted-foreground">
         My 9 to 5 is AI, workflows and the fancier end of corporate problem
         solving, and I like it more than that sentence makes it sound.
-        Everything after it is less organised. I read, I write, I sing. I
-        disappear into a history rabbit hole that has nothing to do with me. I
-        go to lectures nobody asked me to attend, watch more YouTube than I
-        will admit to, and go out hunting for places that do a proper kulhad
-        wali chai.
+        Everything after that is less organised. I read, I write, I sing. I
+        watch too much YouTube and then put Netflix on anyway.
+      </p>
+
+      <p className="m-0 mt-4 max-w-md text-muted-foreground">
+        Every few weeks I end up three tabs deep in some bit of history I have
+        no reason to be reading about, and I stay there until something else
+        grabs me. I’ll go to a lecture on almost anything. I like finding new
+        places, usually somewhere to eat, often just for the chai. A good
+        kulhad wali chai will get me across the city.
       </p>
 
       <p className="m-0 mt-4 max-w-md text-muted-foreground">
