@@ -114,7 +114,7 @@ export default function AboutPage() {
 
       <Reveal className="mt-20">
         <LLink href="/contact" variant="primary">
-          Work with me <span className="np-arrow">→</span>
+          Quick chat? <span className="np-arrow">→</span>
         </LLink>
       </Reveal>
     </Container>
