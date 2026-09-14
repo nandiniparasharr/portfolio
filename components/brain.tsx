@@ -56,14 +56,14 @@ type IconSpec = {
    the folders the icons arrived in, and it is why an icon cannot be dragged
    across the divide: the two sides mean different things. */
 const ICONS: IconSpec[] = [
-  { id: 'python', side: 'left', src: '/brain/left/python.png', label: 'Python', x: 104, y: 104 },
-  { id: 'claude', side: 'left', src: '/brain/left/claude.png', label: 'Claude', x: 156, y: 86 },
-  { id: 'tradingview', side: 'left', src: '/brain/left/tradingview.png', label: 'TradingView', x: 84, y: 158 },
-  { id: 'wsj', side: 'left', src: '/brain/left/wsj.png', label: 'The Wall Street Journal', x: 144, y: 150 },
-  { id: 'ba2', side: 'left', src: '/brain/left/ba2-plus.png', label: 'BA II Plus calculator', x: 116, y: 204, scale: 1.35 },
-  { id: 'instagram', side: 'right', src: '/brain/right/instagram.png', label: 'Instagram', x: 248, y: 102 },
-  { id: 'notion', side: 'right', src: '/brain/right/notion.png', label: 'Notion', x: 306, y: 146 },
-  { id: 'pinterest', side: 'right', src: '/brain/right/pinterest.png', label: 'Pinterest', x: 266, y: 202 },
+  { id: 'claude', side: 'left', src: '/brain/left/claude.png', label: 'Claude', x: 73, y: 203 },
+  { id: 'python', side: 'left', src: '/brain/left/python.png', label: 'Python', x: 99, y: 198 },
+  { id: 'wsj', side: 'left', src: '/brain/left/wsj.png', label: 'The Wall Street Journal', x: 97, y: 214 },
+  { id: 'tradingview', side: 'left', src: '/brain/left/tradingview.png', label: 'TradingView', x: 137, y: 147 },
+  { id: 'ba2', side: 'left', src: '/brain/left/ba2-plus.png', label: 'BA II Plus calculator', x: 157, y: 209, scale: 1.35 },
+  { id: 'instagram', side: 'right', src: '/brain/right/instagram.png', label: 'Instagram', x: 224, y: 61 },
+  { id: 'notion', side: 'right', src: '/brain/right/notion.png', label: 'Notion', x: 255, y: 77 },
+  { id: 'pinterest', side: 'right', src: '/brain/right/pinterest.png', label: 'Pinterest', x: 235, y: 90 },
 ]
 
 /** Box an icon is drawn into, in viewBox units. Aspect is preserved inside
