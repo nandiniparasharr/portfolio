@@ -95,13 +95,13 @@ const ICONS: IconSpec[] = [
   { id: 'ba2', side: 'left', src: '/brain/left/ba2-plus.png', label: 'BA II Plus calculator', x: 148, y: 129, scale: 1.35 },
   { id: 'tradingview', side: 'left', src: '/brain/left/tradingview.png', label: 'TradingView', x: 128, y: 150 },
   { id: 'claude', side: 'left', src: '/brain/left/claude.png', label: 'Claude', x: 72, y: 201 },
-  { id: 'python', side: 'left', src: '/brain/left/python.png', label: 'Python', x: 98, y: 195 },
+  { id: 'python', side: 'left', src: '/brain/left/python.png', label: 'Python', x: 99, y: 192 },
   { id: 'wsj', side: 'left', src: '/brain/left/wsj.png', label: 'The Wall Street Journal', x: 98, y: 213 },
   /* The three app tiles are square marks with no padding of their own, so at
      the shared box size they read a size larger than the logos beside them. */
-  { id: 'instagram', side: 'right', src: '/brain/right/instagram.png', label: 'Instagram', x: 224, y: 57, scale: 0.85 },
-  { id: 'notion', side: 'right', src: '/brain/right/notion.png', label: 'Notion', x: 256, y: 68, scale: 0.85 },
-  { id: 'pinterest', side: 'right', src: '/brain/right/pinterest.png', label: 'Pinterest', x: 229, y: 85, scale: 0.85 },
+  { id: 'instagram', side: 'right', src: '/brain/right/instagram.png', label: 'Instagram', x: 220, y: 53, scale: 0.85 },
+  { id: 'notion', side: 'right', src: '/brain/right/notion.png', label: 'Notion', x: 246, y: 59, scale: 0.85 },
+  { id: 'pinterest', side: 'right', src: '/brain/right/pinterest.png', label: 'Pinterest', x: 225, y: 75, scale: 0.85 },
   { id: 'youtube', side: 'right', src: '/brain/right/youtube.png', label: 'YouTube', x: 271, y: 149 },
   { id: 'kulhad', side: 'centre', draw: KULHAD, label: 'A kulhad of chai', x: 200, y: 200, scale: 1.31 },
 ]
