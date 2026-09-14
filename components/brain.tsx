@@ -97,7 +97,6 @@ const ICONS: IconSpec[] = [
   { id: 'claude', side: 'left', src: '/brain/left/claude.png', label: 'Claude', x: 72, y: 201 },
   { id: 'python', side: 'left', src: '/brain/left/python.png', label: 'Python', x: 99, y: 192 },
   { id: 'wsj', side: 'left', src: '/brain/left/wsj.png', label: 'The Wall Street Journal', x: 98, y: 213 },
-  { id: 'psychology', side: 'left', src: '/brain/left/psychology-of-money.png', label: 'The Psychology of Money', x: 72, y: 150, scale: 1.08 },
   /* The three app tiles are square marks with no padding of their own, so at
      the shared box size they read a size larger than the logos beside them. */
   { id: 'instagram', side: 'right', src: '/brain/right/instagram.png', label: 'Instagram', x: 220, y: 53, scale: 0.85 },
@@ -235,7 +234,7 @@ export function Brain({ className }: { className?: string }) {
       viewBox="0 0 400 320"
       className={className}
       role="img"
-      aria-label="A brain, divided down the middle. The left half holds Claude, Python, the Wall Street Journal, a copy of The Psychology of Money, TradingView, a BA II Plus calculator and Excel. The right half holds Instagram, Notion, Pinterest and YouTube. A kulhad of chai sits on the divide, belonging to both."
+      aria-label="A brain, divided down the middle. The left half holds Claude, Python, the Wall Street Journal, TradingView, a BA II Plus calculator and Excel. The right half holds Instagram, Notion, Pinterest and YouTube. A kulhad of chai sits on the divide, belonging to both."
     >
       {/* the doodle floats, so it gets a shadow to sit on */}
       <ellipse
