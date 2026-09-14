@@ -37,7 +37,9 @@ const BODY_D = `M200 42
   C142 258 166 260 180 250
   C188 258 194 262 200 262`
 
-type Side = 'left' | 'right'
+/* 'centre' is not a half. It is for the things that belong to both, and it
+   is allowed to sit across the divide and roam the whole brain. */
+type Side = 'left' | 'right' | 'centre'
 
 type IconSpec = {
   id: string
@@ -99,7 +101,7 @@ const ICONS: IconSpec[] = [
   { id: 'notion', side: 'right', src: '/brain/right/notion.png', label: 'Notion', x: 255, y: 77 },
   { id: 'pinterest', side: 'right', src: '/brain/right/pinterest.png', label: 'Pinterest', x: 235, y: 90 },
   { id: 'youtube', side: 'right', src: '/brain/right/youtube.png', label: 'YouTube', x: 272, y: 150 },
-  { id: 'kulhad', side: 'right', draw: KULHAD, label: 'A kulhad of chai', x: 238, y: 202, scale: 1.05 },
+  { id: 'kulhad', side: 'centre', draw: KULHAD, label: 'A kulhad of chai', x: 200, y: 202, scale: 1.31 },
 ]
 
 /** Box an icon is drawn into, in viewBox units. Aspect is preserved inside
@@ -199,15 +201,23 @@ export function Brain({ className }: { className?: string }) {
   const fits = (side: Side, x: number, y: number) => {
     const body = bodyRef.current
     if (!body) return false
-    const mx = side === 'right' ? 400 - x : x
     const r = ICON * 0.42
+    /* One path is stored, in the left half's coordinates. A point on the
+       right is tested by mirroring it; a point belonging to neither half is
+       inside if either test passes, which is the union of the two, which is
+       the whole brain. */
+    const on = (px: number, py: number) => {
+      if (side !== 'right' && body.isPointInFill(new DOMPoint(px, py))) return true
+      if (side !== 'left' && body.isPointInFill(new DOMPoint(400 - px, py))) return true
+      return false
+    }
     return [
       [0, 0],
       [r, 0],
       [-r, 0],
       [0, r],
       [0, -r],
-    ].every(([ox, oy]) => body.isPointInFill(new DOMPoint(mx + ox, y + oy)))
+    ].every(([ox, oy]) => on(x + ox, y + oy))
   }
 
   const nudge = (icon: IconSpec, dx: number, dy: number) =>
@@ -222,7 +232,7 @@ export function Brain({ className }: { className?: string }) {
       viewBox="0 0 400 320"
       className={className}
       role="img"
-      aria-label="A brain, divided down the middle. The left half holds Claude, Python, the Wall Street Journal, TradingView, a BA II Plus calculator and Excel. The right half holds Instagram, Notion, Pinterest, YouTube and a kulhad of chai."
+      aria-label="A brain, divided down the middle. The left half holds Claude, Python, the Wall Street Journal, TradingView, a BA II Plus calculator and Excel. The right half holds Instagram, Notion, Pinterest and YouTube. A kulhad of chai sits on the divide, belonging to both."
     >
       {/* the doodle floats, so it gets a shadow to sit on */}
       <ellipse
