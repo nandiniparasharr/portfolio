@@ -11,6 +11,7 @@ import {
 } from '@/lib/perspective'
 import { EaselScene } from '@/components/easel-scene'
 import { HomeIntro } from '@/components/home-intro'
+import { LongShort } from '@/components/long-short'
 import { AllocationDonut } from '@/components/allocation-donut'
 import { categories, projectsIn, type CategoryId } from '@/lib/content'
 
@@ -374,6 +375,13 @@ export function Canvas() {
       <section className="np-positions" aria-label="Positions">
         <HomeIntro />
         <AllocationDonut />
+      </section>
+
+      {/* ---------------- long / short ----------------
+           The next screen down. Same grid as the band above, so the notes
+           start on the same left edge as the prose does. */}
+      <section className="np-positions" aria-label="What I am long and short on">
+        <LongShort />
       </section>
 
       {/* ---------------- mobile index ---------------- */}
