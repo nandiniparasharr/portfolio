@@ -91,17 +91,19 @@ const KULHAD = {
    the folders the icons arrived in, and it is why an icon cannot be dragged
    across the divide: the two sides mean different things. */
 const ICONS: IconSpec[] = [
-  { id: 'claude', side: 'left', src: '/brain/left/claude.png', label: 'Claude', x: 73, y: 203 },
-  { id: 'python', side: 'left', src: '/brain/left/python.png', label: 'Python', x: 99, y: 198 },
-  { id: 'wsj', side: 'left', src: '/brain/left/wsj.png', label: 'The Wall Street Journal', x: 97, y: 214 },
-  { id: 'tradingview', side: 'left', src: '/brain/left/tradingview.png', label: 'TradingView', x: 137, y: 147 },
-  { id: 'ba2', side: 'left', src: '/brain/left/ba2-plus.png', label: 'BA II Plus calculator', x: 157, y: 209, scale: 1.35 },
-  { id: 'excel', side: 'left', src: '/brain/left/excel.png', label: 'Excel', x: 103, y: 118, scale: 0.92 },
-  { id: 'instagram', side: 'right', src: '/brain/right/instagram.png', label: 'Instagram', x: 224, y: 61 },
-  { id: 'notion', side: 'right', src: '/brain/right/notion.png', label: 'Notion', x: 255, y: 77 },
-  { id: 'pinterest', side: 'right', src: '/brain/right/pinterest.png', label: 'Pinterest', x: 235, y: 90 },
-  { id: 'youtube', side: 'right', src: '/brain/right/youtube.png', label: 'YouTube', x: 272, y: 150 },
-  { id: 'kulhad', side: 'centre', draw: KULHAD, label: 'A kulhad of chai', x: 200, y: 202, scale: 1.31 },
+  { id: 'excel', side: 'left', src: '/brain/left/excel.png', label: 'Excel', x: 91, y: 86, scale: 0.92 },
+  { id: 'ba2', side: 'left', src: '/brain/left/ba2-plus.png', label: 'BA II Plus calculator', x: 148, y: 129, scale: 1.35 },
+  { id: 'tradingview', side: 'left', src: '/brain/left/tradingview.png', label: 'TradingView', x: 128, y: 150 },
+  { id: 'claude', side: 'left', src: '/brain/left/claude.png', label: 'Claude', x: 72, y: 201 },
+  { id: 'python', side: 'left', src: '/brain/left/python.png', label: 'Python', x: 98, y: 195 },
+  { id: 'wsj', side: 'left', src: '/brain/left/wsj.png', label: 'The Wall Street Journal', x: 98, y: 213 },
+  /* The three app tiles are square marks with no padding of their own, so at
+     the shared box size they read a size larger than the logos beside them. */
+  { id: 'instagram', side: 'right', src: '/brain/right/instagram.png', label: 'Instagram', x: 224, y: 57, scale: 0.85 },
+  { id: 'notion', side: 'right', src: '/brain/right/notion.png', label: 'Notion', x: 256, y: 68, scale: 0.85 },
+  { id: 'pinterest', side: 'right', src: '/brain/right/pinterest.png', label: 'Pinterest', x: 229, y: 85, scale: 0.85 },
+  { id: 'youtube', side: 'right', src: '/brain/right/youtube.png', label: 'YouTube', x: 271, y: 149 },
+  { id: 'kulhad', side: 'centre', draw: KULHAD, label: 'A kulhad of chai', x: 200, y: 200, scale: 1.31 },
 ]
 
 /** Box an icon is drawn into, in viewBox units. Aspect is preserved inside
