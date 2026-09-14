@@ -16,6 +16,14 @@
    path after the fact is far more work than keeping them apart now.
    ------------------------------------------------------------------ */
 
+/* Line weights, in viewBox units. The drawing renders about 1.7x, so a
+   width of 3 lands near 5px on screen. Kept together and named because
+   they are the first thing to reach for when the drawing reads too heavy
+   or too faint: outline slightly above folds, folds above the divide. */
+const W_OUTLINE = 3
+const W_FOLD = 2.4
+const W_DIVIDE = 2.2
+
 /** One hemisphere. `side` mirrors the same geometry rather than restating
     it, so the halves stay symmetrical by construction. */
 function Hemisphere({ side }: { side: 'left' | 'right' }) {
@@ -35,7 +43,7 @@ function Hemisphere({ side }: { side: 'left' | 'right' }) {
       <path
         fill="var(--brain-body, var(--np-rose-tint))"
         stroke="var(--brain-line, var(--np-rose))"
-        strokeWidth={5}
+        strokeWidth={W_OUTLINE}
         d="M200 42
            C174 34 148 40 138 60
            C112 48 86 62 88 84
@@ -54,7 +62,7 @@ function Hemisphere({ side }: { side: 'left' | 'right' }) {
       <g
         fill="none"
         stroke="var(--brain-line, var(--np-rose))"
-        strokeWidth={3.5}
+        strokeWidth={W_FOLD}
       >
         <path d="M182 72 C152 74 136 92 144 110 C150 124 170 128 182 120" />
         <path d="M182 142 C150 138 122 152 122 174 C122 192 142 204 162 200" />
@@ -98,7 +106,7 @@ export function Brain({ className }: { className?: string }) {
         x2={200}
         y2={258}
         stroke="var(--brain-line, var(--np-rose))"
-        strokeWidth={3}
+        strokeWidth={W_DIVIDE}
         strokeLinecap="round"
         strokeDasharray="0.1 12"
         opacity={0.85}
