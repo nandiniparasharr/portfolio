@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef, useState, type ReactNode } from 'react'
 
 /* ------------------------------------------------------------------
    THE BRAIN
@@ -42,7 +42,6 @@ type Side = 'left' | 'right'
 type IconSpec = {
   id: string
   side: Side
-  src: string
   label: string
   /** starting centre, in viewBox units */
   x: number
@@ -50,6 +49,40 @@ type IconSpec = {
   /** optical size adjustment, for logos that read large or small at the
       same box size — a tall calculator against a round mark, say */
   scale?: number
+  /** a file under /public/brain, for the ones that arrived as artwork */
+  src?: string
+  /** or a drawing, for the marks simple enough to be geometry and for the
+      things that have no logo at all. Vector costs nothing and stays sharp
+      at any size; `vw`/`vh` are the drawing's own coordinate space. */
+  draw?: { vw: number; vh: number; node: ReactNode }
+}
+
+/* Excel and YouTube are the real marks, rasterised from their own artwork.
+   The chai is drawn, because a kulhad does not have a logo. */
+const KULHAD = {
+  vw: 100,
+  vh: 100,
+  node: (
+    <>
+      {/* steam, drawn first so the cup covers where it meets the chai */}
+      <g
+        stroke="#c9a88f"
+        strokeWidth={3.4}
+        fill="none"
+        strokeLinecap="round"
+        opacity={0.8}
+      >
+        <path d="M42 30 C37 23 46 19 41 12" />
+        <path d="M58 32 C53 25 62 21 57 14" />
+      </g>
+      {/* the clay body, tapered the way a kulhad is */}
+      <path d="M26 45 L34 86 Q35 91 40 91 L60 91 Q65 91 66 86 L74 45 Z" fill="#b5714a" />
+      {/* the side the light is on */}
+      <path d="M26 45 L34 86 Q35 91 40 91 L47 91 L41 45 Z" fill="#c4825a" />
+      <ellipse cx={50} cy={45} rx={24} ry={7.4} fill="#97583a" />
+      <ellipse cx={50} cy={45.6} rx={19} ry={5.4} fill="#d8a871" />
+    </>
+  ),
 }
 
 /* Left is the trained half, right is the rest of her. The split comes from
@@ -61,9 +94,12 @@ const ICONS: IconSpec[] = [
   { id: 'wsj', side: 'left', src: '/brain/left/wsj.png', label: 'The Wall Street Journal', x: 97, y: 214 },
   { id: 'tradingview', side: 'left', src: '/brain/left/tradingview.png', label: 'TradingView', x: 137, y: 147 },
   { id: 'ba2', side: 'left', src: '/brain/left/ba2-plus.png', label: 'BA II Plus calculator', x: 157, y: 209, scale: 1.35 },
+  { id: 'excel', side: 'left', src: '/brain/left/excel.png', label: 'Excel', x: 103, y: 118, scale: 0.92 },
   { id: 'instagram', side: 'right', src: '/brain/right/instagram.png', label: 'Instagram', x: 224, y: 61 },
   { id: 'notion', side: 'right', src: '/brain/right/notion.png', label: 'Notion', x: 255, y: 77 },
   { id: 'pinterest', side: 'right', src: '/brain/right/pinterest.png', label: 'Pinterest', x: 235, y: 90 },
+  { id: 'youtube', side: 'right', src: '/brain/right/youtube.png', label: 'YouTube', x: 272, y: 150 },
+  { id: 'kulhad', side: 'right', draw: KULHAD, label: 'A kulhad of chai', x: 238, y: 202, scale: 1.05 },
 ]
 
 /** Box an icon is drawn into, in viewBox units. Aspect is preserved inside
@@ -186,7 +222,7 @@ export function Brain({ className }: { className?: string }) {
       viewBox="0 0 400 320"
       className={className}
       role="img"
-      aria-label="A brain, divided down the middle. The left half holds Python, Claude, TradingView, the Wall Street Journal and a BA II Plus calculator. The right half holds Instagram, Notion and Pinterest."
+      aria-label="A brain, divided down the middle. The left half holds Claude, Python, the Wall Street Journal, TradingView, a BA II Plus calculator and Excel. The right half holds Instagram, Notion, Pinterest, YouTube and a kulhad of chai."
     >
       {/* the doodle floats, so it gets a shadow to sit on */}
       <ellipse
@@ -296,15 +332,36 @@ export function Brain({ className }: { className?: string }) {
               nudge(icon, d[0], d[1])
             }}
           >
-            <image
-              href={icon.src}
-              x={at.x - size / 2}
-              y={at.y - size / 2}
-              width={size}
-              height={size}
-              /* default preserveAspectRatio: a wide wordmark and a tall
-                 calculator both fit the box without being squashed */
-            />
+            {icon.src ? (
+              <image
+                href={icon.src}
+                x={at.x - size / 2}
+                y={at.y - size / 2}
+                width={size}
+                height={size}
+                /* default preserveAspectRatio: a wide wordmark and a tall
+                   calculator both fit the box without being squashed */
+              />
+            ) : (
+              <svg
+                x={at.x - size / 2}
+                y={at.y - size / 2}
+                width={size}
+                height={size}
+                viewBox={`0 0 ${icon.draw!.vw} ${icon.draw!.vh}`}
+                overflow="visible"
+              >
+                {/* A drawing only catches the pointer where it is painted, so
+                    the gaps between the steam and the cup would be holes in
+                    the grab target. This backs the box. */}
+                <rect
+                  width={icon.draw!.vw}
+                  height={icon.draw!.vh}
+                  fill="transparent"
+                />
+                {icon.draw!.node}
+              </svg>
+            )}
           </g>
         )
       })}
