@@ -10,6 +10,7 @@ import {
   type Mat3,
 } from '@/lib/perspective'
 import { EaselScene } from '@/components/easel-scene'
+import { HomeAside } from '@/components/home-aside'
 import { HomeIntro } from '@/components/home-intro'
 import { LongShort } from '@/components/long-short'
 import { AllocationDonut } from '@/components/allocation-donut'
@@ -382,6 +383,7 @@ export function Canvas() {
            start on the same left edge as the prose does. */}
       <section className="np-positions" aria-label="What I am long and short on">
         <LongShort />
+        <HomeAside />
       </section>
 
       {/* ---------------- mobile index ---------------- */}
