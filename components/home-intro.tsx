@@ -24,23 +24,11 @@ export function HomeIntro({ className }: { className?: string }) {
       </p>
 
       <p className="m-0 mt-7 max-w-md text-muted-foreground">
-       My 9 to 5 is AI, workflows and the fancier end of corporate problem solving, and I like it 
-       more than that sentence makes it sound. Everything after that is less organised. 
-       I read, I write, I sing. I watch too much YouTube and then put Netflix on anyway.  
+      hi, i’m nandini. by day, i work in finance and spend a lot of time around AI and automation.
+      apart from that, i usually keep picking up things that i find intriguing, it could be 
+      researching some random history topic that is completely unrelated to me, finding a new place to eat, 
+      going to a lecture, or sitting somewhere with a kulhad wali chai.
          
-      </p>
-
-      <p className="m-0 mt-4 max-w-md text-muted-foreground">
-        Every few weeks I end up three tabs deep in some bit of history I have
-        no reason to be reading about, and I stay there until something else
-        grabs me. I’ll go to a lecture on almost anything. I like finding new
-        places, usually somewhere to eat, often just for the chai. A good
-        kulhad wali chai will get me across the city.
-      </p>
-
-      <p className="m-0 mt-4 max-w-md text-muted-foreground">
-        None of it is a plan. I get curious, I follow it, and some of it ends
-        up here.
       </p>
     </section>
   )
