@@ -23,12 +23,17 @@ export function HomeIntro({ className }: { className?: string }) {
         Well, Hello :)
       </p>
 
-      <p className="m-0 mt-7 max-w-md text-muted-foreground">
+      {/* 35rem, not the 28rem the rest of the site uses for a paragraph.
+          This is one of two halves of the page rather than a column in a
+          card, and 28rem left it a narrow strip with a lane of empty paper
+          beside it. At 17px this measure runs about 66 characters, which is
+          still inside the comfortable range for a line of prose. */}
+      <p className="m-0 mt-7 max-w-[35rem] text-muted-foreground">
         hi, i’m nandini, and by day i work in finance and spend a lot of time
         around AI and automation.
       </p>
 
-      <p className="m-0 mt-4 max-w-md text-muted-foreground">
+      <p className="m-0 mt-4 max-w-[35rem] text-muted-foreground">
         apart from that, i get randomly obsessed with things: researching some
         random history topic that is completely unrelated to me, finding a new
         place to eat, going to a lecture, or sitting somewhere with a kulhad
