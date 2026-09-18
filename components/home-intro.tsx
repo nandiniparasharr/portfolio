@@ -24,11 +24,15 @@ export function HomeIntro({ className }: { className?: string }) {
       </p>
 
       <p className="m-0 mt-7 max-w-md text-muted-foreground">
-      hi, i’m nandini. by day, i work in finance and spend a lot of time around AI and automation.
-      apart from that, i usually keep picking up things that i find intriguing, it could be 
-      researching some random history topic that is completely unrelated to me, finding a new place to eat, 
-      going to a lecture, or sitting somewhere with a kulhad wali chai.
-         
+        hi, i’m nandini, and by day i work in finance and spend a lot of time
+        around AI and automation.
+      </p>
+
+      <p className="m-0 mt-4 max-w-md text-muted-foreground">
+        apart from that, i get randomly obsessed with things: researching some
+        random history topic that is completely unrelated to me, finding a new
+        place to eat, going to a lecture, or sitting somewhere with a kulhad
+        wali chai.
       </p>
     </section>
   )

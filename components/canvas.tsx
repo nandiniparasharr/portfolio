@@ -383,7 +383,9 @@ export function Canvas() {
            start on the same left edge as the prose does. */}
       <section className="np-positions" aria-label="What I am long and short on">
         <LongShort />
-        <HomeAside />
+        {/* One line against 450px of notebook. Top-aligned it read as a
+            stray sentence; centred it reads as the caption to the pair. */}
+        <HomeAside className="self-center" />
       </section>
 
       {/* ---------------- mobile index ---------------- */}
