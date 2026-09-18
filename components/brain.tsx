@@ -91,24 +91,24 @@ const KULHAD = {
    the folders the icons arrived in, and it is why an icon cannot be dragged
    across the divide: the two sides mean different things. */
 const ICONS: IconSpec[] = [
-  { id: 'excel', side: 'left', src: '/brain/left/excel.png', label: 'Excel', x: 91, y: 86, scale: 0.92 },
-  { id: 'ba2', side: 'left', src: '/brain/left/ba2-plus.png', label: 'BA II Plus calculator', x: 148, y: 129, scale: 1.35 },
-  { id: 'tradingview', side: 'left', src: '/brain/left/tradingview.png', label: 'TradingView', x: 128, y: 150 },
-  { id: 'claude', side: 'left', src: '/brain/left/claude.png', label: 'Claude', x: 72, y: 201 },
-  { id: 'python', side: 'left', src: '/brain/left/python.png', label: 'Python', x: 99, y: 192 },
-  { id: 'wsj', side: 'left', src: '/brain/left/wsj.png', label: 'The Wall Street Journal', x: 98, y: 213 },
+  { id: 'excel', side: 'left', src: '/brain/left/excel.png', label: 'Excel', x: 92, y: 87, scale: 0.92 },
+  { id: 'ba2', side: 'left', src: '/brain/left/ba2-plus.png', label: 'BA II Plus calculator', x: 153, y: 198, scale: 1.35 },
+  { id: 'tradingview', side: 'left', src: '/brain/left/tradingview.png', label: 'TradingView', x: 173, y: 222 },
+  { id: 'claude', side: 'left', src: '/brain/left/claude.png', label: 'Claude', x: 73, y: 201 },
+  { id: 'python', side: 'left', src: '/brain/left/python.png', label: 'Python', x: 100, y: 192 },
+  { id: 'wsj', side: 'left', src: '/brain/left/wsj.png', label: 'The Wall Street Journal', x: 99, y: 213 },
   /* A cover, not a cut-out: its own ground is white, so there was nothing to
      knock out without eating into the page. The icon's drop shadow gives the
      rectangle its edge against the pink. */
-  { id: 'psychology', side: 'left', src: '/brain/left/psychology-of-money.png', label: 'The Psychology of Money', x: 72, y: 150, scale: 1.4 },
-  { id: 'zerotoone', side: 'left', src: '/brain/left/zero-to-one.png', label: 'Zero to One', x: 132, y: 195, scale: 1.4 },
+  { id: 'psychology', side: 'left', src: '/brain/left/psychology-of-money.png', label: 'The Psychology of Money', x: 86, y: 135, scale: 1.4 },
+  { id: 'zerotoone', side: 'left', src: '/brain/left/zero-to-one.png', label: 'Zero to One', x: 58, y: 139, scale: 1.4 },
   /* The three app tiles are square marks with no padding of their own, so at
      the shared box size they read a size larger than the logos beside them. */
-  { id: 'instagram', side: 'right', src: '/brain/right/instagram.png', label: 'Instagram', x: 220, y: 53, scale: 0.85 },
-  { id: 'notion', side: 'right', src: '/brain/right/notion.png', label: 'Notion', x: 246, y: 59, scale: 0.85 },
-  { id: 'pinterest', side: 'right', src: '/brain/right/pinterest.png', label: 'Pinterest', x: 225, y: 75, scale: 0.85 },
-  { id: 'youtube', side: 'right', src: '/brain/right/youtube.png', label: 'YouTube', x: 271, y: 149 },
-  { id: 'kulhad', side: 'centre', draw: KULHAD, label: 'A kulhad of chai', x: 200, y: 200, scale: 1.31 },
+  { id: 'instagram', side: 'right', src: '/brain/right/instagram.png', label: 'Instagram', x: 220, y: 54, scale: 0.85 },
+  { id: 'notion', side: 'right', src: '/brain/right/notion.png', label: 'Notion', x: 246, y: 60, scale: 0.85 },
+  { id: 'pinterest', side: 'right', src: '/brain/right/pinterest.png', label: 'Pinterest', x: 225, y: 76, scale: 0.85 },
+  { id: 'youtube', side: 'right', src: '/brain/right/youtube.png', label: 'YouTube', x: 271, y: 150 },
+  { id: 'kulhad', side: 'centre', draw: KULHAD, label: 'A kulhad of chai', x: 200, y: 145, scale: 1.31 },
 ]
 
 /** Box an icon is drawn into, in viewBox units. Aspect is preserved inside
