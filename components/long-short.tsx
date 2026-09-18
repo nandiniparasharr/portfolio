@@ -38,7 +38,7 @@ function Page({
   return (
     <div
       className={cn(
-        'absolute w-60 border border-border bg-card px-5 pb-6 pt-7 shadow-card transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:z-20 hover:-translate-y-1 hover:shadow-pop sm:w-64',
+        'absolute w-60 border border-border bg-card px-5 pb-6 pt-7 shadow-card transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:z-20 hover:-translate-y-1 hover:shadow-pop sm:w-64 lg:w-[324px]',
         className,
       )}
       style={{
@@ -60,7 +60,7 @@ function Page({
         {items.map((item) => (
           <li
             key={item}
-            className="flex gap-2 font-mono text-xs leading-[28px] text-foreground"
+            className="flex gap-2 font-mono text-xs leading-[28px] text-foreground lg:text-[13px]"
           >
             <span aria-hidden="true" className="text-faint">
               —
@@ -73,10 +73,20 @@ function Page({
   )
 }
 
-/** The investor memo, kept in a notebook: long conviction, short noise. */
+/** The investor memo, kept in a notebook: long conviction, short noise.
+ *
+ *  The notes sit in the wider half of their band, so on a large screen they
+ *  grow to fill it rather than leaving a lane of empty paper between
+ *  themselves and the prose beside them. At 304px the longest line — the one
+ *  about meetings — also stops wrapping. */
 export function LongShort({ className }: { className?: string }) {
   return (
-    <div className={cn('relative h-[420px] w-[320px] sm:w-[360px]', className)}>
+    <div
+      className={cn(
+        'relative h-[420px] w-[320px] sm:w-[360px] lg:h-[450px] lg:w-[460px]',
+        className,
+      )}
+    >
       <h2 className="sr-only">What I&apos;m long on</h2>
       <Page
         heading="Long on"
@@ -88,7 +98,7 @@ export function LongShort({ className }: { className?: string }) {
         heading="Short on"
         headingClass="text-rose"
         items={SHORTS}
-        className="left-12 top-44 rotate-[2.5deg] sm:left-20"
+        className="left-12 top-44 rotate-[2.5deg] sm:left-20 lg:left-28 lg:top-48"
       />
     </div>
   )

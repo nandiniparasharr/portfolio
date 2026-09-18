@@ -429,6 +429,23 @@ button:hover > .np-arrow,
   }
 }
 
+/* The prose in these two bands runs a step above body size. 15px is right for
+   a card or a caption and too small for four sentences you are meant to sit
+   and read, which is all these bands are.
+
+   Two things keep it off everything else. :where() holds the specificity at
+   zero, and @layer base puts it below the utilities. Unlayered rules beat
+   layered ones outright, so left among the rest of this file it overrode the
+   serif opener's own clamp() and flattened the block to a single size. Where
+   it is now, anything that states its own size wins: the serif opener, the
+   donut legend, the ruled lines in the notebook. */
+@layer base {
+  .np-positions :where(p) {
+    font-size: 1.0625rem;
+    line-height: 1.62;
+  }
+}
+
 /* ---------- the scene ---------- */
 .np-easel-col { display: flex; justify-content: flex-start; }
 .np-scene {
