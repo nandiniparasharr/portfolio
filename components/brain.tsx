@@ -101,6 +101,7 @@ const ICONS: IconSpec[] = [
      knock out without eating into the page. The icon's drop shadow gives the
      rectangle its edge against the pink. */
   { id: 'psychology', side: 'left', src: '/brain/left/psychology-of-money.png', label: 'The Psychology of Money', x: 72, y: 150, scale: 1.4 },
+  { id: 'zerotoone', side: 'left', src: '/brain/left/zero-to-one.png', label: 'Zero to One', x: 132, y: 195, scale: 1.4 },
   /* The three app tiles are square marks with no padding of their own, so at
      the shared box size they read a size larger than the logos beside them. */
   { id: 'instagram', side: 'right', src: '/brain/right/instagram.png', label: 'Instagram', x: 220, y: 53, scale: 0.85 },
@@ -238,7 +239,7 @@ export function Brain({ className }: { className?: string }) {
       viewBox="0 0 400 320"
       className={className}
       role="img"
-      aria-label="A brain, divided down the middle. The left half holds Claude, Python, the Wall Street Journal, a copy of The Psychology of Money, TradingView, a BA II Plus calculator and Excel. The right half holds Instagram, Notion, Pinterest and YouTube. A kulhad of chai sits on the divide, belonging to both."
+      aria-label="A brain, divided down the middle. The left half holds Claude, Python, the Wall Street Journal, copies of The Psychology of Money and Zero to One, TradingView, a BA II Plus calculator and Excel. The right half holds Instagram, Notion, Pinterest and YouTube. A kulhad of chai sits on the divide, belonging to both."
     >
       {/* the doodle floats, so it gets a shadow to sit on */}
       <ellipse
