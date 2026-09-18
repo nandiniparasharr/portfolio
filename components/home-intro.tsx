@@ -16,18 +16,18 @@ export function HomeIntro({ className }: { className?: string }) {
   return (
     <section className={className} aria-label="About me">
       <SectionLabel tone="muted" className="mb-6">
-        Many hats
+
       </SectionLabel>
 
       <p className="m-0 max-w-md font-serif text-[clamp(1.5rem,2.7vw,2.05rem)] leading-[1.18] text-foreground">
-        I wear a lot of hats, often at the same time.
+        Well, Hello :)
       </p>
 
       <p className="m-0 mt-7 max-w-md text-muted-foreground">
-        My 9 to 5 is AI, workflows and the fancier end of corporate problem
-        solving, and I like it more than that sentence makes it sound.
-        Everything after that is less organised. I read, I write, I sing. I
-        watch too much YouTube and then put Netflix on anyway.
+       My 9 to 5 is AI, workflows and the fancier end of corporate problem solving, and I like it 
+       more than that sentence makes it sound. Everything after that is less organised. 
+       I read, I write, I sing. I watch too much YouTube and then put Netflix on anyway.  
+         
       </p>
 
       <p className="m-0 mt-4 max-w-md text-muted-foreground">
