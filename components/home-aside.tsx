@@ -1,18 +1,21 @@
 /* ------------------------------------------------------------------
    HOME ASIDE
-   The line that sits to the right of the long/short notes. Named for
+   The prose that sits to the right of the long/short notes. Named for
    where it sits rather than what it says, so the copy can change
    without the file lying about itself.
 
-   It is one sentence in a column wide enough for four, so it is set in
-   the serif at the size of a heading rather than left as a stray line
-   of body copy with a lot of paper around it.
+   Set to match the intro paragraph beside the donut above: 21px, the
+   same +25% over the band's body size, so the two halves of the page
+   read as a pair.
    ------------------------------------------------------------------ */
 export function HomeAside({ className }: { className?: string }) {
   return (
-    <section className={className} aria-label="What this site is">
-      <p className="m-0 max-w-md font-serif text-[clamp(1.35rem,2.2vw,1.75rem)] leading-[1.25] text-foreground">
-        so yeah, this website is a little bit of all of that.
+    <section className={className} aria-label="What I keep doing">
+      <p className="m-0 max-w-[35rem] text-[21px] leading-[1.5] text-muted-foreground">
+        apart from that, i get randomly obsessed with things: researching some
+        random history topic that is completely unrelated to me, finding a new
+        place to eat, going to a lecture, or sitting somewhere with a kulhad
+        wali chai.
       </p>
     </section>
   )

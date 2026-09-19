@@ -374,7 +374,9 @@ export function Canvas() {
            Under the name: the notebook of what she is long and short on,
            and where the hours actually go. */}
       <section className="np-positions" aria-label="Positions">
-        <HomeIntro />
+        {/* Centred against the donut: the intro is short now, so top-aligned
+            it floated above the middle of the chart. */}
+        <HomeIntro className="self-center" />
         <AllocationDonut />
       </section>
 
@@ -383,8 +385,7 @@ export function Canvas() {
            start on the same left edge as the prose does. */}
       <section className="np-positions" aria-label="What I am long and short on">
         <LongShort />
-        {/* One line against 450px of notebook. Top-aligned it read as a
-            stray sentence; centred it reads as the caption to the pair. */}
+        {/* Centred against the notes, mirroring the intro/donut band above. */}
         <HomeAside className="self-center" />
       </section>
 
