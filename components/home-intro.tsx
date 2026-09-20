@@ -24,12 +24,19 @@ export function HomeIntro({ className }: { className?: string }) {
         Well, Hello :)
       </p>
 
-      {/* Only the first line now; the second moved beside the notes below.
-          21px is +25% on the 17px the band otherwise runs, and it beats the
-          .np-positions rule on specificity, so it holds. */}
-      <p className="m-0 mt-6 max-w-[35rem] text-[21px] leading-[1.5] text-muted-foreground">
+      {/* Both lines again, at 16px — a quarter down from the 21px they briefly
+          ran at. The explicit size beats the .np-positions rule on
+          specificity, so it holds. */}
+      <p className="m-0 mt-6 max-w-[35rem] text-[16px] leading-[1.6] text-muted-foreground">
         hi, i’m nandini, and by day i work in finance and spend a lot of time
         around AI and automation.
+      </p>
+
+      <p className="m-0 mt-4 max-w-[35rem] text-[16px] leading-[1.6] text-muted-foreground">
+        apart from that, i get randomly obsessed with things: researching some
+        random history topic that is completely unrelated to me, finding a new
+        place to eat, going to a lecture, or sitting somewhere with a kulhad
+        wali chai.
       </p>
     </section>
   )
