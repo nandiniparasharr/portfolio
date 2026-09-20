@@ -1106,6 +1106,26 @@ button:hover > .np-arrow,
 }
 .np-id-bar { display: block; width: 76px; height: 2px; background: var(--np-rose); margin: 26px 0 0; }
 .np-id-links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; }
+/* The "currently" line under the quick links — black, as asked, to sit
+   apart from the muted intro line above. The label is the site's mono
+   micro-cap; the rest is plain body weight. */
+.np-id-now {
+  margin: 28px 0 0;
+  max-width: 34ch;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--np-ink);
+}
+.np-id-now-label {
+  margin-right: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--np-ink);
+}
 .np-id-links button {
   font-family: var(--font-mono);
   font-size: 10px;

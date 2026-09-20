@@ -368,6 +368,10 @@ export function Canvas() {
               )
             })}
           </nav>
+          <p className="np-id-now">
+            <span className="np-id-now-label">Currently</span>
+            building small tools, and reading whatever grabs me.
+          </p>
         </div>
       </div>
 
