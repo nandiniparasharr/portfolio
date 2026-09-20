@@ -396,7 +396,9 @@ export function Canvas() {
         <div data-lab="notes">
           <LongShort />
         </div>
-        <div data-lab="buttons" className="self-center">
+        {/* Dropped to the lower part of the notes rather than centred, so the
+            actions sit with the short/long pad instead of floating mid-band. */}
+        <div data-lab="buttons" className="self-end pb-16">
           <HomeAside />
         </div>
       </section>

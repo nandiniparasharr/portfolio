@@ -58,8 +58,11 @@ export function AllocationDonut({ className }: { className?: string }) {
 
   const current = active !== null ? SLICES[active] : null
 
+  /* items-start, not items-center: the donut and legend share the right
+     column's left edge, so they line up with the buttons in the band below
+     rather than floating centred. */
   return (
-    <figure className={cn('m-0 flex flex-col items-center gap-5', className)}>
+    <figure className={cn('m-0 flex flex-col items-start gap-5', className)}>
       {/* data-lab tags let the ?layout dev tool drag the chart and the
           legend independently; inert without the flag. */}
       <div className="relative" data-lab="donut">
