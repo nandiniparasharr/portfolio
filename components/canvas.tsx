@@ -396,9 +396,8 @@ export function Canvas() {
         <div data-lab="notes">
           <LongShort />
         </div>
-        {/* Dropped to the lower part of the notes rather than centred, so the
-            actions sit with the short/long pad instead of floating mid-band. */}
-        <div data-lab="buttons" className="self-end pb-28">
+        {/* Currently line + actions, centred against the notes. */}
+        <div data-lab="buttons" className="self-center">
           <HomeAside />
         </div>
       </section>
