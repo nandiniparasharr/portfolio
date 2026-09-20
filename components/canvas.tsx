@@ -382,7 +382,9 @@ export function Canvas() {
         <div data-lab="intro" className="self-center">
           <HomeIntro />
         </div>
-        <div data-lab="donut">
+        {/* No data-lab here: the donut and its legend are tagged separately
+            inside AllocationDonut, so ?layout can drag them apart. */}
+        <div>
           <AllocationDonut />
         </div>
       </section>

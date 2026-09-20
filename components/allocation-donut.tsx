@@ -60,7 +60,9 @@ export function AllocationDonut({ className }: { className?: string }) {
 
   return (
     <figure className={cn('m-0 flex flex-col items-center gap-5', className)}>
-      <div className="relative">
+      {/* data-lab tags let the ?layout dev tool drag the chart and the
+          legend independently; inert without the flag. */}
+      <div className="relative" data-lab="donut">
         <svg
           viewBox={`0 0 ${SIZE} ${SIZE}`}
           className="h-56 w-56 sm:h-64 sm:w-64"
@@ -110,7 +112,7 @@ export function AllocationDonut({ className }: { className?: string }) {
         </div>
       </div>
 
-      <figcaption className="w-full max-w-[260px]">
+      <figcaption className="w-full max-w-[260px]" data-lab="allocation">
         <p className="m-0 mb-2 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
           Current allocation
         </p>

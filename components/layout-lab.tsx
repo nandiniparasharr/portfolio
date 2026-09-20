@@ -44,9 +44,11 @@ export function LayoutLab() {
         outlineOffset: el.style.outlineOffset,
         zIndex: el.style.zIndex,
         touchAction: el.style.touchAction,
+        userSelect: el.style.userSelect,
       }
       el.style.cursor = 'grab'
       el.style.touchAction = 'none'
+      el.style.userSelect = 'none'
       el.style.outline = '1px dashed rgba(200,40,80,0.55)'
       el.style.outlineOffset = '6px'
 
@@ -102,6 +104,7 @@ export function LayoutLab() {
         el.style.outlineOffset = prev.outlineOffset
         el.style.zIndex = prev.zIndex
         el.style.touchAction = prev.touchAction
+        el.style.userSelect = prev.userSelect
       })
     })
 
