@@ -12,6 +12,7 @@ import {
 import { EaselScene } from '@/components/easel-scene'
 import { HomeAside } from '@/components/home-aside'
 import { HomeIntro } from '@/components/home-intro'
+import { LayoutLab } from '@/components/layout-lab'
 import { LongShort } from '@/components/long-short'
 import { AllocationDonut } from '@/components/allocation-donut'
 import { categories, projectsIn, type CategoryId } from '@/lib/content'
@@ -373,20 +374,29 @@ export function Canvas() {
       {/* ---------------- positions ----------------
            Under the name: the notebook of what she is long and short on,
            and where the hours actually go. */}
+      {/* The data-lab wrappers are drag handles for the ?layout dev tool
+          (components/layout-lab.tsx) and inert otherwise. The self-center
+          that centred the block now lives on the wrapper, since it is the
+          grid item. */}
       <section className="np-positions" aria-label="Positions">
-        {/* Centred against the donut: the intro is short now, so top-aligned
-            it floated above the middle of the chart. */}
-        <HomeIntro className="self-center" />
-        <AllocationDonut />
+        <div data-lab="intro" className="self-center">
+          <HomeIntro />
+        </div>
+        <div data-lab="donut">
+          <AllocationDonut />
+        </div>
       </section>
 
       {/* ---------------- long / short ----------------
            The next screen down. Same grid as the band above, so the notes
            start on the same left edge as the prose does. */}
       <section className="np-positions" aria-label="What I am long and short on">
-        <LongShort />
-        {/* Centred against the notes, mirroring the intro/donut band above. */}
-        <HomeAside className="self-center" />
+        <div data-lab="notes">
+          <LongShort />
+        </div>
+        <div data-lab="buttons" className="self-center">
+          <HomeAside />
+        </div>
       </section>
 
       {/* ---------------- mobile index ---------------- */}
@@ -460,6 +470,8 @@ export function Canvas() {
           </div>
         </div>
       )}
+
+      <LayoutLab />
     </>
   )
 }
