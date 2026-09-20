@@ -398,7 +398,7 @@ export function Canvas() {
         </div>
         {/* Dropped to the lower part of the notes rather than centred, so the
             actions sit with the short/long pad instead of floating mid-band. */}
-        <div data-lab="buttons" className="self-end pb-16">
+        <div data-lab="buttons" className="self-end pb-28">
           <HomeAside />
         </div>
       </section>
