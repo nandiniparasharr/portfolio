@@ -158,7 +158,6 @@ export const projects: Project[] = [
     image: '/projects/portfolio-prism.png',
     record: [
       { label: 'The question', value: 'Can a retail investor get an advisor’s read without an advisor?' },
-      { label: 'The call' },
       { label: 'Method', value: 'Allocation, risk, correlation and risk-adjusted return' },
       { label: 'Data', value: 'Yahoo Finance for equities · AMFI for mutual fund NAVs' },
       { label: 'Built with', value: 'Next.js · TypeScript · Vercel' },
@@ -189,7 +188,6 @@ export const projects: Project[] = [
     image: '/projects/avenue-supermarts.png',
     record: [
       { label: 'The question', value: 'Does everyday-low-price actually show up in DMart’s numbers?' },
-      { label: 'The call' },
       { label: 'Method', value: 'DCF and relative valuation · 5Y ratio analysis' },
       { label: 'Projected to', value: 'FY29' },
       { label: 'Data', value: 'Company filings · FY19 to FY24' },
@@ -222,7 +220,6 @@ export const projects: Project[] = [
     imageHrefLabel: 'Read the write-up ↗',
     record: [
       { label: 'The question', value: 'Does a ₹20 ice pop actually make money?' },
-      { label: 'The call' },
       { label: 'Method', value: 'Dual-channel unit economics · scenario analysis' },
       { label: 'Built with', value: 'Excel' },
       { label: 'When', value: '2024' },
@@ -255,7 +252,6 @@ export const projects: Project[] = [
         label: 'The question',
         value: 'Is my study time spread across the syllabus, or piled into what I already like?',
       },
-      { label: 'The call' },
       { label: 'How it works', value: 'Start a timer, tag the subject, see the week' },
       { label: 'Built with', value: 'Python, Claude Code' },
       { label: 'When', value: '2026' },

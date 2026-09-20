@@ -132,8 +132,8 @@ export default async function CaseStudyPage({
           </Reveal>
 
           {/* Two paragraphs, no more. The Record box already carries the
-              question, the method and the call, so the body's only job is the
-              part a box cannot hold: the setup, and the finding. */}
+              question and the method, so the body's only job is the part a
+              box cannot hold: the setup, and the finding. */}
           <Reveal>
             <h3 className="mb-3 mt-12 text-h3">The setup</h3>
             <Prose copy={project.brief} />
