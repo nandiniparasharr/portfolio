@@ -11,8 +11,10 @@
    The specifics are the whole point: "kulhad wali chai" does more work
    than any positioning language could.
    ------------------------------------------------------------------ */
+/* Body back in the sans. 17px, not the serif's 20px: Cormorant has a much
+   smaller x-height, so 17px Archivo reads at about the same size. */
 const BODY =
-  'm-0 max-w-[29rem] font-serif text-[20px] leading-[1.45] text-foreground/80'
+  'm-0 max-w-[29rem] font-sans text-[17px] leading-[1.55] text-foreground/80'
 
 export function HomeIntro({ className }: { className?: string }) {
   return (
