@@ -11,22 +11,25 @@
    the voice; the small print carries the specifics ("kulhad wali chai"
    does more work than any positioning language could).
    ------------------------------------------------------------------ */
-const DISPLAY =
-  'm-0 font-serif text-[clamp(1.75rem,2.6vw,2.25rem)] leading-[1.08] text-rose'
+const DISPLAY = 'm-0 font-serif leading-[1.08] text-rose'
 const DETAIL = 'm-0 max-w-[27rem] text-[15px] leading-[1.55] text-muted-foreground'
 
 export function HomeIntro({ className }: { className?: string }) {
   return (
     <section className={className} aria-label="About me">
-      <p className={DISPLAY}>hi, i’m nandini,</p>
+      <p className={`${DISPLAY} text-[clamp(1.75rem,2.6vw,2.25rem)] font-bold`}>
+        hi, i’m nandini,
+      </p>
       <p className={`${DETAIL} mt-2`}>
-        and by day i work in finance and spend a lot of time around AI and
+        by day i work in finance and spend a lot of time around AI and
         automation.
       </p>
 
       <span aria-hidden="true" className="my-6 block h-[1.5px] w-10 bg-rose" />
 
-      <p className={`${DISPLAY} max-w-[10em]`}>
+      {/* 10% under the greeting: 1.75/2.6/2.25 -> 1.575/2.34/2.025. The
+          max-width is in em, so the line still breaks after "obsessed". */}
+      <p className={`${DISPLAY} max-w-[10em] text-[clamp(1.575rem,2.34vw,2.025rem)]`}>
         <em>apart from that,</em>
         <br />
         i get randomly obsessed with things.
