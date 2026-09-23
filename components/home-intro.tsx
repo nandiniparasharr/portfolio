@@ -6,28 +6,35 @@
    Named for where it sits rather than what it currently says, so the
    copy can change without the file lying about itself.
 
-   The specifics are the whole point. "Kulhad wali chai" does more work
-   than any amount of positioning language, because nobody else's
-   portfolio says it.
+   Two beats, each a large rose serif line with a small grey line of
+   detail under it, split by a short rose rule. The display lines carry
+   the voice; the small print carries the specifics ("kulhad wali chai"
+   does more work than any positioning language could).
    ------------------------------------------------------------------ */
+const DISPLAY =
+  'm-0 font-serif text-[clamp(1.75rem,2.6vw,2.25rem)] leading-[1.08] text-rose'
+const DETAIL = 'm-0 max-w-[27rem] text-[15px] leading-[1.55] text-muted-foreground'
+
 export function HomeIntro({ className }: { className?: string }) {
   return (
     <section className={className} aria-label="About me">
-      {/* No heading: the greeting is the opening words themselves, set in
-          rose and a step up so they do the job "Well, Hello" used to. */}
-      <p className="m-0 max-w-[31.5rem] text-[16px] leading-[1.6] text-muted-foreground">
-        <span className="text-[1.25em] font-medium text-rose">
-          hi, i’m nandini
-        </span>
-        , and by day i work in finance and spend a lot of time around AI and
+      <p className={DISPLAY}>hi, i’m nandini,</p>
+      <p className={`${DETAIL} mt-2`}>
+        and by day i work in finance and spend a lot of time around AI and
         automation.
       </p>
 
-      <p className="m-0 mt-4 max-w-[31.5rem] text-[16px] leading-[1.6] text-muted-foreground">
-        apart from that, i get randomly obsessed with things: researching some
-        random history topic that is completely unrelated to me, finding a new
-        place to eat, going to a lecture, or sitting somewhere with a kulhad
-        wali chai.
+      <span aria-hidden="true" className="my-6 block h-[1.5px] w-10 bg-rose" />
+
+      <p className={`${DISPLAY} max-w-[10em]`}>
+        <em>apart from that,</em>
+        <br />
+        i get randomly obsessed with things.
+      </p>
+      <p className={`${DETAIL} mt-3`}>
+        researching some random history topic that is completely unrelated to
+        me, finding a new place to eat, going to a lecture, or sitting
+        somewhere with a kulhad wali chai.
       </p>
     </section>
   )
