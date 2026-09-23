@@ -7,7 +7,7 @@
    copy can change without the file lying about itself.
 
    One display line (the greeting, rose serif italic), then two short
-   paragraphs in the serif at reading size, split by a short rose rule.
+   paragraphs in the sans at reading size, split by a short rose rule.
    The specifics are the whole point: "kulhad wali chai" does more work
    than any positioning language could.
    ------------------------------------------------------------------ */
