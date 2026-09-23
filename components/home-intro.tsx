@@ -20,7 +20,7 @@ export function HomeIntro({ className }: { className?: string }) {
   return (
     <section className={className} aria-label="About me">
       <p className="m-0 font-serif text-[clamp(1.75rem,2.6vw,2.25rem)] font-medium italic leading-[1.1] text-rose">
-        hi, i’m nandini,
+        hi, i’m nandini :)
       </p>
       <p className={`${BODY} mt-2`}>
         by day i work in finance and spend a lot of time around AI and
